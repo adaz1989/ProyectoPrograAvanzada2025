@@ -4,52 +4,84 @@ USE ProyectoAspNetCore;
 --          INDEPPENDIENTES
 -- //////////////////////////////////
 CREATE TABLE Dias(
-    DiaId INT PRIMARY KEY,
-    Nombre VARCHAR(50) NOT NULL
+    DiaId BIGINT PRIMARY KEY,
+    NombreDia VARCHAR(50) NOT NULL
 );
 
+INSERT INTO Dias (DiaId, NombreDia) VALUES
+(1, 'Lunes'),
+(2, 'Martes'),
+(3, 'Miércoles'),
+(4, 'Jueves'),
+(5, 'Viernes'),
+(6, 'Sábado'),
+(7, 'Domingo');
+
 CREATE TABLE Categorias(
-    CategoriaId INT PRIMARY KEY,
-    Nombre VARCHAR(50) NOT NULL,
+    CategoriaId BIGINT IDENTITY(1,1) PRIMARY KEY,
+    NombreCategoria VARCHAR(50) NOT NULL,
     EdadMinima INT NOT NULL,
     EdadMaxima INT NOT NULL,
     Estado BIT NOT NULL DEFAULT 1
 );
 
 CREATE TABLE TipoUsuario(
-    TipoUsuarioId INT PRIMARY KEY,
-    Descripcion VARCHAR(50) NOT NULL
+    TipoUsuarioId BIGINT PRIMARY KEY,
+    DescripcionTipoUsuario VARCHAR(50) NOT NULL
 );
+
+INSERT INTO TipoUsuario (TipoUsuarioId, DescripcionTipoUsuario)
+VALUES 
+    (1, 'Usuario'),
+    (2, 'Administrador');
 
 CREATE TABLE MetodosPago(
-    MetodoPagoId INT PRIMARY KEY,
-    Descripcion VARCHAR(50) NOT NULL
+    MetodoPagoId BIGINT PRIMARY KEY,
+    DescripcionMetodoPago VARCHAR(50) NOT NULL
 );
 
+INSERT INTO MetodosPago (MetodoPagoId, DescripcionMetodoPago)
+VALUES 
+    (1, 'Efectivo'),
+    (2, 'Tarjeta'),
+    (3, 'Sinpe');
+
 CREATE TABLE Deportes(
-    DeporteId INT PRIMARY KEY,
-    Nombre VARCHAR(50) NOT NULL
+    DeporteId BIGINT IDENTITY(1,1) PRIMARY KEY,
+    NombreDeporte VARCHAR(50) NOT NULL
 );
+
+INSERT INTO Deportes (NombreDeporte)
+VALUES 
+    ('Fútbol 11'),
+    ('Fútbol 7'),
+    ('Fútbol 5'),
+    ('Fútbol sala'),
+    ('Fútbol playa'),
+    ('Baloncesto'),
+    ('Voleibol'),
+    ('Tenis');
+
 
 -- //////////////////////////////////
 --          DIRECCIONES
 -- //////////////////////////////////
 CREATE TABLE Provincias(
-    ProvinciaId INT PRIMARY KEY,
-    Nombre VARCHAR(50) NOT NULL
+    ProvinciaId BIGINT PRIMARY KEY,
+    NombreProvincia VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE Cantones(
-    CantonId INT PRIMARY KEY,
-    Nombre VARCHAR(50) NOT NULL,
-    ProvinciaId INT NOT NULL,
+    CantonId BIGINT PRIMARY KEY,
+    NombreCanton VARCHAR(50) NOT NULL,
+    ProvinciaId BIGINT NOT NULL,
     FOREIGN KEY (ProvinciaId) REFERENCES Provincias(ProvinciaId)
 );
 
 CREATE TABLE Distritos(
-    DistritoId INT PRIMARY KEY,
-    Nombre VARCHAR(50) NOT NULL,
-    CantonId INT NOT NULL,
+    DistritoId BIGINT PRIMARY KEY,
+    NombreDistrito VARCHAR(50) NOT NULL,
+    CantonId BIGINT NOT NULL,
     FOREIGN KEY (CantonId) REFERENCES Cantones(CantonId)
 ); 
 
@@ -57,151 +89,155 @@ CREATE TABLE Distritos(
 --          PRINCIPALES
 -- //////////////////////////////////
 CREATE TABLE Usuarios(
-    UsuarioId INT PRIMARY KEY,
-    Nombre VARCHAR(50) NOT NULL,
-    Apellids VARCHAR(100) NOT NULL,
-    Correo VARCHAR(50) NOT NULL,
-    Telefono VARCHAR(50) NOT NULL,
-    Contrasena VARCHAR(50) NOT NULL,
-    TipoUsuarioId INT NOT NULL,
+    UsuarioId BIGINT IDENTITY(1,1) PRIMARY KEY,
+    NombreUsuario VARCHAR(50) NOT NULL,
+    ApellidosUsuario VARCHAR(100) NOT NULL,
+    CorreoUsuario VARCHAR(50) NOT NULL UNIQUE,
+    TelefonoUsuario VARCHAR(50) NOT NULL UNIQUE,
+    Contrasenna VARCHAR(100) NOT NULL,
+    TipoUsuarioId BIGINT NOT NULL,
     Estado BIT NOT NULL DEFAULT 1,
     FOREIGN KEY (TipoUsuarioId) REFERENCES TipoUsuario(TipoUsuarioId)
 );
 
 CREATE TABLE Canchas(
-    CanchaId INT PRIMARY KEY,
-    Nombre VARCHAR(50) NOT NULL,
-    Correo VARCHAR(50) NOT NULL,
-    Telefono VARCHAR(50) NOT NULL,
-    PrecioHora INT NOT NULL,
-    DeporteId INT NOT NULL,
-    ProvinciaId INT NOT NULL,
-    CantonId INT NOT NULL,
-    DistritoId INT NOT NULL,
+    CanchaId BIGINT IDENTITY(1,1) PRIMARY KEY,
+    NombreCancha VARCHAR(50) NOT NULL,
+    CorreoCancha VARCHAR(50) NOT NULL,
+    TelefonoCancha VARCHAR(50) NOT NULL,
+    PrecioHora DECIMAL(10,2) NOT NULL,
+    DeporteId BIGINT NOT NULL,
+    ProvinciaId BIGINT NOT NULL,
+    CantonId BIGINT NOT NULL,
+    DistritoId BIGINT NOT NULL,
     DetalleDireccion VARCHAR(100) NOT NULL,
-    Descripcion VARCHAR(100) NOT NULL,
-    Propietario INT NOT NULL,
+    DescripcionCancha VARCHAR(100) NOT NULL,
+    UsuarioId BIGINT NOT NULL,
     Estado BIT NOT NULL DEFAULT 1,
     FOREIGN KEY (DeporteId) REFERENCES Deportes(DeporteId),
     FOREIGN KEY (ProvinciaId) REFERENCES Provincias(ProvinciaId),
     FOREIGN KEY (CantonId) REFERENCES Cantones(CantonId),
     FOREIGN KEY (DistritoId) REFERENCES Distritos(DistritoId),
-    FOREIGN KEY (Propietario) REFERENCES Usuarios(UsuarioId)
+    FOREIGN KEY (UsuarioId) REFERENCES Usuarios(UsuarioId)
 );
 
 CREATE TABLE Equipos(
-    EquipoId INT PRIMARY KEY,
-    Nombre VARCHAR(50) NOT NULL,
-    DeporteId INT NOT NULL,
-    CategoriaId INT NOT NULL,
-    Propietario INT NOT NULL,
+    EquipoId BIGINT IDENTITY(1,1) PRIMARY KEY,
+    NombreEquipo VARCHAR(50) NOT NULL,
+    DeporteId BIGINT NOT NULL,
+    CategoriaId BIGINT NOT NULL,
+    UsuarioId BIGINT NOT NULL,
     Estado BIT NOT NULL DEFAULT 1,
     FOREIGN KEY (DeporteId) REFERENCES Deportes(DeporteId),
     FOREIGN KEY (CategoriaId) REFERENCES Categorias(CategoriaId),
-    FOREIGN KEY (Propietario) REFERENCES Usuarios(UsuarioId)
+    FOREIGN KEY (UsuarioId) REFERENCES Usuarios(UsuarioId)
 );
 
 CREATE TABLE Torneos(
-    TorneoId INT PRIMARY KEY,
+    TorneoId BIGINT IDENTITY(1,1) PRIMARY KEY,
+    NombreTorneo VARCHAR(50) NOT NULL,
+    DescripcionTorneo VARCHAR(255) NOT NULL,
     FechaInicio DATE NOT NULL,
     FechaFin DATE NOT NULL,
-    Organizador INT NOT NULL,
+    UsuarioId BIGINT NOT NULL,
+    DeporteId BIGINT NOT NULL,
+    CategoriaId BIGINT NOT NULL,
     Estado BIT NOT NULL DEFAULT 1,
-    FOREIGN KEY (Organizador) REFERENCES Usuarios(UsuarioId)
+    FOREIGN KEY (UsuarioId) REFERENCES Usuarios(UsuarioId),
+    FOREIGN KEY (DeporteId) REFERENCES Deportes(DeporteId),
+    FOREIGN KEY (CategoriaId) REFERENCES Categorias(CategoriaId)
 );
 
 CREATE TABLE ReservacionesCanchas(
-    ReservacionId INT PRIMARY KEY,
-    Fecha DATE NOT NULL,
+    ReservacionId BIGINT IDENTITY(1,1) PRIMARY KEY,
+    FechaReservavion DATE NOT NULL,
     HoraInicio TIME NOT NULL,
     HoraFin TIME NOT NULL,
-    Cancha INT NOT NULL,
-    Solicitante INT NOT NULL,
-    Torneo INT NOT NULL,
+    CanchaId BIGINT NOT NULL,
+    UsuarioId BIGINT NOT NULL,
+    TorneoId BIGINT NOT NULL,
     Estado BIT NOT NULL DEFAULT 1,
-    FOREIGN KEY (Cancha) REFERENCES Canchas(CanchaId),
-    FOREIGN KEY (Solicitante) REFERENCES Usuarios(UsuarioId),
-    FOREIGN KEY (Torneo) REFERENCES Torneos(TorneoId)
+    FOREIGN KEY (CanchaId) REFERENCES Canchas(CanchaId),
+    FOREIGN KEY (UsuarioId) REFERENCES Usuarios(UsuarioId),
+    FOREIGN KEY (TorneoId) REFERENCES Torneos(TorneoId)
 );
 
 CREATE TABLE Facturas(
-    FacturaId INT PRIMARY KEY,
-    Monto INT NOT NULL,
-    FechaHora DATETIME NOT NULL,
-    Comprobante VARCHAR(50) NOT NULL,
-    Reservacion INT NOT NULL,
-    Cliente INT NOT NULL,
-    MetodoPago INT NOT NULL,
+    FacturaId BIGINT IDENTITY(1,1) PRIMARY KEY,
+    Monto DECIMAL(10,2) NOT NULL,
+    FechaHoraFactura DATETIME NOT NULL,
+    Comprobante VARCHAR(MAX),
+    ReservacionId BIGINT NOT NULL,
+    UsuarioId BIGINT NOT NULL,
+    MetodoPagoId BIGINT NOT NULL,
     Estado BIT NOT NULL DEFAULT 1,
-    FOREIGN KEY (Reservacion) REFERENCES ReservacionesCanchas(ReservacionId),
-    FOREIGN KEY (Cliente) REFERENCES Usuarios(UsuarioId),
-    FOREIGN KEY (MetodoPago) REFERENCES MetodosPago(MetodoPagoId)
+    FOREIGN KEY (ReservacionId) REFERENCES ReservacionesCanchas(ReservacionId),
+    FOREIGN KEY (UsuarioId) REFERENCES Usuarios(UsuarioId),
+    FOREIGN KEY (MetodoPagoId) REFERENCES MetodosPago(MetodoPagoId)
 );
 
 -- //////////////////////////////////
 --          TABLAS DE APOYO
 -- //////////////////////////////////
 CREATE TABLE FotosCanchas(
-    Cancha INT NOT NULL,
-    Url VARCHAR(100) NOT NULL,
-    PRIMARY KEY (Cancha, Url),
-    FOREIGN KEY (Cancha) REFERENCES Canchas(CanchaId)
+    CanchaId BIGINT NOT NULL,
+    Url VARCHAR(255) NOT NULL,
+    PRIMARY KEY (CanchaId, Url),
+    FOREIGN KEY (CanchaId) REFERENCES Canchas(CanchaId)
 );
 
 CREATE TABLE HorariosCanchas(
-    Cancha INT NOT NULL,
-    Dia INT NOT NULL,
+    CanchaId BIGINT NOT NULL,
+    DiaId BIGINT NOT NULL,
     HoraApertura TIME NOT NULL,
     HoraCierre TIME NOT NULL,
-    PRIMARY KEY (Cancha, Dia),
-    FOREIGN KEY (Cancha) REFERENCES Canchas(CanchaId),
-    FOREIGN KEY (Dia) REFERENCES Dias(DiaId)
+    PRIMARY KEY (CanchaId, DiaId),
+    FOREIGN KEY (CanchaId) REFERENCES Canchas(CanchaId),
+    FOREIGN KEY (DiaId) REFERENCES Dias(DiaId)
 );
 
 CREATE TABLE ResennasCanchas(
-    Cancha INT NOT NULL,
-    Usuario INT NOT NULL,
+    CanchaId BIGINT NOT NULL,
+    UsuarioId BIGINT NOT NULL,
     Comentario VARCHAR(255) NOT NULL,
     Calificacion INT NOT NULL,
-    PRIMARY KEY (Cancha, Usuario),
-    FOREIGN KEY (Cancha) REFERENCES Canchas(CanchaId),
-    FOREIGN KEY (Usuario) REFERENCES Usuarios(UsuarioId)
+    PRIMARY KEY (CanchaId, UsuarioId),
+    FOREIGN KEY (CanchaId) REFERENCES Canchas(CanchaId),
+    FOREIGN KEY (UsuarioId) REFERENCES Usuarios(UsuarioId)
 );
 
 CREATE TABLE IntegrantesEquipos(
-    Equipo INT NOT NULL,
+    EquipoId BIGINT NOT NULL,
     Cedula VARCHAR(50) NOT NULL,
+    FechaInscripcion DATE NOT NULL,
     Estado BIT NOT NULL DEFAULT 1,
-    PRIMARY KEY (Equipo, Cedula),
-    FOREIGN KEY (Equipo) REFERENCES Equipos(EquipoId)
+    PRIMARY KEY (EquipoId, Cedula),
+    FOREIGN KEY (EquipoId) REFERENCES Equipos(EquipoId)
 );
 
 CREATE TABLE EquiposTorneos(
-    Torneo INT NOT NULL,
-    Equipo INT NOT NULL,
+    TorneoId BIGINT NOT NULL,
+    EquipoId BIGINT NOT NULL,
     FechaInscripcion DATETIME NOT NULL,
-    Deporte INT NOT NULL,
-    Categoria INT NOT NULL,
     Estado BIT NOT NULL DEFAULT 1,
-    PRIMARY KEY (Torneo, Equipo),
-    FOREIGN KEY (Torneo) REFERENCES Torneos(TorneoId),
-    FOREIGN KEY (Equipo) REFERENCES Equipos(EquipoId),
-    FOREIGN KEY (Deporte) REFERENCES Deportes(DeporteId),
-    FOREIGN KEY (Categoria) REFERENCES Categorias(CategoriaId)
+    PRIMARY KEY (TorneoId, EquipoId),
+    FOREIGN KEY (TorneoId) REFERENCES Torneos(TorneoId),
+    FOREIGN KEY (EquipoId) REFERENCES Equipos(EquipoId)
 );
 
 CREATE TABLE ResultadosTorneos(
-    Torneo INT NOT NULL,
+    TorneoId BIGINT NOT NULL,
     NumeroPartida INT NOT NULL,
-    Reservacion INT NOT NULL,
-    Equipo1 INT NOT NULL,
+    ReservacionId BIGINT NOT NULL,
+    EquipoId1 BIGINT NOT NULL,
     PuntosEquipo1 INT NOT NULL,
-    Equipo2 INT NOT NULL,
+    EquipoId2 BIGINT NOT NULL,
     PuntosEquipo2 INT NOT NULL,
     Estado BIT NOT NULL DEFAULT 1,
-    PRIMARY KEY (Torneo, NumeroPartida),
-    FOREIGN KEY (Torneo) REFERENCES Torneos(TorneoId),
-    FOREIGN KEY (Reservacion) REFERENCES ReservacionesCanchas(ReservacionId),
-    FOREIGN KEY (Equipo1) REFERENCES Equipos(EquipoId),
-    FOREIGN KEY (Equipo2) REFERENCES Equipos(EquipoId)
+    PRIMARY KEY (TorneoId, NumeroPartida),
+    FOREIGN KEY (TorneoId) REFERENCES Torneos(TorneoId),
+    FOREIGN KEY (ReservacionId) REFERENCES ReservacionesCanchas(ReservacionId),
+    FOREIGN KEY (EquipoId1) REFERENCES Equipos(EquipoId),
+    FOREIGN KEY (EquipoId2) REFERENCES Equipos(EquipoId)
 );
+
