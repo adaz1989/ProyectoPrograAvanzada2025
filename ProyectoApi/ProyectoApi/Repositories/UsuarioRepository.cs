@@ -16,10 +16,10 @@ namespace ProyectoApi.Repositories
 
         public async Task<(int CodigoError, string Mensaje)> RegistrarUsuario(UsuarioModel model)
         {
-            using var connection = _context.CrearConexion();
+            using var conexion = _context.CrearConexion();
 
             // Crear los parámetros con datos de entrada
-            var parameters = new DynamicParameters(new
+            var parametros = new DynamicParameters(new
             {
                 model.NombreUsuario,
                 model.ApellidosUsuario,
@@ -29,17 +29,17 @@ namespace ProyectoApi.Repositories
             });
 
             // Agregar parámetros de salida
-            parameters.Add("@CodigoError", dbType: DbType.Int32, direction: ParameterDirection.Output);
-            parameters.Add("@Mensaje", dbType: DbType.String, size: 255, direction: ParameterDirection.Output);
+            parametros.Add("@CodigoError", dbType: DbType.Int32, direction: ParameterDirection.Output);
+            parametros.Add("@Mensaje", dbType: DbType.String, size: 255, direction: ParameterDirection.Output);
 
             // Ejecutar el procedimiento
-            await connection.ExecuteAsync("dbo.RegistrarUsuario", parameters, commandType: CommandType.StoredProcedure);
+            await conexion.ExecuteAsync("dbo.RegistrarUsuario", parametros, commandType: CommandType.StoredProcedure);
 
             // Obtener los valores de salida
-            int Exito = parameters.Get<int>("@CodigoError");
-            string Mensaje = parameters.Get<string>("@Mensaje");
+            int CodigoError = parametros.Get<int>("@CodigoError");
+            string Mensaje = parametros.Get<string>("@Mensaje");
 
-            return (Exito, Mensaje);
+            return (CodigoError, Mensaje);
         }
 
         public async Task<UsuarioModel> AutenticarUsuario(UsuarioModel model)
@@ -54,5 +54,50 @@ namespace ProyectoApi.Repositories
 
             return resultado!;
         }
+
+        public async Task<(int CodigoError, string Mensaje)> ActualizarInformacionUsuario(UsuarioModel model)
+        {
+            using var conexion = _context.CrearConexion();
+
+            var parametros = new DynamicParameters(new
+            {
+                model.UsuarioId,
+                model.NombreUsuario,
+                model.ApellidosUsuario,
+                model.TelefonoUsuario
+            });
+
+            parametros.Add("@CodigoError", dbType: DbType.Int32, direction: ParameterDirection.Output);
+            parametros.Add("@Mensaje", dbType: DbType.String, size: 255, direction: ParameterDirection.Output);
+
+            await conexion.ExecuteAsync("dbo.ActualizarInformacionUsuario", parametros, commandType: CommandType.StoredProcedure);
+
+
+            int CodigoError = parametros.Get<int>("@CodigoError");
+            string Mensaje = parametros.Get<string>("@Mensaje");
+
+            return (CodigoError, Mensaje);
+        }
+
+        public async Task<(int CodigoError, string Mensaje)> DeshabilitarUsuario(UsuarioModel model)
+        {
+            using var conexion = _context.CrearConexion();
+
+            var parametros = new DynamicParameters(
+                new
+                {
+                    model.UsuarioId
+                });
+            parametros.Add("@CodigoError", dbType: DbType.Int32, direction: ParameterDirection.Output);
+            parametros.Add("@Mensaje", dbType: DbType.String, size: 255, direction: ParameterDirection.Output);
+
+            await conexion.ExecuteAsync("dbo.DeshabilitarUsuario", parametros, commandType: CommandType.StoredProcedure);
+
+            int CodigoError = parametros.Get<int>("@CodigoError");
+            string Mensaje = parametros.Get<string>("@Mensaje");
+
+            return (CodigoError, Mensaje);
+        }
     }
+    
 }

@@ -16,26 +16,26 @@ namespace ProyectoApi.Services
 
         public async Task<RespuestaModel> RegistrarUsuario(UsuarioModel model)
         {
-            var(CodigoError, Mensaje) = await _usuarioRepository.RegistrarUsuario(model);
-            
-            var respuesta = new RespuestaModel
-            {
-                Exito = true,
-                Mensaje = Mensaje
-            };
+            var (CodigoError, Mensaje) = await _usuarioRepository.RegistrarUsuario(model);
 
-            if (CodigoError != 0) respuesta.Exito = false;
-            //if (CodigoError == 2) respuesta.Mensaje = "Error inesperado en la base de datos";
-            
-            return respuesta;
+            return CodigoError switch
+            {
+                0 => new RespuestaModel { Exito = true, Mensaje = Mensaje },
+                1 => new RespuestaModel { Exito = false, Mensaje = Mensaje },
+                _ => new RespuestaModel
+                {
+                    Exito = false,
+                    Mensaje = "Error inesperado en la base de datos"
+                }
+            };
         }
 
         public async Task<RespuestaModel> AutenticarUsuario(UsuarioModel model)
         {
             var resultado = await _usuarioRepository.AutenticarUsuario(model);
-            var respuesta = new RespuestaModel();            
+            var respuesta = new RespuestaModel();
 
-            if(resultado != null)
+            if (resultado != null)
             {
                 resultado.Token = _jwtService.GenerarToken(resultado.UsuarioId, resultado.DescripcionTipoUsuario!);
 
@@ -49,5 +49,36 @@ namespace ProyectoApi.Services
             }
             return (respuesta);
         }
-    }
+
+
+        public async Task<RespuestaModel> ActualizarInformacionUsuario(UsuarioModel model)
+        {
+            var (CodigoError, Mensaje) = await _usuarioRepository.ActualizarInformacionUsuario(model);
+
+            return CodigoError switch
+            {
+                0 => new RespuestaModel { Exito = true, Mensaje = Mensaje },
+                1 => new RespuestaModel { Exito = false, Mensaje = Mensaje },
+                _ => new RespuestaModel { Exito = false, Mensaje = "Error inesperado en la base de datos"
+                }
+            };
+
+        }
+
+        public async Task<RespuestaModel> DeshabilitarUsuario(UsuarioModel model)
+            {
+                var (CodigoError, Mensaje) = await _usuarioRepository.DeshabilitarUsuario(model);
+
+                return CodigoError switch
+                {
+                    0 => new RespuestaModel { Exito = true, Mensaje = Mensaje },
+                    1 => new RespuestaModel { Exito = false, Mensaje = Mensaje },
+                    _ => new RespuestaModel
+                    {
+                        Exito = false,
+                        Mensaje = "Error inesperado en la base de datos"
+                    }
+                };
+            }
+        }
 }

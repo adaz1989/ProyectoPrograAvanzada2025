@@ -49,7 +49,7 @@ BEGIN
 
     END TRY
     BEGIN CATCH
-        -- Manejo de errores internos de SQL Server
+        
         SET @CodigoError = 2
         SET @Mensaje = ERROR_MESSAGE()
     END CATCH
@@ -73,3 +73,6 @@ SELECT UsuarioId, NombreUsuario, DescripcionTipoUsuario
 	WHERE @CorreoUsuario = CorreoUsuario
 	AND @Contrasenna = Contrasenna
 END
+
+
+

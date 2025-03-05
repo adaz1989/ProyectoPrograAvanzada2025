@@ -4,7 +4,7 @@
     {
         public Task<RespuestaModel> RegistrarUsuario(UsuarioModel usuario);
         public Task<RespuestaModel> AutenticarUsuario(UsuarioModel model);
-        //public Task<RespuestaModel> ActualizarUsuario(UsuarioModel usuario);
-        //public Task<RespuestaModel> InactivarUsuario(long usuarioId);
+        public Task<RespuestaModel> ActualizarInformacionUsuario(UsuarioModel model);
+        public Task<RespuestaModel> DeshabilitarUsuario(UsuarioModel model);
     }
 }
