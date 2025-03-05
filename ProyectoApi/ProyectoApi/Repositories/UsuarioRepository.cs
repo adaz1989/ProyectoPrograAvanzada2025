@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using Dapper;
+using Microsoft.AspNetCore.Http.HttpResults;
 using ProyectoApi.Data;
 
 namespace ProyectoApi.Repositories
@@ -39,6 +40,19 @@ namespace ProyectoApi.Repositories
             string Mensaje = parameters.Get<string>("@Mensaje");
 
             return (Exito, Mensaje);
+        }
+
+        public async Task<UsuarioModel> AutenticarUsuario(UsuarioModel model)
+        {
+            using var coneccion = _context.CrearConexion();
+
+            var resultado = await coneccion.QueryFirstOrDefaultAsync<UsuarioModel>(
+                "AutenticarUsuario",
+                new { model.CorreoUsuario, model.Contrasenna },
+                commandType: CommandType.StoredProcedure
+            );
+
+            return resultado!;
         }
     }
 }

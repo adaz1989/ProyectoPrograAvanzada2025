@@ -24,5 +24,13 @@ namespace ProyectoApi.Controllers
             var respuesta = await _usuarioService.RegistrarUsuario(model);
             return Ok(respuesta);
         }
+
+        [HttpPost]
+        [Route("IniciarSesion")]
+        public async Task<IActionResult> IniciarSesion(UsuarioModel model)
+        {
+            var respuesta = await _usuarioService.AutenticarUsuario(model);
+            return Ok(respuesta);
+        }
     }
 }

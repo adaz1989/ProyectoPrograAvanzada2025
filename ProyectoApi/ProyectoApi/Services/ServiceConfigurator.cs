@@ -48,30 +48,27 @@ namespace ProyectoApi.Services
         }
 
         private static void ConfigureAuthentication(WebApplicationBuilder builder)
-        {
-            string SecretKey = builder.Configuration.GetSection("Variables:llaveToken").Value!;
-            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
-            {
-                options.TokenValidationParameters = new TokenValidationParameters
+        {            
+            string secretKey = builder.Configuration.GetSection("Variables:llaveToken").Value!;
+
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
                 {
-                    ValidateAudience = false,
-                    ValidateIssuer = false,
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(
-                            Encoding.UTF8.GetBytes(SecretKey)),
-                    ValidateLifetime = true,
-                    LifetimeValidator = (DateTime? notBefore, DateTime? expires,
-                        SecurityToken securityToken,
-                        TokenValidationParameters validationParameters) =>
-                    {
-                        if (expires != null)
-                        {
-                            return expires > DateTime.UtcNow;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {                        
+                        ValidateAudience = false,
+                        ValidateIssuer = false,
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),                                                
+                        ValidateLifetime = true,
+                        LifetimeValidator = (DateTime? notBefore, DateTime? expires,
+                            SecurityToken securityToken,
+                            TokenValidationParameters validationParameters) =>
+                        {                            
+                            return expires.HasValue && expires.Value > DateTime.UtcNow;
                         }
-                        return false;
-                    }
-                };
-            });
+                    };
+                });
         }
 
         private static void RegisterServices(WebApplicationBuilder builder)
@@ -79,6 +76,7 @@ namespace ProyectoApi.Services
             builder.Services.AddScoped<IDapperContext, DapperContext>();
             builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+            builder.Services.AddScoped<IJwtService, JwtService>();
         }
     }
 }

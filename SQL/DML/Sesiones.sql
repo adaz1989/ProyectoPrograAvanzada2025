@@ -1,5 +1,7 @@
 
-
+-- ===============================================================
+--                REGISTRAR USUARIO
+-- ===============================================================
 CREATE or ALTER PROCEDURE dbo.RegistrarUsuario 
     @NombreUsuario VARCHAR(50),
     @ApellidosUsuario VARCHAR(100),
@@ -55,3 +57,19 @@ END
 GO
 
 
+-- ===============================================================
+--                INICIO SESION
+-- ===============================================================
+
+CREATE OR ALTER PROCEDURE AutenticarUsuario
+	@CorreoUsuario VARCHAR(50),
+	@Contrasenna VARCHAR(50)
+AS
+BEGIN
+
+SELECT UsuarioId, NombreUsuario, DescripcionTipoUsuario
+	FROM dbo.Usuarios u
+	INNER JOIN dbo.TipoUsuario t ON u.TipoUsuarioId = t.TipoUsuarioId
+	WHERE @CorreoUsuario = CorreoUsuario
+	AND @Contrasenna = Contrasenna
+END
