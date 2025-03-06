@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.Http.HttpResults;
-
-namespace ProyectoApi.Services
+﻿namespace ProyectoApi.Services
 {
     public class UsuarioService : IUsuarioService
     {
@@ -65,20 +62,41 @@ namespace ProyectoApi.Services
 
         }
 
-        public async Task<RespuestaModel> DeshabilitarUsuario(UsuarioModel model)
-            {
-                var (CodigoError, Mensaje) = await _usuarioRepository.DeshabilitarUsuario(model);
+        public async Task<RespuestaModel> DeshabilitarUsuario(int usuarioId)
+        {
+            var (CodigoError, Mensaje) = await _usuarioRepository.DeshabilitarUsuario(usuarioId);
 
-                return CodigoError switch
+            return CodigoError switch
+            {
+                0 => new RespuestaModel { Exito = true, Mensaje = Mensaje },
+                1 => new RespuestaModel { Exito = false, Mensaje = Mensaje },
+                _ => new RespuestaModel
                 {
-                    0 => new RespuestaModel { Exito = true, Mensaje = Mensaje },
-                    1 => new RespuestaModel { Exito = false, Mensaje = Mensaje },
-                    _ => new RespuestaModel
-                    {
-                        Exito = false,
-                        Mensaje = "Error inesperado en la base de datos"
-                    }
-                };
-            }
+                    Exito = false,
+                    Mensaje = "Error inesperado en la base de datos"
+                }
+            };
         }
+
+        public async Task<RespuestaModel> ObtenerInformacionUsuario(int usuarioId)
+        {
+            var resultado = await _usuarioRepository.ObtenerPerfilUsuario(usuarioId);
+
+            var respuesta = new RespuestaModel();
+
+            if (resultado != null)
+            {
+                respuesta.Exito = true;
+                respuesta.Datos = resultado;
+            }
+            else
+            {
+                respuesta.Exito = false;
+                respuesta.Mensaje = "No se encontro un usuario valido con ese Id";
+            }
+            return (respuesta);
+
+        }
+    }
+
 }

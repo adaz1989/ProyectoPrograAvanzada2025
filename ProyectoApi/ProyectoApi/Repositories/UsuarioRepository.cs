@@ -1,6 +1,5 @@
 ﻿using System.Data;
 using Dapper;
-using Microsoft.AspNetCore.Http.HttpResults;
 using ProyectoApi.Data;
 
 namespace ProyectoApi.Repositories
@@ -13,7 +12,7 @@ namespace ProyectoApi.Repositories
         {
             _context = dapperContext;
         }
-
+        
         public async Task<(int CodigoError, string Mensaje)> RegistrarUsuario(UsuarioModel model)
         {
             using var conexion = _context.CrearConexion();
@@ -79,14 +78,14 @@ namespace ProyectoApi.Repositories
             return (CodigoError, Mensaje);
         }
 
-        public async Task<(int CodigoError, string Mensaje)> DeshabilitarUsuario(UsuarioModel model)
+        public async Task<(int CodigoError, string Mensaje)> DeshabilitarUsuario(int UsuarioId)
         {
             using var conexion = _context.CrearConexion();
 
             var parametros = new DynamicParameters(
                 new
                 {
-                    model.UsuarioId
+                    UsuarioId
                 });
             parametros.Add("@CodigoError", dbType: DbType.Int32, direction: ParameterDirection.Output);
             parametros.Add("@Mensaje", dbType: DbType.String, size: 255, direction: ParameterDirection.Output);
@@ -98,6 +97,20 @@ namespace ProyectoApi.Repositories
 
             return (CodigoError, Mensaje);
         }
+
+        public async Task<UsuarioModel> ObtenerPerfilUsuario(int UsuarioId)
+        {
+            using var conexion = _context.CrearConexion();
+
+            var resultado = await conexion.QueryFirstOrDefaultAsync<UsuarioModel>(
+                "ObtenerPerfilUsuario",
+                new { UsuarioId },
+                commandType: CommandType.StoredProcedure
+            );
+
+            return resultado!;
+        }
     }
-    
 }
+    
+

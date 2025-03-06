@@ -72,6 +72,7 @@ SELECT UsuarioId, NombreUsuario, DescripcionTipoUsuario
 	INNER JOIN dbo.TipoUsuario t ON u.TipoUsuarioId = t.TipoUsuarioId
 	WHERE @CorreoUsuario = CorreoUsuario
 	AND @Contrasenna = Contrasenna
+    AND Estado = 1
 END
 
 

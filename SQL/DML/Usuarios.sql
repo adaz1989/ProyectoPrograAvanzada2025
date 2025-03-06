@@ -41,7 +41,8 @@ BEGIN
            SET NombreUsuario    = @NombreUsuario,
                ApellidosUsuario = @ApellidosUsuario,
                TelefonoUsuario  = @TelefonoUsuario
-         WHERE UsuarioId = @UsuarioId;
+            WHERE UsuarioId = @UsuarioId
+            AND Estado = 1;
 
         -- Verificar si realmente se modificó alguna fila
         IF @@ROWCOUNT = 0
@@ -106,3 +107,23 @@ BEGIN
         SET @Mensaje = ERROR_MESSAGE();
     END CATCH
 END;
+
+
+-- ===============================================================
+--                OBTENER INFORMACION USUARIO
+-- ===============================================================
+
+CREATE OR ALTER PROCEDURE dbo.ObtenerPerfilUsuario
+	@UsuarioId BIGINT
+AS
+BEGIN
+
+SELECT UsuarioId, NombreUsuario, ApellidosUsuario, CorreoUsuario, TelefonoUsuario
+  FROM dbo.Usuarios
+  WHERE @UsuarioId = UsuarioId
+  AND Estado = 1
+
+END
+GO
+
+
