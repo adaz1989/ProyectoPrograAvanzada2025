@@ -14,7 +14,7 @@ namespace ProyectoDeportivoCR.Services
             _usuarioRepositorie = usuarioRepositorie;
         }
 
-        public async Task<RespuestaModel<UsuarioModel>> IniciarSesion(UsuarioModel model)
+        public async Task<Respuesta2Model<UsuarioModel>> IniciarSesion(UsuarioModel model)
         {
             // *** cuando registro este listo se puede descomentar ***
             //model.Contrasenna = _encriptacion.Encriptar(model.Contrasenna!);
@@ -24,13 +24,13 @@ namespace ProyectoDeportivoCR.Services
             if (response.IsSuccessStatusCode)
             {
                 // Primero, deserializamos como objeto base
-                var resultJson = await response.Content.ReadFromJsonAsync<RespuestaModel<JsonElement>>();
+                var resultJson = await response.Content.ReadFromJsonAsync<Respuesta2Model<JsonElement>>();
 
                 if (resultJson != null && resultJson.Exito)
                 {
                     // Ahora sí, solo deserializamos los datos si Exito es true
                     var datos = JsonSerializer.Deserialize<UsuarioModel>(resultJson.Datos!.ToString()!);
-                    return new RespuestaModel<UsuarioModel>
+                    return new Respuesta2Model<UsuarioModel>
                     {
                         Exito = true,
                         Datos = datos,
@@ -39,7 +39,7 @@ namespace ProyectoDeportivoCR.Services
                 }
 
                 // Exito == false, devolvemos solo mensaje
-                return new RespuestaModel<UsuarioModel>
+                return new Respuesta2Model<UsuarioModel>
                 {
                     Exito = false,
                     Mensaje = resultJson?.Mensaje
@@ -47,7 +47,7 @@ namespace ProyectoDeportivoCR.Services
             }
 
             // Si la API no respondió bien
-            return new RespuestaModel<UsuarioModel>
+            return new Respuesta2Model<UsuarioModel>
             {
                 Exito = false,
                 Mensaje = "Error al comunicarse con la API."
