@@ -3,6 +3,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddScoped<IEncriptacionService, EncriptacionService>();
+builder.Services.AddScoped<IUsuarioRepositorie, UsuarioRepositorie>();
+builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+
+builder.Services.AddSession();
+builder.Services.AddHttpClient();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -13,6 +20,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseSession();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 

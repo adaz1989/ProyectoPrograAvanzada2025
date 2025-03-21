@@ -14,17 +14,17 @@
                         </div>
                     </div>
                     <div class="card-form card-form-login">
-                        <form class="rd-form rd-mailform" method="post" action="@Url.Action("Principal", "Login")" novalidate="novalidate">
+                        <form class="rd-form rd-mailform" method="post" asp-controller="Login" asp-action="IniciarSesion">
                             <div class="form-wrap">
-                                <p>Usuario.</p>
+                                <p>Correo.</p>
                                 <label class="form-label rd-input-label" for="form-login-name-1"></label>
-                                <input class="form-input form-control-has-validation form-control-last-child" id="form-login-name-1" type="text" name="username" required>
+                                <input class="form-input form-control-has-validation form-control-last-child" id="form-login-name-1" type="text" name="CorreoUsuario" required>
                                 <span class="form-validation"></span>
                             </div>
                             <div class="form-wrap">
                                 <p>Contraseña.</p>
                                 <label class="form-label rd-input-label" for="form-login-password-1"></label>
-                                <input class="form-input form-control-has-validation form-control-last-child" id="form-login-password-1" type="password" name="password" required>
+                                <input class="form-input form-control-has-validation form-control-last-child" id="form-login-password-1" type="password" name="Contrasenna" required>
                                 <span class="form-validation"></span>
                             </div>
 
@@ -33,28 +33,7 @@
                     </div>
 
 
-                    @* <div class="card-form card-form-register">
-                        <form class="rd-form rd-mailform" data-form-output="form-output-global" data-form-type="contact" method="post" action="bat/rd-mailform.php" novalidate="novalidate">
-                            <div class="form-wrap">
-                                <label class="form-label rd-input-label" for="form-register-email">E-mail</label>
-                                <input class="form-input form-control-has-validation form-control-last-child" id="form-register-email" type="email" name="email" required><span class="form-validation"></span>
-                            </div>
-                            <div class="form-wrap">
-                                <label class="form-label rd-input-label" for="form-login-name-2">Login</label>
-                                <input class="form-input form-control-has-validation form-control-last-child" id="form-login-name-2" type="text" name="form-input" required><span class="form-validation"></span>
-                            </div>
-                            <div class="form-wrap">
-                                <label class="form-label rd-input-label" for="form-login-password-2">Password</label>
-                                <input class="form-input form-control-has-validation form-control-last-child" id="form-login-password-2" type="password" name="password" required><span class="form-validation"></span>
-                            </div>
-                            <div class="form-wrap">
-                                <label class="form-label rd-input-label" for="form-login-password-3">Repeat Password</label>
-                                <input class="form-input form-control-has-validation form-control-last-child" id="form-login-password-3" type="password" name="password" required><span class="form-validation"></span>
-                            </div>
-                            <button class="button button-lg button-primary button-block" type="submit">Create new account</button>
-                        </form>
-                        <div class="group-sm group-sm-justify group-middle"><a class="button button-google button-icon button-icon-left button-round" href="#"><span class="icon fa fa-google-plus"></span><span>Google+</span></a><a class="button button-twitter button-icon button-icon-left button-round" href="#"><span class="icon fa fa-twitter"></span><span>Twitter</span></a><a class="button button-facebook button-icon button-icon-left button-round" href="#"><span class="icon fa fa-facebook"></span><span>Facebook</span></a></div>
-                    </div> *@
+                    
                 </div>
             </div>
         </div>

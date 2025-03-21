@@ -9,6 +9,7 @@ CREATE or ALTER PROCEDURE dbo.RegistrarUsuario
     @TelefonoUsuario VARCHAR(50),
     @Contrasenna VARCHAR(100),
     @Estado BIT = 1,
+    
     @CodigoError INT OUTPUT,
     @Mensaje VARCHAR(255) OUTPUT
 AS
