@@ -12,7 +12,7 @@
 
 
 -- ===============================================================
---                ACTUALIZAR INFORMACION CANCHA
+--                OBTENER INFORMACION CANCHA / Filtrado por ubicacion
 -- ===============================================================
 
 
