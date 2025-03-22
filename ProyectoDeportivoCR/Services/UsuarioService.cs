@@ -1,5 +1,7 @@
 ﻿using System.Security.Cryptography.Xml;
 using System.Text.Json;
+using ProyectoDeportivoCR.Services.Extensions;
+
 
 namespace ProyectoDeportivoCR.Services
 {
@@ -16,50 +18,39 @@ namespace ProyectoDeportivoCR.Services
 
         public async Task<Respuesta2Model<UsuarioModel>> IniciarSesion(UsuarioModel model)
         {
-            // *** cuando registro este listo se puede descomentar ***
-            //model.Contrasenna = _encriptacion.Encriptar(model.Contrasenna!);
+            model.Contrasenna = _encriptacion.Encriptar(model.Contrasenna!);
 
-            var response = await _usuarioRepositorie.IniciarSesion(model);
+            var respuesta = await _usuarioRepositorie.IniciarSesion(model);
 
-            if (response.IsSuccessStatusCode)
+            if (respuesta.IsSuccessStatusCode)
             {
-                // Primero, deserializamos como objeto base
-                var resultJson = await response.Content.ReadFromJsonAsync<Respuesta2Model<JsonElement>>();
-
-                if (resultJson != null && resultJson.Exito)
-                {
-                    // Ahora sí, solo deserializamos los datos si Exito es true
-                    var datos = JsonSerializer.Deserialize<UsuarioModel>(resultJson.Datos!.ToString()!);
-                    return new Respuesta2Model<UsuarioModel>
-                    {
-                        Exito = true,
-                        Datos = datos,
-                        Mensaje = resultJson.Mensaje
-                    };
-                }
-
-                // Exito == false, devolvemos solo mensaje
-                return new Respuesta2Model<UsuarioModel>
-                {
-                    Exito = false,
-                    Mensaje = resultJson?.Mensaje
-                };
+                return await respuesta.LeerRespuesta2Model<UsuarioModel>();
             }
 
-            // Si la API no respondió bien
+            return new Respuesta2Model<UsuarioModel>
+            {
+                Exito = false,
+                Mensaje = "Error de comunicación con la API."
+            };
+        }
+
+        public async Task<Respuesta2Model<UsuarioModel>> RegistrarUsuario(UsuarioModel model)
+        {
+            model.Contrasenna = _encriptacion.Encriptar(model.Contrasenna!);
+
+            var respuesta = await _usuarioRepositorie.RegistrarUsuario(model);
+
+            if (respuesta.IsSuccessStatusCode)
+            {
+                return await respuesta.LeerRespuesta2Model<UsuarioModel>();
+            }
+
             return new Respuesta2Model<UsuarioModel>
             {
                 Exito = false,
                 Mensaje = "Error al comunicarse con la API."
             };
-        }
 
-
-        //public async Task<bool> RegistrarUsuario(UsuarioModel model)
-        //{
-        //    model.Contrasenna = _encriptacion.Encriptar(model.Contrasenna!);
-
-        //    return await _usuarioRepositorie.RegistrarUsuario(model);
-        //}
+        }        
     }
 }
