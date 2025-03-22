@@ -1,9 +1,4 @@
-﻿using System.Net.Http;
-using System.Text.Json;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-
-
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace ProyectoDeportivoCR.Controllers
 {
@@ -61,9 +56,9 @@ namespace ProyectoDeportivoCR.Controllers
         }
 
 
-        public IActionResult Principal(string username, string password)
-        {
-            return RedirectToAction("Index", "Home");
-        }
+        //public IActionResult Principal(string username, string password)
+        //{
+        //    return RedirectToAction("Index", "Home");
+        //}
     }
 }
