@@ -5,12 +5,18 @@ using Swashbuckle.AspNetCore.Filters;
 using System.Text;
 
 using ProyectoApi.Configuration.App;
+using ProyectoApi.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.PropertyNamingPolicy = null);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<IDapperContext, DapperContext>();
+builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+builder.Services.AddScoped<IJwtService, JwtService>();
 
 builder.Services.AddSwaggerGen(options =>
 {
