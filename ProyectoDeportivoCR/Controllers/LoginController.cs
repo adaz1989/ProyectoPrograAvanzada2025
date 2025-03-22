@@ -1,7 +1,4 @@
-﻿using System.Net.Http;
-using System.Text.Json;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace ProyectoDeportivoCR.Controllers
 {
@@ -17,27 +14,23 @@ namespace ProyectoDeportivoCR.Controllers
             _encriptacion = encriptacion;
         }
 
+        [HttpGet]
+        public IActionResult RegistrarUsuario()
+        {
+            return View();
+        }
 
-        //[HttpGet]
-        //public IActionResult RegistrarUsuario()
-        //{
-        //    return View();
-        //}
+        [HttpPost]
+        public async Task<IActionResult> RegistrarUsuario(UsuarioModel model)
+        {
+            var resultado = await _usuarioService.RegistrarUsuario(model);
 
-        //[HttpPost]
-        //public async Task<IActionResult> RegistrarUsuario(UsuarioModel model)
-        //{
-        //    var resultado = await _usuarioService.RegistrarUsuario(model);
+            ViewBag.Mensaje = resultado.Mensaje;
 
-        //    if(resultado)
-        //    {
-        //        ViewBag.mensaje = "Usuario registrado correctamente";
-        //        return RedirectToAction("IniciarSesion");
-        //    }
+            if (resultado.Exito) return RedirectToAction("IniciarSesion");
 
-        //    ViewBag.mensaje = "Error al registrar el usuario";
-        //    return View();
-        //}
+            return View();
+        }
 
         public IActionResult IniciarSesion()
         {
@@ -63,9 +56,9 @@ namespace ProyectoDeportivoCR.Controllers
         }
 
 
-        public IActionResult Principal(string username, string password)
-        {
-            return RedirectToAction("Index", "Home");
-        }
+        //public IActionResult Principal(string username, string password)
+        //{
+        //    return RedirectToAction("Index", "Home");
+        //}
     }
 }

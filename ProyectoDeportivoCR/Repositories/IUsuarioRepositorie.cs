@@ -4,6 +4,6 @@
     {
 
         public Task<HttpResponseMessage> IniciarSesion(UsuarioModel model);
-        //public Task<bool?> RegistrarUsuario(UsuarioModel model);
+        public Task<HttpResponseMessage> RegistrarUsuario(UsuarioModel model);
     }
 }
