@@ -27,7 +27,9 @@ namespace ProyectoDeportivoCR.Repositories
         {
             using var http = _httpClient.CreateClient();
             var url = _apiEndpoints["IniciarSesion"];
-            return await http.PostAsJsonAsync(url, model);
+            var response = await http.PostAsJsonAsync(url, model);
+            return response;
+            //return await http.PostAsJsonAsync(url, model);
 
         }
 
