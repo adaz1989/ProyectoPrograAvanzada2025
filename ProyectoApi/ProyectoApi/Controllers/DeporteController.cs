@@ -26,7 +26,8 @@ namespace ProyectoApi.Controllers
             return Ok(respuesta);
         }
 
-        [HttpDelete]
+
+        [HttpPut]
         [Route("EliminarDeporte/{deporteId}")]
         public async Task<IActionResult> EliminarDeporte(long deporteId)
         {

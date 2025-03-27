@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ProyectoApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class EquipoController : ControllerBase
@@ -17,7 +19,7 @@ namespace ProyectoApi.Controllers
         }
 
         [HttpPut]
-        [Route("RegistrarEquipo)]
+        [Route("RegistrarEquipo")]
         public async Task<IActionResult> RegistrarEquipo(EquipoModel model)
         {
             var respuesta = await _equipoService.RegistrarEquipo(model);
