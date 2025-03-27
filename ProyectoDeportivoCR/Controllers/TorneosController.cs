@@ -18,6 +18,14 @@ namespace ProyectoDeportivoCR.Controllers
 
         public IActionResult ConsultarTorneos()
         {
+            var datosResult = _general.ConsultarDatosTorneos(0);
+
+            var torneosActuales = datosResult.Where(t => t.FechaInicio <= DateTime.Now).ToList();
+            var torneosFuturos = datosResult.Where(t => t.FechaInicio > DateTime.Now).ToList();
+
+            ViewData["TorneosActuales"] = torneosActuales;
+            ViewData["TorneosFuturos"] = torneosFuturos;
+
             return View();
         }
     }

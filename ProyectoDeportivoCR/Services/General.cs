@@ -18,27 +18,38 @@ namespace ProyectoDeportivoCR.Services
             _contextAccessor = contextAccessor;
         }
 
-        public List<TorneosModel> ConsultarDatosTorneos(long Id)
+        public List<TorneoModel> ConsultarDatosTorneos(long TorneoId)
         {
             using (var http = _httpClient.CreateClient())
             {
-                var url = _configuration.GetSection("Variables:urlWebApi").Value + "Torneos/ConsultarTorneos?Id=" + Id;
+                var url = _configuration.GetSection("Variables:urlWebApi").Value + "Torneos/ConsultarTorneos?TorneoId=" + TorneoId;
 
-                http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _contextAccessor.HttpContext?.Session.GetString("Token"));
+                Console.WriteLine("URL generada: " + url);
+
+                // http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _contextAccessor.HttpContext?.Session.GetString("Token"));
                 var response = http.GetAsync(url).Result;
+
+                Console.WriteLine("Código de estado: " + response.StatusCode);
 
                 if (response.IsSuccessStatusCode)
                 {
+
                     var result = response.Content.ReadFromJsonAsync<RespuestaModel>().Result;
 
+                    return JsonSerializer.Deserialize<List<TorneoModel>>((JsonElement)result.Datos!)!;
+
+                    
+                    /*
                     if (result != null && result.Indicador)
                     {
-                        return JsonSerializer.Deserialize<List<TorneosModel>>((JsonElement)result.Datos!)!;
-                    }
+                        return JsonSerializer.Deserialize<List<TorneoModel>>((JsonElement)result.Datos!)!;
+                    } */
+
                 }
 
-                return new List<TorneosModel>();
+                return new List<TorneoModel>();
             }
         }
+
     }
 }
