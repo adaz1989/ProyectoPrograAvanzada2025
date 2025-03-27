@@ -6,8 +6,9 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient();
 builder.Services.AddSession();
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddScoped<ITorneoService, TorneoService>();
 
+
+builder.Services.AddScoped<ITorneoService, TorneoService>();
 builder.Services.AddScoped<IEncriptacionService, EncriptacionService>();
 builder.Services.AddScoped<IUsuarioRepositorie, UsuarioRepositorie>();
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();

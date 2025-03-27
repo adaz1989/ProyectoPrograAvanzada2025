@@ -5,7 +5,9 @@ namespace ProyectoApi.Models
     public class IntegranteEquipoModel
     {
         public long EquipoId { get; set; }
-        [StringLength(50)]
+        public int Rol { get; set; }
+
+        [StringLength(09)]
         public string? Cedula { get; set; }
 
         public DateOnly FechaInscripcion { get; set; }
