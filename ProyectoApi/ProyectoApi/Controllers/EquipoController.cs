@@ -9,22 +9,22 @@ namespace ProyectoApi.Controllers
     //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class IntegranteEquipoController : Controller
+    public class EquipoController : Controller
     {
         private readonly IConfiguration _configuration;
 
-        public IntegranteEquipoController (IConfiguration configuration)
+        public EquipoController (IConfiguration configuration)
         {
             _configuration = configuration;
         }
 
         [HttpPost]
-        [Route("RegistrarIntegranteEquipo")]
-        public IActionResult RegistrarIntegranteEquipo(IntegranteEquipoModel model)
+        [Route("RegistrarEquipo")]
+        public IActionResult RegistrarEquipo(EquipoModel model)
         {
             using (var context = new SqlConnection(_configuration.GetSection("ConnectionStrings:BDConnection").Value))
             {
-                var result = context.Execute("RegistrarIntegranteEquipo",
+                var result = context.Execute("RegistrarEquipo",
                     new { model.EquipoId, model.Cedula, model.Rol });
 
                 var respuesta = new RespuestaModel();

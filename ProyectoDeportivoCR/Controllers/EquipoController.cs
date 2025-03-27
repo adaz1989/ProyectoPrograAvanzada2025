@@ -3,21 +3,21 @@ using System.Net.Http.Headers;
 
 namespace ProyectoDeportivoCR.Controllers
 {
-    public class IntegranteEquipoController : Controller
+    public class EquipoController : Controller
     {
         private readonly IHttpClientFactory _httpClient;
         private readonly IConfiguration _configuration;
 
-        public IntegranteEquipoController(IHttpClientFactory httpClient, IConfiguration configuration)
+        public EquipoController(IHttpClientFactory httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
             _configuration = configuration;
         }
 
         [HttpGet]
-        public IActionResult RegistrarIntegranteEquipo(long torneoId)
+        public IActionResult RegistrarEquipo(long torneoId)
         {
-            var model = new IntegranteEquipoModel
+            var model = new EquipoModel
             {
                 EquipoId = torneoId
             };
@@ -26,11 +26,11 @@ namespace ProyectoDeportivoCR.Controllers
         }
 
         [HttpPost]
-        public IActionResult RegistrarIntegranteEquipo(IntegranteEquipoModel model)
+        public IActionResult RegistrarEquipo(EquipoModel model)
         {
             using (var http = _httpClient.CreateClient())
             {
-                var url = _configuration.GetSection("Variables:urlWebApi").Value + "IntegranteEquipo/RegistrarIntegranteEquipo";
+                var url = _configuration.GetSection("Variables:urlWebApi").Value + "Equipo/RegistrarEquipo";
 
                 // http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
                 var response = http.PostAsJsonAsync(url, model).Result;

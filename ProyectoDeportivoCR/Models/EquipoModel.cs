@@ -2,7 +2,7 @@
 
 namespace ProyectoDeportivoCR.Models
 {
-    public class IntegranteEquipoModel
+    public class EquipoModel
     {
         public long EquipoId { get; set; }
         public int Rol { get; set; }
