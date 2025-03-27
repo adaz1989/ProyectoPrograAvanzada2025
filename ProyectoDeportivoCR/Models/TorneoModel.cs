@@ -2,7 +2,7 @@
 
 namespace ProyectoDeportivoCR.Models
 {
-    public class TorneosModel
+    public class TorneoModel
     {
         public long TorneoId { get; set; }
         [StringLength(50)]

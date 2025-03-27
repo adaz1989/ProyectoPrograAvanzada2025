@@ -1,0 +1,101 @@
+﻿@{
+    var torneosActuales = ViewData["TorneosActuales"] as List<TorneoModel>;
+    var torneosFuturos = ViewData["TorneosFuturos"] as List<TorneoModel>;
+}
+
+<div class="container">
+    <h1 class="text-center my-4">Torneos</h1>
+
+    <div class="table-responsive">
+        <div>
+            <h2 class="text-center">TORNEOS ACTUALES</h2>
+
+            <table class="table table-striped table-hover text-center">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Imagen</th>
+                        <th>Nombre</th>
+                        <th>Deporte</th>
+                        <th>Categoria</th>
+                        <th>Fecha Fin</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (torneosActuales != null && torneosActuales.Any())
+                    {
+                        @foreach (var item in torneosActuales)
+                        {
+                            <tr>
+                                <td></td>
+                                <td>@item.NombreTorneo</td>
+                                <td>@item.NombreDeporte</td>
+                                <td>@item.NombreCategoria</td>
+                                <td>@item.FechaFin</td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="6">
+                                Actualmente no hay torneos registrados,
+                                pero puedes seguir nuestra agenda de futuros torneos.
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <div>
+            <h2 class="text-center">FUTUROS TORNEOS</h2>
+
+            <table class="table table-striped table-hover text-center">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Imagen</th>
+                        <th>Nombre</th>
+                        <th>Deporte</th>
+                        <th>Categoria</th>
+                        <th>Fecha Inicio</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (torneosFuturos != null && torneosFuturos.Any())
+                    {
+                        @foreach (var item in torneosFuturos)
+                        {
+                            <tr>
+                                <td></td>
+                                <td>@item.NombreTorneo</td>
+                                <td>@item.NombreDeporte</td>
+                                <td>@item.NombreCategoria</td>
+                                <td>@item.FechaInicio</td>
+                                <td>
+                                    <a asp-controller="EquipoTorneo"
+                                       asp-action="RegistrarEquipo"
+                                       asp-route-torneoId="@item.TorneoId"
+                                       class="btn btn-primary btn-sm">
+                                        Registrar Equipo
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="6">
+                                Actualmente no hay torneos registrados para el futuro,
+                                pero asegúrate de revisar nuestro sitio para no perderte de noticias.
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

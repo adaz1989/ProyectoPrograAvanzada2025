@@ -7,9 +7,9 @@ namespace ProyectoDeportivoCR.Controllers
     {
         private readonly IHttpClientFactory _httpClient;
         private readonly IConfiguration _configuration;
-        private readonly IGeneral _general;
+        private readonly ITorneoService _general;
 
-        public TorneosController(IHttpClientFactory httpClient, IConfiguration configuration, IGeneral general)
+        public TorneosController(IHttpClientFactory httpClient, IConfiguration configuration, ITorneoService general)
         {
             _httpClient = httpClient;
             _configuration = configuration;
@@ -18,6 +18,14 @@ namespace ProyectoDeportivoCR.Controllers
 
         public IActionResult ConsultarTorneos()
         {
+            var datosResult = _general.ConsultarDatosTorneos(0);
+
+            var torneosActuales = datosResult.Where(t => t.FechaInicio <= DateTime.Now).ToList();
+            var torneosFuturos = datosResult.Where(t => t.FechaInicio > DateTime.Now).ToList();
+
+            ViewData["TorneosActuales"] = torneosActuales;
+            ViewData["TorneosFuturos"] = torneosFuturos;
+
             return View();
         }
     }
