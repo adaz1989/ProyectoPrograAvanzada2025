@@ -28,9 +28,9 @@ namespace ProyectoDeportivoCR.Controllers
         [HttpPost]
         public IActionResult RegistrarEquipo(EquipoTorneoModel model)
         {
-            if (model.TorneoId <= 0)
+            if (model.TorneoId <= 0 || model.Integrantes == null || !model.Integrantes.Any() )
             {
-                ModelState.AddModelError("", "Error: No se encontró el torneo.");
+                ModelState.AddModelError("", "Debe agregar al menos un integrante.");
                 return View(model);
             }
 

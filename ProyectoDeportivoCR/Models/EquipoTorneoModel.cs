@@ -9,12 +9,16 @@ namespace ProyectoDeportivoCR.Models
         public long DeporteId { get; set; }
 
         // IntegranteEquipo
-        public int Rol { get; set; }
-
-        [StringLength(09)]
-        public string? Cedula { get; set; }
+        public List<IntegranteModel> Integrantes { get; set; } = new List<IntegranteModel>();
 
         [Required]
         public long TorneoId { get; set; }
+    }
+
+    public class IntegranteModel
+    {
+        [StringLength(09)]
+        public string? Cedula { get; set; }
+        public int Rol { get; set; }
     }
 }
