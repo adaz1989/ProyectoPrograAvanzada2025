@@ -1,0 +1,42 @@
+﻿@model ProyectoDeportivoCR.Models.CategoriaModel
+
+@{
+    ViewBag.Title = "Registrar Categoría";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4">Registrar Categoría</h2>
+
+    @if (ViewBag.Mensaje != null)
+    {
+        <div class="alert alert-info">
+            @ViewBag.Mensaje
+        </div>
+    }
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <form asp-action="RegistrarCategoria" method="post">
+                @* Mostrar los errores de validación generales *@
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="mb-3">
+                    <label asp-for="NombreCategoria" class="form-label"></label>
+                    <input asp-for="NombreCategoria" class="form-control" />
+                    <span asp-validation-for="NombreCategoria" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="EdadMinima" class="form-label"></label>
+                    <input asp-for="EdadMinima" class="form-control" type="number" />
+                    <span asp-validation-for="EdadMinima" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="EdadMaxima" class="form-label"></label>
+                    <input asp-for="EdadMaxima" class="form-control" type="number" />
+                    <span asp-validation-for="EdadMaxima" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-primary">Registrar Categoría</button>
+            </form>
+        </div>
+    </div>
+</div>

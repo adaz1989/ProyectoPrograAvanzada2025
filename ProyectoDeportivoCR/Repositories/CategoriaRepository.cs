@@ -13,11 +13,11 @@ public class CategoriaRepository : ICategoriaRepository
         var baseUrl = _configuration.GetSection("Variables:urlWebApi").Value!;
 
         _apiEndpoints = new Dictionary<string, string>
-        {
+{
             { "RegistrarCategoria",  $"{baseUrl}Categoria/RegistrarCategoria" },
-            { "ActualizarCategoria", $"{baseUrl}Categoria/ActualizarCategoria" },
-            { "ObtenerCategorias",   $"{baseUrl}Categoria/ObtenerCategorias" },
-            { "DesabilitarCategoria", $"{baseUrl}Categoria/DesabilitarCategoria" }
+            { "ActualizarCategoria", $"{baseUrl}Categoria/ActualizarInformacionCategoria" },
+            { "ObtenerCategorias",   $"{baseUrl}Categoria/ObtenerInformacionCategoria" },
+            { "DesabilitarCategoria", $"{baseUrl}Categoria/DeshabilitarCategoria" }
         };
     }
 
@@ -25,7 +25,7 @@ public class CategoriaRepository : ICategoriaRepository
     {
         using var http = _httpClient.CreateClient();
         var url = _apiEndpoints["RegistrarCategoria"];
-        return await http.PostAsJsonAsync(url, model);
+        return await http.PutAsJsonAsync(url, model);
     }
 
     public async Task<HttpResponseMessage> ActualizarCategoria(CategoriaModel model)

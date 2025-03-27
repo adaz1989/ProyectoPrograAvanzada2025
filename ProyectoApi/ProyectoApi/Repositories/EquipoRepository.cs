@@ -99,11 +99,11 @@ namespace ProyectoApi.Repositories
             var parametros = new DynamicParameters(new
             {
                 model.NombreEquipo,
-                model.EquipoId,
+                model.DeporteId,
                 model.CategoriaId,
-                model.UsuarioId,
-
+                model.UsuarioId
             });
+
 
             // Agregar parámetros de salida
             parametros.Add("@CodigoError", dbType: DbType.Int32, direction: ParameterDirection.Output);

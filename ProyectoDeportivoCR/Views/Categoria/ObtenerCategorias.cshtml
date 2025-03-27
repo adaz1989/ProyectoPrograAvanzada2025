@@ -1,0 +1,70 @@
+﻿@model ProyectoDeportivoCR.Models.CategoriaModel?
+
+@{
+    ViewBag.Title = "Buscar Categoría";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h2 class="mb-4 text-center">Buscar Categoría</h2>
+            
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <!-- Formulario para solicitar el ID de la categoría -->
+                    <form asp-action="ObtenerCategorias" method="get">
+                        <div class="mb-3">
+                            <label for="categoriaId" class="form-label">ID de la Categoría</label>
+                            <input type="number" class="form-control" id="categoriaId" name="categoriaId" required />
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Buscar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Se muestran los detalles de la categoría si el modelo no es null -->
+            @if (Model != null)
+            {
+                <div class="card shadow-sm mt-4">
+                    <div class="card-body">
+                        <h5 class="card-title">@Model.NombreCategoria</h5>
+                        <ul class="list-group list-group-flush mb-3">
+                            <li class="list-group-item"><strong>ID:</strong> @Model.CategoriaId</li>
+                            <li class="list-group-item"><strong>Nombre Categoria:</strong> @Model.NombreCategoria</li>
+                            <li class="list-group-item"><strong>Edad Mínima:</strong> @Model.EdadMinima</li>
+                            <li class="list-group-item"><strong>Edad Máxima:</strong> @Model.EdadMaxima</li>
+                        </ul>
+                        <div class="d-flex justify-content-between flex-wrap gap-2">
+                            <!-- Botón para buscar otra categoría -->
+                            <a asp-controller="Categoria" asp-action="RegistrarCategoria" class="btn btn-primary">
+                                Registrar Categoría
+                            </a>
+                            <!-- Botón para actualizar la categoría -->
+                            <a asp-controller="Categoria" asp-action="ActualizarCategoria" asp-route-categoriaId="@Model.CategoriaId" class="btn btn-warning">
+                                Actualizar Categoría
+                            </a>
+                            <!-- Botón/formulario para deshabilitar la categoría -->
+                            <form asp-controller="Categoria" asp-action="DesabilitarCategoria" method="post"
+                                  onsubmit="return confirm('¿Está seguro que desea deshabilitar esta categoría?');"
+                                  style="display:inline;">
+                                @Html.AntiForgeryToken() <!-- Añadir esta línea -->
+                                <input type="hidden" name="categoriaId" value="@Model.CategoriaId" />
+                                <button type="submit" class="btn btn-danger">
+                                    Deshabilitar Categoría
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+            else if (ViewBag.Mensaje != null)
+            {
+                <div class="alert alert-warning mt-4" role="alert">
+                    @ViewBag.Mensaje
+                </div>
+            }
+        </div>
+    </div>
+</div>

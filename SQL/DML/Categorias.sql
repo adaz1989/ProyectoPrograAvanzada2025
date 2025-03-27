@@ -132,7 +132,7 @@ BEGIN
             RETURN;
         END;
 
-        -- Actualizar la categoría
+        -- Actualizar la categoría sólo si está activa
         UPDATE dbo.Categorias
            SET NombreCategoria = @NombreCategoria,
                EdadMinima = @EdadMinima,
@@ -143,7 +143,7 @@ BEGIN
         IF @@ROWCOUNT = 0
         BEGIN
             SET @CodigoError = 1;
-            SET @Mensaje = 'Todos los datos eran iguales a los registrados.';
+            SET @Mensaje = 'Todos los datos eran iguales a los registrados o la categoría está deshabilitada.';
             RETURN;
         END;
 
@@ -206,13 +206,26 @@ BEGIN
 END;
 GO
 
-
-
+select * from dbo.Categorias
 
 DECLARE @CodigoError INT, @Mensaje VARCHAR(255);
 
 EXEC dbo.ObtenerCategoriasPorId 
-    @CategoriaId = 1, -- Reemplaza con el ID de la categoría que quieras consultar
+    @CategoriaId = 1, 
+    @CodigoError = @CodigoError OUTPUT,
+    @Mensaje = @Mensaje OUTPUT;
+
+SELECT @CodigoError AS CodigoError, @Mensaje AS Mensaje;
+
+go 
+
+DECLARE @CodigoError INT;
+DECLARE @Mensaje VARCHAR(255);
+
+EXEC dbo.RegistrarCategoria 
+    @NombreCategoria = 'Juvenil',
+    @EdadMinima = 12,
+    @EdadMaxima = 17,
     @CodigoError = @CodigoError OUTPUT,
     @Mensaje = @Mensaje OUTPUT;
 

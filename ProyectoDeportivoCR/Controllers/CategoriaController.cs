@@ -13,6 +13,12 @@ namespace ProyectoDeportivoCR.Controllers
         }
 
         [HttpGet]
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpGet]
         public IActionResult RegistrarCategoria()
         {
             return View();
@@ -31,22 +37,41 @@ namespace ProyectoDeportivoCR.Controllers
         }
 
         [HttpGet]
-        public IActionResult ActualizarCategoria()
+        public async Task<IActionResult> ActualizarCategoria(int categoriaId)
         {
-            return View();
+            // Obtén la categoría por su ID
+            var resultado = await _categoriaService.ObtenerCategorias(categoriaId);
+
+            if (resultado.Exito && resultado.Datos != null)
+            {
+                // Retorna la vista con el modelo que se va a editar
+                return View(resultado.Datos);
+            }
+
+            ViewBag.Mensaje = resultado.Mensaje;
+            // Si no se encontró o hubo un error, redirige a la vista de búsqueda
+            return RedirectToAction("ObtenerCategorias");
         }
 
         [HttpPost]
         public async Task<IActionResult> ActualizarCategoria(CategoriaModel model)
         {
+            // Lógica de actualización
             var resultado = await _categoriaService.ActualizarCategoria(model);
 
             ViewBag.Mensaje = resultado.Mensaje;
 
-            if (resultado.Exito) return RedirectToAction("ObtenerCategorias");
+            if (resultado.Exito)
+            {
+                // Si se actualiza con éxito, podrías volver a mostrar la misma categoría
+                // o redirigir a otra acción (por ejemplo, al listado o a la vista de búsqueda).
+                return RedirectToAction("ObtenerCategorias", new { categoriaId = model.CategoriaId });
+            }
 
-            return View();
+            // Si ocurre algún error, vuelve a la vista con el modelo para mostrar mensajes.
+            return View(model);
         }
+
 
         [HttpGet]
         public async Task<IActionResult> ObtenerCategorias(int categoriaId)
