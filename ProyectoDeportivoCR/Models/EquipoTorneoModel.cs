@@ -2,7 +2,7 @@
 
 namespace ProyectoDeportivoCR.Models
 {
-    public class EquipoModel
+    public class EquipoTorneoModel
     {
         // Equipo
         public string? NombreEquipo { get; set; }

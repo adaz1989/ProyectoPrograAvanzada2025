@@ -9,18 +9,18 @@ namespace ProyectoApi.Controllers
     //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class EquipoController : Controller
+    public class EquipoTorneoController : Controller
     {
         private readonly IConfiguration _configuration;
 
-        public EquipoController (IConfiguration configuration)
+        public EquipoTorneoController (IConfiguration configuration)
         {
             _configuration = configuration;
         }
 
         [HttpPost]
         [Route("RegistrarEquipo")]
-        public IActionResult RegistrarEquipo(EquipoModel model)
+        public IActionResult RegistrarEquipo(EquipoTorneo model)
         {
             using (var context = new SqlConnection(_configuration.GetSection("ConnectionStrings:BDConnection").Value))
             {
