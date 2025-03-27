@@ -76,7 +76,21 @@ namespace ProyectoApi.Services
             builder.Services.AddScoped<IDapperContext, DapperContext>();
             builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+
+            builder.Services.AddScoped<ICategoriaService, CategoriaService>();
+            builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
+
+            builder.Services.AddScoped<IProvinciaService, ProvinciaService>();
+            builder.Services.AddScoped<IProvinciaRepository, ProvinciaRepository>();
+
+            builder.Services.AddScoped<IDeporteRepository, DeporteRepository>();
+            builder.Services.AddScoped<IDeporteService, DeporteService>();
+
+            builder.Services.AddScoped<ICanchasService, CanchasService>();
+            builder.Services.AddScoped<ICanchasRepository, CanchasRepository>();  
+
             builder.Services.AddScoped<IJwtService, JwtService>();
+
         }
     }
 }
