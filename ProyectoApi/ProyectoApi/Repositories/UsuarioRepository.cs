@@ -64,6 +64,7 @@ namespace ProyectoApi.Repositories
                 model.NombreUsuario,
                 model.ApellidosUsuario,
                 model.TelefonoUsuario
+
             });
 
             parametros.Add("@CodigoError", dbType: DbType.Int32, direction: ParameterDirection.Output);
@@ -87,6 +88,7 @@ namespace ProyectoApi.Repositories
                 {
                     UsuarioId
                 });
+
             parametros.Add("@CodigoError", dbType: DbType.Int32, direction: ParameterDirection.Output);
             parametros.Add("@Mensaje", dbType: DbType.String, size: 255, direction: ParameterDirection.Output);
 
