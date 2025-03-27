@@ -7,9 +7,9 @@ namespace ProyectoDeportivoCR.Controllers
     {
         private readonly IHttpClientFactory _httpClient;
         private readonly IConfiguration _configuration;
-        private readonly IGeneral _general;
+        private readonly ITorneoService _general;
 
-        public TorneosController(IHttpClientFactory httpClient, IConfiguration configuration, IGeneral general)
+        public TorneosController(IHttpClientFactory httpClient, IConfiguration configuration, ITorneoService general)
         {
             _httpClient = httpClient;
             _configuration = configuration;

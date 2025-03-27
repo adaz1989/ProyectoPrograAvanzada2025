@@ -4,14 +4,14 @@ using System.Text.Json;
 
 namespace ProyectoDeportivoCR.Services
 {
-    public class General : IGeneral
+    public class TorneoService : ITorneoService
     {
 
         private readonly IHttpClientFactory _httpClient;
         private readonly IConfiguration _configuration;
         private readonly IHttpContextAccessor _contextAccessor;
 
-        public General(IHttpClientFactory httpClient, IConfiguration configuration, IHttpContextAccessor contextAccessor)
+        public TorneoService(IHttpClientFactory httpClient, IConfiguration configuration, IHttpContextAccessor contextAccessor)
         {
             _httpClient = httpClient;
             _configuration = configuration;

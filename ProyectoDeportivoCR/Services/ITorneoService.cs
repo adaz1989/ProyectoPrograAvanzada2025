@@ -2,7 +2,7 @@
 
 namespace ProyectoDeportivoCR.Services
 {
-    public interface IGeneral
+    public interface ITorneoService
     {
         List<TorneoModel> ConsultarDatosTorneos(long TorneoId);
     }
