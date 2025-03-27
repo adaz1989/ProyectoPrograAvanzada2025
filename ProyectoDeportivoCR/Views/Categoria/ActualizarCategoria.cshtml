@@ -1,0 +1,61 @@
+﻿@model ProyectoDeportivoCR.Models.CategoriaModel
+
+@{
+    ViewBag.Title = "Actualizar Categoría";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h2 class="mb-4 text-center">Actualizar Categoría</h2>
+
+            @if (ViewBag.Mensaje != null)
+            {
+                <div class="alert alert-info" role="alert">
+                    @ViewBag.Mensaje
+                </div>
+            }
+
+            <!-- Formulario para actualizar la categoría -->
+            <form asp-action="ActualizarCategoria" method="post">
+                <!-- ID (solo lectura, para no ser editado accidentalmente) -->
+                <div class="mb-3">
+                    <label asp-for="CategoriaId" class="form-label"></label>
+                    <input asp-for="CategoriaId" class="form-control" readonly />
+                </div>
+
+                <!-- Nombre de la Categoría -->
+                <div class="mb-3">
+                    <label asp-for="NombreCategoria" class="form-label"></label>
+                    <input asp-for="NombreCategoria" class="form-control" />
+                </div>
+
+                <!-- Edad Mínima -->
+                <div class="mb-3">
+                    <label asp-for="EdadMinima" class="form-label"></label>
+                    <input asp-for="EdadMinima" class="form-control" />
+                </div>
+
+                <!-- Edad Máxima -->
+                <div class="mb-3">
+                    <label asp-for="EdadMaxima" class="form-label"></label>
+                    <input asp-for="EdadMaxima" class="form-control" />
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">
+                        Guardar Cambios
+                    </button>
+
+                    <!-- Enlace para volver, si deseas ir a la vista de detalles o búsqueda -->
+                    <a asp-controller="Categoria"
+                       asp-action="ObtenerCategorias"
+                       asp-route-categoriaId="@Model.CategoriaId"
+                       class="btn btn-secondary">
+                        Volver
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
