@@ -1,7 +1,13 @@
 ﻿@model EquipoModel
 
 <form asp-controller="Equipo" asp-action="RegistrarEquipo" method="post">
-    <input type="hidden" asp-for="EquipoId" />
+
+    <input type="hidden" asp-for="TorneoId" />
+
+    <div class="form-group">
+        <label asp-for="NombreEquipo">Nombre del equipo</label>
+        <input asp-for="NombreEquipo" class="form-control" required />
+    </div>
 
     <div class="form-group">
         <label asp-for="Cedula">Cédula</label>

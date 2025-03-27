@@ -25,7 +25,7 @@ namespace ProyectoApi.Controllers
             using (var context = new SqlConnection(_configuration.GetSection("ConnectionStrings:BDConnection").Value))
             {
                 var result = context.Execute("RegistrarEquipo",
-                    new { model.EquipoId, model.Cedula, model.Rol });
+                    new { model.NombreEquipo, model.TorneoId, model.Cedula, model.Rol });
 
                 var respuesta = new RespuestaModel();
 
@@ -34,10 +34,10 @@ namespace ProyectoApi.Controllers
                 else
                 {
                     respuesta.Exito = false;
-                    respuesta.Mensaje = "Su info no pudo registrarse";
+                    respuesta.Mensaje = "No se pudo registrar el equipo.";
                 }
 
-                return Ok();
+                return Ok(respuesta);
             }
 
         }

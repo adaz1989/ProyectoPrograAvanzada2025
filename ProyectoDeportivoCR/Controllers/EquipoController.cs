@@ -19,7 +19,7 @@ namespace ProyectoDeportivoCR.Controllers
         {
             var model = new EquipoModel
             {
-                EquipoId = torneoId
+                TorneoId = torneoId
             };
 
             return View(model);
@@ -28,6 +28,12 @@ namespace ProyectoDeportivoCR.Controllers
         [HttpPost]
         public IActionResult RegistrarEquipo(EquipoModel model)
         {
+            if (model.TorneoId <= 0)
+            {
+                ModelState.AddModelError("", "Error: No se encontró el torneo.");
+                return View(model);
+            }
+
             using (var http = _httpClient.CreateClient())
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Equipo/RegistrarEquipo";
@@ -39,7 +45,8 @@ namespace ProyectoDeportivoCR.Controllers
                     return RedirectToAction("ConsultarTorneos", "Torneos");
             }
 
-            return View();
+            ModelState.AddModelError("", "Error al registrar el equipo. Intente nuevamente.");
+            return View(model);
         }
     }
 }
