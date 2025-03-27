@@ -5,11 +5,16 @@ GO
 --		        REGISTRAR EQUIPO
 --////////////////////////////////////////////////
 
+CREATE TYPE IntegranteEquipoType AS TABLE
+(
+	Cedula varchar(50),
+	Rol int
+);
+
 CREATE OR ALTER PROCEDURE [dbo].[RegistrarEquipo]
 	@NombreEquipo VARCHAR(100),
 	@TorneoId bigint,
-	@Cedula varchar(50),
-	@Rol int
+	@Integrantes dbo.IntegranteEquipoType READONLY
 AS
 BEGIN
 
@@ -29,7 +34,8 @@ BEGIN
 	SET @NuevoEquipoId = SCOPE_IDENTITY();
 
 	INSERT INTO IntegrantesEquipos (EquipoId, Cedula, FechaInscripcion, Estado, Rol)
-	VALUES (@NuevoEquipoId, @Cedula, GETDATE(), 1, @Rol);
+	SELECT @NuevoEquipoId, Cedula, GETDATE(), 1, Rol
+	FROM @Integrantes;
 
 	INSERT INTO EquiposTorneos (TorneoId, EquipoId, FechaInscripcion, Estado)
 	VALUES (@TorneoId, @NuevoEquipoId, GETDATE(), 1);
