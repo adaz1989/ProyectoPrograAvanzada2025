@@ -1,0 +1,86 @@
+﻿@model List<ProyectoDeportivoCR.Models.CanchaModel>
+
+@{
+    ViewData["Title"] = "Listado de Canchas";
+}
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="mb-4 text-center">Listado de Canchas</h2>
+        </div>
+    </div>
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="row">
+            <div class="col-12">
+                <div class="alert alert-danger" role="alert">
+                    @ViewBag.ErrorMessage
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="row mb-4">
+        <div class="col-md-6 text-center mb-2">
+            <a asp-controller="Cancha" asp-action="RegistrarCancha" class="btn btn-success btn-lg">
+                Registrar Cancha
+            </a>
+        </div>
+
+        <div class="col-md-6 text-center mb-2">
+            <a asp-controller="Cancha" asp-action="ObtenerCancha" class="btn btn-primary btn-lg">
+                Obtener Cancha Específica
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-header bg-info text-white">
+                    <h4 class="mb-0">Canchas Disponibles</h4>
+                </div>
+                <div class="card-body p-0">
+                    <table class="table table-striped mb-0">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Deporte</th>
+                                <th>Precio Hora</th>
+                                <th>Dirección</th>
+                                <th>Provincia</th>
+                                <th>Cantón</th>
+                                <th>Distrito</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null && Model.Any())
+                            {
+                                foreach (var cancha in Model)
+                                {
+                                    <tr>
+                                        <td>@cancha.NombreCancha</td>
+                                        <td>@cancha.NombreDeporte</td>
+                                        <td>@cancha.PrecioHora.ToString("C")</td>
+                                        <td>@cancha.DetalleDireccion</td>
+                                        <td>@cancha.NombreProvincia</td>
+                                        <td>@cancha.NombreCanton</td>
+                                        <td>@cancha.NombreDistrito</td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="7" class="text-center">No se encontraron canchas.</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

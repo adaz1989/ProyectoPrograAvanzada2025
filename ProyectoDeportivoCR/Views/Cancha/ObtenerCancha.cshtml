@@ -1,0 +1,80 @@
+﻿@model ProyectoDeportivoCR.Models.CanchaModel?
+
+@{
+    ViewData["Title"] = "Buscar Cancha";
+}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Tarjeta para el formulario de búsqueda -->
+            <div class="card shadow">
+                <div class="card-header bg-info text-white">
+                    <h3 class="mb-0 text-center">Buscar Cancha por ID</h3>
+                </div>
+                <div class="card-body">
+                    <form asp-action="ObtenerCancha" method="get">
+                        <div class="mb-3">
+                            <label for="canchaId" class="form-label">ID de la Cancha</label>
+                            <input class="form-control form-control-sm" id="canchaId" name="canchaId" required />
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary btn-sm">Buscar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Botón para registrar una nueva cancha -->
+            <div class="text-center mt-4">
+                <a asp-controller="Cancha" asp-action="RegistrarCancha" class="btn btn-success btn-lg">
+                    Registrar Cancha
+                </a>
+            </div>
+
+            <!-- Mostrar detalles de la cancha encontrada -->
+            @if (Model != null)
+            {
+                <div class="card shadow mt-4">
+                    <div class="card-header bg-secondary text-white">
+                        <h4 class="mb-0">Detalles de la Cancha</h4>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">@Model.NombreCancha</h5>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><strong>ID:</strong> @Model.CanchaId</li>
+                            <li class="list-group-item"><strong>Correo:</strong> @Model.CorreoCancha</li>
+                            <li class="list-group-item"><strong>Teléfono:</strong> @Model.TelefonoCancha</li>
+                            <li class="list-group-item"><strong>Precio por Hora:</strong> @Model.PrecioHora.ToString("C")</li>
+                            <li class="list-group-item"><strong>Dirección:</strong> @Model.DetalleDireccion</li>
+                            <li class="list-group-item"><strong>Descripción:</strong> @Model.DescripcionCancha</li>
+                            <li class="list-group-item"><strong>Deporte:</strong> @Model.NombreDeporte</li>
+                            <li class="list-group-item"><strong>Ubicacion:</strong> @Model.NombreProvincia</li>
+                          
+                        </ul>
+                        <div class="d-flex justify-content-between flex-wrap gap-2 mt-3">
+                            <!-- Botón para actualizar la cancha -->
+                            <a asp-controller="Cancha" asp-action="ActualizarCancha" asp-route-canchaId="@Model.CanchaId" class="btn btn-warning">
+                                Actualizar Cancha
+                            </a>
+                            <!-- Botón para deshabilitar la cancha -->
+                            <form asp-controller="Cancha" asp-action="DeshabilitarCancha" asp-route-canchaId="@Model.CanchaId" method="post" onsubmit="return confirm('¿Está seguro que desea deshabilitar esta cancha?');">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-danger">
+                                    Deshabilitar Cancha
+                                </button>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            }
+            else if (ViewBag.Mensaje != null)
+            {
+                <div class="alert alert-warning mt-4" role="alert">
+                    @ViewBag.Mensaje
+                </div>
+            }
+        </div>
+    </div>
+</div>

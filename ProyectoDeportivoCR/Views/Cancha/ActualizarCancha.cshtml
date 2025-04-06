@@ -1,0 +1,78 @@
+﻿@model ProyectoDeportivoCR.Models.CanchaModel
+
+@{
+    ViewBag.Title = "Actualizar Cancha";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-7 col-md-9">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white text-center">
+                    <h3 class="mb-0">Actualizar Cancha</h3>
+                </div>
+                <div class="card-body">
+                    @if (ViewBag.Mensaje != null)
+                    {
+                        <div class="alert alert-info text-center" role="alert">
+                            @ViewBag.Mensaje
+                        </div>
+                    }
+
+                    <form asp-action="ActualizarCancha" method="post">
+                        @Html.AntiForgeryToken()
+
+                        <!-- Campos editables -->
+                        <div class="mb-3">
+                            <label asp-for="NombreCancha" class="form-label fw-bold"></label>
+                            <input asp-for="NombreCancha" class="form-control" />
+                            <span asp-validation-for="NombreCancha" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="CorreoCancha" class="form-label fw-bold"></label>
+                            <input asp-for="CorreoCancha" type="email" class="form-control" />
+                            <span asp-validation-for="CorreoCancha" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="TelefonoCancha" class="form-label fw-bold"></label>
+                            <input asp-for="TelefonoCancha" class="form-control" />
+                            <span asp-validation-for="TelefonoCancha" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="PrecioHora" class="form-label fw-bold"></label>
+                            <input asp-for="PrecioHora" class="form-control" />
+                            <span asp-validation-for="PrecioHora" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="DetalleDireccion" class="form-label fw-bold"></label>
+                            <input asp-for="DetalleDireccion" class="form-control" />
+                            <span asp-validation-for="DetalleDireccion" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="DescripcionCancha" class="form-label fw-bold"></label>
+                            <textarea asp-for="DescripcionCancha" class="form-control" rows="3"></textarea>
+                            <span asp-validation-for="DescripcionCancha" class="text-danger"></span>
+                        </div>
+                        
+                        <!-- Campo para el estado -->
+                        <div class="mb-3 form-check">
+                            <input asp-for="Estado" class="form-check-input" type="checkbox" />
+                            <label asp-for="Estado" class="form-check-label fw-bold"></label>
+                            <span asp-validation-for="Estado" class="text-danger"></span>
+                        </div>
+
+                        <div class="text-center mt-4 d-grid gap-2 d-md-flex justify-content-md-center">
+                            <button type="submit" class="btn btn-success px-4">
+                                <i class="bi bi-save me-2"></i>Guardar Cambios
+                            </button>
+                            <a asp-action="ObtenerCancha" asp-route-canchaId="@Model.CanchaId"
+                               class="btn btn-outline-secondary px-4">
+                                <i class="bi bi-arrow-left me-2"></i>Volver
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -51,6 +51,14 @@ namespace ProyectoApi.Controllers
             return Ok(respuesta);
         }
 
+        [HttpGet]
+        [Route("ObtenerTodasLasCanchas")]
+        public async Task<IActionResult> ObtenerTodasLasCanchas()
+        {
+            var canchas = await _canchasService.ObtenerTodasLasCanchas();
+            return Ok(canchas); // Devuelve la lista directamente, no un objeto envoltorio.
+        }
+
 
 
     }

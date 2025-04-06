@@ -25,11 +25,9 @@ namespace ProyectoApi.Repositories
             parametros.Add("@TelefonoCancha", model.TelefonoCancha);
             parametros.Add("@PrecioHora", model.PrecioHora);
             parametros.Add("@DeporteId", model.DeporteId);
-            parametros.Add("@ProvinciaId", model.ProvinciaId);
-            parametros.Add("@CantonId", model.CantonId);
-            parametros.Add("@Distritold", model.DistritoId);
             parametros.Add("@DetalleDireccion", model.DetalleDireccion);
             parametros.Add("@DescripcionCancha", model.DescripcionCancha);
+            parametros.Add("@Estado", model.Estado);
             parametros.Add("@UsuarioId", model.UsuarioId);
 
             // Parámetros de salida
@@ -43,6 +41,7 @@ namespace ProyectoApi.Repositories
 
             return (codigoError, mensaje);
         }
+
 
         public async Task<(int CodigoError, string Mensaje)> DeshabilitarCancha(long canchaId)
         {
@@ -111,6 +110,18 @@ namespace ProyectoApi.Repositories
             string Mensaje = parametros.Get<string>("@Mensaje");
 
             return (CodigoError, Mensaje);
+        }
+
+        public async Task<IEnumerable<CanchaModel>> ObtenerTodasLasCanchas()
+        {
+            using var conexion = _context.CrearConexion();
+
+            var resultado = await conexion.QueryAsync<CanchaModel>(
+                "dbo.ObtenerTodasLasCanchas",
+                commandType: CommandType.StoredProcedure
+            );
+
+            return resultado;
         }
     }
 }
