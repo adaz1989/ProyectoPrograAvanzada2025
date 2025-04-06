@@ -1,0 +1,65 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutExterno.cshtml";
+}
+
+<section class="section section-variant-1 bg-gray-100">
+    <div class="container">
+        <div class="row row-50 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-4">
+                <div class="card-login-register" id="card-l-r">
+                    <div class="card-top-panel">
+                        <div class="card-top-panel-left">
+                            <h5 class="card-title card-title-login">Registro de usuario.</h5>
+                            <h5 class="card-title card-title-register">Register</h5>
+                        </div>
+                    </div>
+                    <div class="card-form card-form-login">
+                        <form class="rd-form rd-mailform" method="post" asp-controller="Login" asp-action="RegistrarUsuario">
+
+                            <div class="form-wrap">
+                                <p>Nombre.</p>
+                                <label class="form-label rd-input-label" for="form-login-name-1"></label>
+                                <input class="form-input form-control-has-validation form-control-last-child" id="form-login-name-1" type="text" name="NombreUsuario" required>
+                                <span class="form-validation"></span>
+                            </div>
+
+                            <div class="form-wrap">
+                                <p>Apellidos.</p>
+                                <label class="form-label rd-input-label" for="form-login-name-1"></label>
+                                <input class="form-input form-control-has-validation form-control-last-child" id="form-login-name-1" type="text" name="ApellidosUsuario" required>
+                                <span class="form-validation"></span>
+                            </div>
+
+                            <div class="form-wrap">
+                                <p>Correo.</p>
+                                <label class="form-label rd-input-label" for="form-login-name-1"></label>
+                                <input class="form-input form-control-has-validation form-control-last-child" id="form-login-name-1" type="text" name="CorreoUsuario" required>
+                                <span class="form-validation"></span>
+                            </div>
+
+                            <div class="form-wrap">
+                                <p>Telefono.</p>
+                                <label class="form-label rd-input-label" for="form-login-name-1"></label>
+                                <input class="form-input form-control-has-validation form-control-last-child" id="form-login-name-1" type="text" name="TelefonoUsuario" required>
+                                <span class="form-validation"></span>
+                            </div>
+
+                            <div class="form-wrap">
+                                <p>Contraseña.</p>
+                                <label class="form-label rd-input-label" for="form-login-password-1"></label>
+                                <input class="form-input form-control-has-validation form-control-last-child" id="form-login-password-1" type="password" name="Contrasenna" required>
+                                <span class="form-validation"></span>
+                            </div>
+
+                            <button type="submit" class="button button-lg button-primary button-block">Ingresar al sitio</button>
+                        </form>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

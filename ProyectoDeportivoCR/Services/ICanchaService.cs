@@ -11,5 +11,7 @@
         public Task<Respuesta2Model<CanchaModel>> ObtenerCancha(int canchaId);
 
         public Task<Respuesta2Model<List<CanchaModel>>> ObtenerTodasLasCanchas();
+
+
     }
 }

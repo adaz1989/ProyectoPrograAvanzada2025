@@ -10,6 +10,8 @@
 
         public Task<HttpResponseMessage> ObtenerCancha(int canchaId);
 
+
         public Task<HttpResponseMessage> ObtenerTodasLasCanchas();
+
     }
 }

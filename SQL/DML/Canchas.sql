@@ -32,6 +32,8 @@ BEGIN
         BEGIN
             SET @CodigoError = 1;
             SET @Mensaje = 'La cancha ya est� registrada y activa para este usuario.';
+            SET @Mensaje = 'La cancha ya est  registrada y activa para este usuario.';
+
             RETURN;
         END;
 
@@ -62,10 +64,17 @@ BEGIN
             @DetalleDireccion,
             @DescripcionCancha,
             @UsuarioId,
+
             1  -- Estado = 1 indica que est� activa
         );
 
         -- Verificar si la inserci�n fue exitosa
+
+            1  -- Estado = 1 indica que est  activa
+        );
+
+        -- Verificar si la inserci n fue exitosa
+
         IF @@ROWCOUNT = 0
         BEGIN
             SET @CodigoError = 1;
@@ -100,7 +109,11 @@ EXEC dbo.RegistrarCancha
     @CantonId = 1,
     @DistritoId = 2,
     @DetalleDireccion = 'Calle 123, Barrio Deportivo',
+
     @DescripcionCancha = 'Cancha sint�tica con iluminaci�n',
+
+    @DescripcionCancha = 'Cancha sint tica con iluminaci n',
+
     @UsuarioId = 1,
     @CodigoError = @CodigoError OUTPUT,
     @Mensaje = @Mensaje OUTPUT;
@@ -128,6 +141,10 @@ BEGIN
     SET NOCOUNT ON;
 
     BEGIN TRY
+
+
+        -- Verificar que la cancha exista, pertenezca al usuario y est� activa
+
         IF NOT EXISTS (
             SELECT 1 
             FROM dbo.Canchas 
@@ -136,9 +153,10 @@ BEGIN
         )
         BEGIN
             SET @CodigoError = 1;
-            SET @Mensaje = 'La cancha no existe o no pertenece al usuario.';
+            SET @Mensaje = 'La cancha no existe, est� deshabilitada o no pertenece al usuario.';
             RETURN;
         END
+
 
             ROLLBACK TRANSACTION;
             RETURN;
@@ -159,6 +177,8 @@ BEGIN
 
 
         -- Actualizar la informaci�n de la cancha
+
+        -- Actualizar la informaci�n de la cancha s�lo si est� activa
         UPDATE dbo.Canchas
         SET NombreCancha      = @NombreCancha,
             CorreoCancha      = @CorreoCancha,
@@ -174,6 +194,14 @@ BEGIN
         BEGIN
             SET @CodigoError = 1;
             SET @Mensaje = 'No se pudo actualizar la informaci�n de la cancha.';
+
+          AND UsuarioId = @UsuarioId
+          AND Estado = 1;
+
+        IF @@ROWCOUNT = 0
+        BEGIN
+            SET @CodigoError = 1;
+            SET @Mensaje = 'No se pudo actualizar la informaci�n de la cancha, o los datos eran iguales a los registrados.';
             RETURN;
         END
         SELECT 
@@ -203,6 +231,7 @@ BEGIN
     END CATCH
 END;
 GO
+
 
 
 USE ProyectoAspNetCore;
@@ -255,18 +284,19 @@ BEGIN
     SET NOCOUNT ON;
 
     BEGIN TRY
-        -- Verificar que la cancha exista
+        -- Verificar que la cancha exista y est� activa
         IF NOT EXISTS (
             SELECT 1 
             FROM dbo.Canchas 
             WHERE CanchaId = @CanchaId
+              AND Estado = 1
         )
         BEGIN
-            RAISERROR('La cancha no existe.', 16, 1);
+            RAISERROR('La cancha no existe o est� deshabilitada.', 16, 1);
             RETURN;
         END
 
-        -- Seleccionar la informaci�n de la categor�a a partir del deporte asociado
+        -- Seleccionar la informaci�n de la cancha junto con datos del deporte asociado, solo si la cancha est� activa
         SELECT d.DeporteId,
                d.NombreDeporte AS NombreDeporte
         FROM dbo.Canchas c
@@ -301,6 +331,8 @@ BEGIN
         SET @CodigoError = 0;
         SET @Mensaje = 'Operaci�n exitosa.';
 
+        WHERE c.CanchaId = @CanchaId
+          AND c.Estado = 1;
     END TRY
     BEGIN CATCH
         SET @CodigoError = ERROR_NUMBER();
@@ -331,6 +363,7 @@ EXEC dbo.ActualizarInformacionCancha
     @Mensaje = @Mensaje OUTPUT;
 
 SELECT @CodigoError AS CodigoError, @Mensaje AS Mensaje;
+
 
 
 

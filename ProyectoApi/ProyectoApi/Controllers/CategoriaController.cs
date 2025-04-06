@@ -4,8 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ProyectoApi.Controllers
 {
-
-    [Authorize]
+    [AllowAnonymous]
     [Route("api/[controller]")]
     [ApiController]
     public class CategoriaController : ControllerBase

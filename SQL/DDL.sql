@@ -241,3 +241,28 @@ CREATE TABLE ResultadosTorneos(
     FOREIGN KEY (EquipoId2) REFERENCES Equipos(EquipoId)
 );
 
+-- //////////////////////////////////
+--           ALTERACIONES
+-- //////////////////////////////////
+
+CREATE TABLE EscudosEquipos(
+    EquipoId BIGINT NOT NULL,
+    Url VARCHAR(255) NOT NULL,
+    PRIMARY KEY (EquipoId, Url),
+    FOREIGN KEY (EquipoId) REFERENCES Equipos(EquipoId)
+);
+
+CREATE TABLE RolIntegrantes (
+    RolIntegranteId BIGINT PRIMARY KEY,
+    DescripcionRolIntegrante VARCHAR(50) NOT NULL
+);
+
+INSERT INTO RolIntegrantes (RolIntegranteId, DescripcionRolIntegrante)
+VALUES 
+    (1, 'Entrenador'),
+    (2, 'Jugador');
+
+DELETE FROM EquiposTorneos;
+
+ALTER TABLE IntegrantesEquipos
+ADD Rol INT NOT NULL;

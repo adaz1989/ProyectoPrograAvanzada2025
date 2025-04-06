@@ -14,6 +14,7 @@ namespace ProyectoDeportivoCR.Controllers
         }
 
         [HttpGet]
+
         public async Task<IActionResult> Index()
         {
             var respuesta = await _canchaService.ObtenerTodasLasCanchas();
@@ -27,6 +28,11 @@ namespace ProyectoDeportivoCR.Controllers
                 ViewBag.ErrorMessage = respuesta.Mensaje; // Muestra mensaje de error
                 return View();
             }
+
+        public IActionResult Index()
+        {
+            return View();
+
         }
 
         [HttpGet]

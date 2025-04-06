@@ -74,6 +74,7 @@ namespace ProyectoDeportivoCR.Services
                 Mensaje = "Error al comunicarse con la API."
             };
         }
+
         public async Task<Respuesta2Model<List<CanchaModel>>> ObtenerTodasLasCanchas()
         {
             var respuesta = await _canchaRepository.ObtenerTodasLasCanchas();
@@ -90,6 +91,7 @@ namespace ProyectoDeportivoCR.Services
                 Datos = null
             };
         }
+
 
     }
 }

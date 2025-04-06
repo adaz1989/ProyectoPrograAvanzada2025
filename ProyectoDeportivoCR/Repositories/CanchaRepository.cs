@@ -24,6 +24,8 @@ namespace ProyectoDeportivoCR.Repositories
                 { "DeshabilitarCancha",         $"{baseUrl}Canchas/DeshabilitarCanchas" },
                 { "ObtenerCancha",              $"{baseUrl}Canchas/ObtenerInformacionCanchas" },
                 { "ObtenerTodasLasCanchas",     $"{baseUrl}Canchas/ObtenerTodasLasCanchas" }
+                { "ObtenerCancha",              $"{baseUrl}Canchas/ObtenerInformacionCanchas" }
+
             };
         }
 
@@ -68,6 +70,7 @@ namespace ProyectoDeportivoCR.Repositories
             // GET para obtener la información de la cancha
             return await http.GetAsync(url);
         }
+
         public async Task<HttpResponseMessage> ObtenerTodasLasCanchas()
         {
             using var http = _httpClient.CreateClient();
@@ -76,5 +79,6 @@ namespace ProyectoDeportivoCR.Repositories
             // Realizamos una petición GET para obtener la lista de todas las canchas activas
             return await http.GetAsync(url);
         }
+
     }
 }

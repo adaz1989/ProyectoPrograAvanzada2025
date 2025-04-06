@@ -2,47 +2,94 @@
     ViewData["Title"] = "Inicio";
 }
 
-
-<!-- Swiper-->
-<section class="section swiper-container swiper-slider swiper-classic bg-gray-2" data-loop="true" data-autoplay="4000" data-simulate-touch="false" data-slide-effect="fade">
+<!-- Sección principal con un Swiper (slider) -->
+<section class="section swiper-container swiper-slider swiper-classic bg-gray-2"
+         data-loop="true"
+         data-autoplay="4000"
+         data-simulate-touch="false"
+         data-slide-effect="fade">
     <div class="swiper-wrapper">
-        <div class="swiper-slide text-center" data-slide-bg="images/slider-1-slide-1-1920x671.jpg">
+
+        <!-- Slide 1: Fútbol -->
+        <div class="swiper-slide" data-slide-bg="@Url.Content("~/images/shop/sele.jpg")">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-xl-6">
                         <div class="swiper-slide-caption">
-                            <h1 data-caption-animate="fadeInUp" data-caption-delay="100">We play Soccer</h1>
-                            <h4 data-caption-animate="fadeInUp" data-caption-delay="200">like no one else in the united states</h4><a class="button button-primary" data-caption-animate="fadeInUp" data-caption-delay="300" href="about-us.html">Read More</a>
+                            <h1 data-caption-animate="fadeInUp" data-caption-delay="100">
+                                Reserva tu Cancha
+                            </h1>
+                            <h4 data-caption-animate="fadeInUp" data-caption-delay="200">
+                                Disfruta del deporte y la cultura
+                            </h4>
+                            <!-- Botón que lleva a la vista de canchas -->
+                            <a class="button button-primary"
+                               data-caption-animate="fadeInUp"
+                               data-caption-delay="300"
+                               asp-controller="Canchas"
+                               asp-action="Index">
+                                Ver más
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="swiper-slide" data-slide-bg="images/slider-1-slide-2-1920x671.jpg">
+
+        <!-- Slide 2: Tenis -->
+        <div class="swiper-slide" data-slide-bg="@Url.Content("~/images/shop/tennis.jpg")">
             <div class="container">
                 <div class="row justify-content-end">
                     <div class="col-xl-5">
                         <div class="swiper-slide-caption">
-                            <h1 data-caption-animate="fadeInUp" data-caption-delay="100">We Are Pros</h1>
-                            <h4 data-caption-animate="fadeInUp" data-caption-delay="200">in Everything Concerning Soccer</h4><a class="button button-primary" data-caption-animate="fadeInUp" data-caption-delay="300" href="about-us.html">Read More</a>
+                            <h1 data-caption-animate="fadeInUp" data-caption-delay="100">
+                                Organiza tu Torneo
+                            </h1>
+                            <h4 data-caption-animate="fadeInUp" data-caption-delay="200">
+                                Actívate y promueve la integración
+                            </h4>
+                            <!-- Botón que lleva a la vista de torneos -->
+                            <a class="button button-primary"
+                               data-caption-animate="fadeInUp"
+                               data-caption-delay="300"
+                               asp-controller="Torneos"
+                               asp-action="Index">
+                                Ver Torneos
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="swiper-slide" data-slide-bg="images/slider-1-slide-3-1920x671.jpg">
+
+        <!-- Slide 3: Baloncesto -->
+        <div class="swiper-slide" data-slide-bg="@Url.Content("~/images/shop/basket.jpeg")">
             <div class="container">
                 <div class="row">
                     <div class="col-xl-5">
                         <div class="swiper-slide-caption">
-                            <h1 data-caption-animate="fadeInUp" data-caption-delay="100">Best Website</h1>
-                            <h4 data-caption-animate="fadeInUp" data-caption-delay="200">for soccer news, updates, <br class="d-none d-xl-block"> and game results</h4><a class="button button-primary" data-caption-animate="fadeInUp" data-caption-delay="300" href="about-us.html">Read More</a>
+                            <h1 data-caption-animate="fadeInUp" data-caption-delay="100">
+                                Vive el Baloncesto
+                            </h1>
+                            <h4 data-caption-animate="fadeInUp" data-caption-delay="200">
+                                Fomenta la pasión deportiva en tu comunidad
+                            </h4>
+                            <!-- Botón que podría llevar a más información general, por ejemplo "About" -->
+                            <a class="button button-primary"
+                               data-caption-animate="fadeInUp"
+                               data-caption-delay="300"
+                               href="about-us.html">
+                                Más información
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
+
+    <!-- Controles del Swiper -->
     <div class="swiper-button swiper-button-prev"></div>
     <div class="swiper-button swiper-button-next"></div>
     <div class="swiper-pagination"></div>

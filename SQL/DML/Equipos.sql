@@ -1,3 +1,5 @@
+
+
 USE ProyectoAspNetCore;
 GO
 
@@ -58,7 +60,6 @@ BEGIN
     SET NOCOUNT ON;
 
     BEGIN TRY
-        -- Verificar que el equipo exista y est� activo
         IF NOT EXISTS (
             SELECT 1 
             FROM dbo.Equipos
@@ -68,6 +69,8 @@ BEGIN
         BEGIN
             SET @CodigoError = 1;
             SET @Mensaje = 'El equipo no existe o ya est� deshabilitado.';
+            SET @Mensaje = 'El equipo no existe o ya est  deshabilitado.';
+
             RETURN;
         END;
 
@@ -94,6 +97,8 @@ END;
 GO
 
 -- Procedimiento para editar la informaci�n de un equipo
+-- Procedimiento para editar la informaci n de un equipo
+
 CREATE OR ALTER PROCEDURE dbo.EditarEquipo
     @EquipoId BIGINT,
     @NombreEquipo VARCHAR(50),
@@ -107,7 +112,10 @@ BEGIN
     SET NOCOUNT ON;
 
     BEGIN TRY
+
         -- Verificar que el equipo exista y est� activo
+        -- Verificar que el equipo exista y est  activo
+
         IF NOT EXISTS (
             SELECT 1 
             FROM dbo.Equipos
@@ -121,6 +129,13 @@ BEGIN
         END;
 
         -- Verificar que el nuevo nombre no est� duplicado en otro equipo activo
+
+            SET @Mensaje = 'El equipo no existe o est  deshabilitado.';
+            RETURN;
+        END;
+
+        -- Verificar que el nuevo nombre no est  duplicado en otro equipo activo
+
         IF EXISTS (
             SELECT 1 
             FROM dbo.Equipos
@@ -130,11 +145,19 @@ BEGIN
         )
         BEGIN
             SET @CodigoError = 1;
+
             SET @Mensaje = 'El nombre del equipo ya est� registrado en otro equipo.';
             RETURN;
         END;
 
         -- Actualizar la informaci�n del equipo
+
+            SET @Mensaje = 'El nombre del equipo ya est  registrado en otro equipo.';
+            RETURN;
+        END;
+
+        -- Actualizar la informaci n del equipo
+
         UPDATE dbo.Equipos
            SET NombreEquipo = @NombreEquipo,
                DeporteId = @DeporteId,
@@ -162,7 +185,10 @@ GO
 
 -- Procedimiento para obtener equipos (por ID o todos los activos)
 CREATE OR ALTER PROCEDURE dbo.ObtenerEquiposPorId
-    @EquipoId BIGINT = NULL,  -- Par�metro opcional. Si se env�a, se obtiene ese equipo en espec�fico.
+   @EquipoId BIGINT = NULL,  -- Par�metro opcional. Si se env�a, se obtiene ese equipo en espec�fico.
+
+    @EquipoId BIGINT = NULL,  -- Par metro opcional. Si se env a, se obtiene ese equipo en espec fico.
+
     @CodigoError INT OUTPUT,
     @Mensaje VARCHAR(255) OUTPUT
 AS
@@ -172,7 +198,11 @@ BEGIN
     BEGIN TRY
         IF @EquipoId IS NOT NULL
         BEGIN
+
             -- Verificar que el equipo solicitado exista y est� activo
+
+            -- Verificar que el equipo solicitado exista y est  activo
+
             IF NOT EXISTS (
                 SELECT 1 
                 FROM dbo.Equipos
@@ -181,7 +211,11 @@ BEGIN
             )
             BEGIN
                 SET @CodigoError = 1;
+
                 SET @Mensaje = 'El equipo solicitado no existe o est� deshabilitado.';
+
+                SET @Mensaje = 'El equipo solicitado no existe o est  deshabilitado.';
+
                 RETURN;
             END;
 
@@ -208,3 +242,4 @@ BEGIN
     END CATCH
 END;
 GO
+
