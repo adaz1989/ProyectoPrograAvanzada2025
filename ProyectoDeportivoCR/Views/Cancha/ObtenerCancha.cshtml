@@ -16,7 +16,7 @@
                     <form asp-action="ObtenerCancha" method="get">
                         <div class="mb-3">
                             <label for="canchaId" class="form-label">ID de la Cancha</label>
-                            <input type="number" class="form-control" id="canchaId" name="canchaId" required />
+                            <input class="form-control" id="canchaId" name="canchaId" required />
                         </div>
                         <div class="text-center">
                             <button type="submit" class="btn btn-primary">Buscar</button>
@@ -49,8 +49,6 @@
                             <li class="list-group-item"><strong>Dirección:</strong> @Model.DetalleDireccion</li>
                             <li class="list-group-item"><strong>Descripción:</strong> @Model.DescripcionCancha</li>
                             <li class="list-group-item"><strong>Deporte:</strong> @Model.NombreDeporte</li>
-                            <li class="list-group-item"><strong>Ubicación:</strong> @Model.NombreProvincia, @Model.NombreCanton, @Model.NombreDistrito</li>
-                            <li class="list-group-item"><strong>Usuario:</strong> @Model.NombreUsuario</li>
                         </ul>
                         <div class="d-flex justify-content-between flex-wrap gap-2">
                             <!-- Botón para actualizar la cancha -->

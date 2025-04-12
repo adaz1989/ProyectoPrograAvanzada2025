@@ -17,20 +17,6 @@ namespace ProyectoApi.Repositories
         public async Task<(int CodigoError, string Mensaje)> RegistrarFactura(FacturaModel model)
         {
             using var conexion = _context.CrearConexion();
-
-          
-            if (model.FotoComprobante == null && !string.IsNullOrEmpty(model.FotoBase64))
-            {
-                try
-                {
-                    model.FotoComprobante = Convert.FromBase64String(model.FotoBase64);
-                }
-                catch (FormatException)
-                {
-                    return (-1, "La imagen no tiene un formato base64 válido.");
-                }
-            }
-
             var parametros = new DynamicParameters(new
             {
                 model.Monto,

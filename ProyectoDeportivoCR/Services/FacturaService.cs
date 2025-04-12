@@ -44,16 +44,16 @@ namespace ProyectoDeportivoCR.Services
             };
         }
 
-        public async Task<Respuesta2Model<FacturaModel>> ObtenerTodasLasFacturas()
+        public async Task<Respuesta2Model<List<FacturaModel>>> ObtenerTodasLasFacturas()
         {
             var respuesta = await _facturaRepository.ObtenerTodasLasFacturas();
 
             if (respuesta.IsSuccessStatusCode)
             {
-                return await respuesta.LeerRespuesta2Model<FacturaModel>();
+                return await respuesta.LeerRespuesta2Model<List<FacturaModel>>(); 
             }
 
-            return new Respuesta2Model<FacturaModel>
+            return new Respuesta2Model<List<FacturaModel>>
             {
                 Exito = false,
                 Mensaje = "Error al comunicarse con la API."

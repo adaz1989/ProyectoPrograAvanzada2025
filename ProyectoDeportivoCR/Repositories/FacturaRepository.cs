@@ -20,10 +20,10 @@ namespace ProyectoDeportivoCR.Repositories
 
             // Se definen los endpoints de la API, de acuerdo a las rutas del FacturasController.
             _apiEndpoints = new Dictionary<string, string>
-            {
-                { "RegistrarFactura", $"{baseUrl}/Facturas/RegistrarFactura" },
-                { "ObtenerFacturaPorId", $"{baseUrl}/Facturas/ObtenerFacturaPorId" },
-                { "ObtenerTodasLasFacturas", $"{baseUrl}/Facturas/ObtenerTodasLasFacturas" }
+{
+                { "RegistrarFactura", $"{baseUrl}Facturas/RegistrarFactura" },
+                { "ObtenerFacturaPorId", $"{baseUrl}Facturas/ObtenerFacturaPorId" },
+                { "ObtenerTodasLasFacturas", $"{baseUrl}Facturas/ObtenerTodasLasFacturas" }
             };
         }
 

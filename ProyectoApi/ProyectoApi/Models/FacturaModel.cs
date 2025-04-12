@@ -6,8 +6,6 @@
     public string? Comprobante { get; set; }
     public byte[]? FotoComprobante { get; set; }
 
-    public string? FotoBase64 { get; set; } 
-
     public long ReservacionId { get; set; }
     public long UsuarioId { get; set; }
     public long MetodoPagoId { get; set; }

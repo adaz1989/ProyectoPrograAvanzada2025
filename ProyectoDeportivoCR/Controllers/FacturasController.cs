@@ -19,13 +19,13 @@ namespace ProyectoDeportivoCR.Controllers
         {
             var resultado = await _facturaService.ObtenerTodasLasFacturas();
 
-            if (resultado.Exito)
+            if (resultado.Exito && resultado.Datos != null)
             {
-                return View(resultado.Datos); // Lista de facturas a la vista
+                return View(resultado.Datos); 
             }
 
-            ViewBag.Mensaje = resultado.Mensaje;
-            return View();
+            ViewBag.ErrorMessage = resultado.Mensaje ?? "No hay facturas registradas.";
+            return View(new List<FacturaModel>()); 
         }
 
         [HttpGet]

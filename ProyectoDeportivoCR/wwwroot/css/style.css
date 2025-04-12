@@ -254,7 +254,6 @@ h6,
 
 .heading-decoration-2::before {
 	content: '';
-	position: absolute;
 	left: 0;
 	top: .5em;
 	width: 25px;
@@ -339,7 +338,6 @@ p [style*='max-width'] {
 }
 
 .text-style-2 span::before {
-	position: absolute;
 	top: 50%;
 	transform: translate3d(-100%, -50%, 0);
 	left: 0;
@@ -415,7 +413,6 @@ p [style*='max-width'] {
 
 .heading-component-title::before {
 	content: '';
-	position: absolute;
 	top: 3px;
 	bottom: 3px;
 	left: 0;
@@ -468,7 +465,6 @@ p [style*='max-width'] {
 
 .time-decorated::before, .time-decorated::after {
 	content: '';
-	position: absolute;
 	top: .66em;
 	display: inline-block;
 	vertical-align: middle;
@@ -1642,7 +1638,6 @@ button.link-cart::-moz-focus-inner {
 
 .unit-bordered > *:not(:last-child)::after {
 	content: '';
-	position: absolute;
 	height: 100%;
 	max-height: 45px;
 	top: 50%;
@@ -1928,7 +1923,7 @@ p + .list-marked {
 .list-ordered > li:before {
 	content: counter(li, decimal) ".";
 	counter-increment: li;
-	position: absolute;
+
 	top: 0;
 	left: 0;
 	display: inline-block;
@@ -2005,7 +2000,7 @@ p + .list-marked {
 
 .list-inline-bordered > li:not(:last-child)::after {
 	content: '';
-	position: absolute;
+
 	top: 50%;
 	transform: translate3d(0, -50%, 0);
 	height: 100%;
@@ -2082,7 +2077,6 @@ p + .list-marked {
 }
 
 .contact-list .icon {
-	position: absolute;
 	left: 0;
 	top: 0;
 	font-size: 24px;
@@ -2281,7 +2275,6 @@ a.icon-gray-500:hover, a.icon-gray-500.active {
 }
 
 .icon-media::before {
-	position: absolute;
 	top: 50%;
 	left: 50%;
 	z-index: 1;
@@ -2321,7 +2314,6 @@ a.icon-gray-500:hover, a.icon-gray-500.active {
 }
 
 .icon-media-circle:after {
-	position: absolute;
 	top: 5px;
 	right: 5px;
 	bottom: 5px;
@@ -2521,7 +2513,6 @@ a.icon-gray-500:hover, a.icon-gray-500.active {
 }
 
 .table-creative tbody td:first-child span::before {
-	position: absolute;
 	content: '';
 	top: 50%;
 	left: 0;
@@ -2589,7 +2580,6 @@ a.icon-gray-500:hover, a.icon-gray-500.active {
 }
 
 .table-counter::before {
-	position: absolute;
 	content: '';
 	top: 0;
 	right: 0;
@@ -2601,7 +2591,6 @@ a.icon-gray-500:hover, a.icon-gray-500.active {
 }
 
 .table-counter::after {
-	position: absolute;
 	content: '';
 	top: 0;
 	right: 0;
@@ -2651,7 +2640,7 @@ a.icon-gray-500:hover, a.icon-gray-500.active {
 }
 
 .table-game-info-title span {
-	position: absolute;
+
 	display: none;
 	content: '';
 	top: 0;
@@ -2665,7 +2654,7 @@ a.icon-gray-500:hover, a.icon-gray-500.active {
 
 .table-game-info-title::before, .table-game-info-title::after {
 	display: none;
-	position: absolute;
+
 	content: '';
 	bottom: 0;
 	height: 1px;
@@ -3325,7 +3314,6 @@ html .context-light .button-gray-outline.button-ujarak::before {
 
 .button-ujarak::before {
 	content: '';
-	position: absolute;
 	top: 0;
 	left: 0;
 	width: 100%;
@@ -3543,7 +3531,6 @@ html .context-light .button-gray-outline.button-ujarak::before {
 }
 
 .button-media-icon {
-	position: absolute;
 	top: 50%;
 	font-size: 130px;
 	color: #fff;
@@ -3615,7 +3602,7 @@ html .context-light .button-gray-outline.button-ujarak::before {
 }
 
 .button-icon-alternate:before {
-	position: absolute;
+
 	top: 0;
 	bottom: 0;
 	left: 0;
@@ -3780,7 +3767,7 @@ input:-webkit-autofill ~ .form-validation {
 }
 
 .form-input-icon {
-	position: absolute;
+
 	font-size: 24px;
 	line-height: 1;
 	top: 18px;
@@ -3824,7 +3811,6 @@ textarea.form-input {
 }
 
 .form-label {
-	position: absolute;
 	top: 30px;
 	left: 0;
 	right: 0;
@@ -3868,7 +3854,6 @@ textarea.form-input {
 }
 
 .form-validation {
-	position: absolute;
 	right: 8px;
 	top: 0;
 	z-index: 11;
@@ -3909,7 +3894,6 @@ textarea.form-input {
 }
 
 .form-output {
-	position: absolute;
 	top: 100%;
 	left: 0;
 	font-size: 10px;
@@ -5635,7 +5619,6 @@ textarea.form-input {
 }
 
 .post-gloria::before {
-	position: absolute;
 	top: 0;
 	right: 0;
 	bottom: 0;
@@ -5647,7 +5630,6 @@ textarea.form-input {
 }
 
 .post-gloria img {
-	position: absolute;
 	top: 50%;
 	right: 50%;
 	transform: translate(50%, -50%) scale(1);
@@ -5736,7 +5718,6 @@ textarea.form-input {
 }
 
 .post-gloria-text svg {
-	position: absolute;
 	top: 5px;
 	left: -3px;
 	width: 27px;
@@ -5941,7 +5922,6 @@ textarea.form-input {
 }
 
 .post-veronica-figure .badge {
-	position: absolute;
 	top: 20px;
 	left: 15px;
 }

@@ -7,9 +7,7 @@ namespace ProyectoDeportivoCR.Models {
         public double Monto { get; set; }
         public DateTime FechaHoraFactura { get; set; }
         public string? Comprobante { get; set; }
-        public IFormFile? FotoComprobante { get; set; }
-
-        public string? FotoBase64 { get; set; }
+        public byte[]? FotoComprobante { get; set; }
 
         public long ReservacionId { get; set; }
         public long UsuarioId { get; set; }
