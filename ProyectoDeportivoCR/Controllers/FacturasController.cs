@@ -37,12 +37,19 @@ namespace ProyectoDeportivoCR.Controllers
         [HttpPost]
         public async Task<IActionResult> RegistrarFactura(FacturaModel model)
         {
+            if (model.FotoComprobante != null && model.FotoComprobante.Length > 0)
+            {
+                using var memoryStream = new MemoryStream();
+                await model.FotoComprobante.CopyToAsync(memoryStream);
+                model.FotoComprobanteByte = memoryStream.ToArray(); 
+            }
+
             var resultado = await _facturaService.RegistrarFactura(model);
 
             ViewBag.Mensaje = resultado.Mensaje;
 
             if (resultado.Exito)
-                return RedirectToAction("ObtenerFactura", new { facturaId = resultado.Datos.FacturaId });
+                return RedirectToAction("Index");
 
             return View(model);
         }

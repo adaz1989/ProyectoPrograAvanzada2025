@@ -35,6 +35,16 @@ builder.Services.AddScoped<IEquipoRepository, EquipoRepository>();
 builder.Services.AddScoped<IFacturaService, FacturasService>();
 builder.Services.AddScoped<IFacturaRepository, FacturaRepository>();
 
+builder.Services.AddScoped<ICantonRepository, CantonRepository>(); 
+builder.Services.AddScoped<ICantonService, CantonService>();
+
+builder.Services.AddScoped<IProvinciaRepository,ProvinciaRepository>();
+builder.Services.AddScoped<IProvinciaService, ProvinciaService>();
+
+builder.Services.AddScoped<IDistritoService, DistritoService>();
+builder.Services.AddScoped<IDistritoRepository, DistritoRepository>();
+
+
 
 
 

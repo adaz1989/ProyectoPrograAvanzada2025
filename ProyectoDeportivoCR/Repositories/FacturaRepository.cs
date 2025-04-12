@@ -30,10 +30,21 @@ namespace ProyectoDeportivoCR.Repositories
         // Método para registrar una factura utilizando PUT
         public async Task<HttpResponseMessage> RegistrarFactura(FacturaModel model)
         {
-           
-            using var http = _httpClient.CreateClient();
+            using var httpClient = _httpClient.CreateClient();
             var url = _apiEndpoints["RegistrarFactura"];
-            return await http.PutAsJsonAsync(url, model);
+            var payload = new
+            {
+                model.FacturaId,
+                model.Monto,
+                model.FechaHoraFactura,
+                FotoComprobante = model.FotoComprobanteByte, // ⚠️ ¡Cambiar el nombre aquí!
+                model.Comprobante,
+                model.ReservacionId,
+                model.UsuarioId,
+                model.MetodoPagoId,
+            };
+
+            return await httpClient.PutAsJsonAsync(url, payload);
         }
 
         // Método para obtener una factura por Id utilizando GET

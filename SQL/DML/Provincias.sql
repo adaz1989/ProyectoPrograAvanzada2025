@@ -152,3 +152,47 @@ DELETE FROM Provincias;
 select * from dbo.Provincias
 
 INSERT INTO Provincias (NombreProvincia) VALUES ('San Jose');
+
+
+CREATE OR ALTER PROCEDURE dbo.ObtenerTodasProvincias
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        -- Retorna todas las provincias ordenadas alfabéticamente
+        SELECT 
+            ProvinciaId,
+            NombreProvincia
+        FROM dbo.Provincias
+        ORDER BY NombreProvincia;
+    END TRY
+    BEGIN CATCH
+        DECLARE @ErrorMessage NVARCHAR(4000) = ERROR_MESSAGE();
+        RAISERROR(@ErrorMessage, 16, 1); -- Propaga el error a C#
+    END CATCH
+END;
+GO
+
+CREATE OR ALTER PROCEDURE dbo.ObtenerTodosDistritos
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        -- Retorna todos los distritos con el nombre del cantón asociado
+        SELECT 
+            d.DistritoId AS DistritoId, 
+            d.NombreDistrito,
+            d.CantonId,
+            c.NombreCanton               -- Nombre del cantón (desnormalización)
+        FROM dbo.Distritos d
+        INNER JOIN dbo.Cantones c ON d.CantonId = c.CantonId
+        ORDER BY d.NombreDistrito;
+    END TRY
+    BEGIN CATCH
+        DECLARE @ErrorMessage NVARCHAR(4000) = ERROR_MESSAGE();
+        RAISERROR(@ErrorMessage, 16, 1); -- Propaga el error a C#
+    END CATCH
+END;
+GO

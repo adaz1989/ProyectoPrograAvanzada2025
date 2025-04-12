@@ -43,6 +43,14 @@ namespace ProyectoApi.Controllers
             return Ok(respuesta);
         }
 
+        [HttpGet]
+        [Route("ObtenerTodosCantones")]
+        public async Task<IActionResult> ObtenerTodosCantones()
+        {
+            var respuesta = await _cantonService.ObtenerTodosCantones();
+            return Ok(respuesta);
+        }
+
 
     }
 }

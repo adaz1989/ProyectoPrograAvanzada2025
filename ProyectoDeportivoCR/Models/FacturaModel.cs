@@ -1,13 +1,19 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Text.Json.Serialization;
+using System.ComponentModel.DataAnnotations;
 
-namespace ProyectoDeportivoCR.Models {
+namespace ProyectoDeportivoCR.Models
+{
     public class FacturaModel
     {
         public int FacturaId { get; set; }
         public double Monto { get; set; }
         public DateTime FechaHoraFactura { get; set; }
         public string? Comprobante { get; set; }
-        public byte[]? FotoComprobante { get; set; }
+
+        [JsonIgnore]
+        public IFormFile? FotoComprobante { get; set; }
+
+        public byte[]? FotoComprobanteByte { get; set; }
 
         public long ReservacionId { get; set; }
         public long UsuarioId { get; set; }
