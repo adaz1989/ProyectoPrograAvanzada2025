@@ -16,6 +16,8 @@ namespace ProyectoDeportivoCR.Models
         public string? DetalleDireccion { get; set; }
         [StringLength(100)]
         public string? DescripcionCancha { get; set; }
+        public bool Estado { get; set; }
+
 
         // Llaves foraneas
         public long UsuarioId { get; set; }

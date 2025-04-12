@@ -18,14 +18,12 @@ namespace ProyectoDeportivoCR.Repositories
 
             // Definir los endpoints de Canchas según tu CanchasController
             _apiEndpoints = new Dictionary<string, string>
-            {
+{
                 { "RegistrarCancha",            $"{baseUrl}Canchas/RegistrarCancha" },
                 { "ActualizarCancha",           $"{baseUrl}Canchas/ActualizarInformacionCanchas" },
                 { "DeshabilitarCancha",         $"{baseUrl}Canchas/DeshabilitarCanchas" },
                 { "ObtenerCancha",              $"{baseUrl}Canchas/ObtenerInformacionCanchas" },
                 { "ObtenerTodasLasCanchas",     $"{baseUrl}Canchas/ObtenerTodasLasCanchas" }
-                { "ObtenerCancha",              $"{baseUrl}Canchas/ObtenerInformacionCanchas" }
-
             };
         }
 
