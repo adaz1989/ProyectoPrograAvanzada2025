@@ -1,0 +1,62 @@
+﻿@model ProyectoDeportivoCR.Models.FacturaModel
+
+@{
+    ViewBag.Title = "Registrar Factura";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4">Registrar Factura</h2>
+
+    @if (ViewBag.Mensaje != null)
+    {
+        <div class="alert alert-info">
+            @ViewBag.Mensaje
+        </div>
+    }
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <form asp-action="RegistrarFactura" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="mb-3">
+                    <label asp-for="Monto" class="form-label">Monto</label>
+                    <input asp-for="Monto" class="form-control" type="number" step="0.01" />
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="FechaHoraFactura" class="form-label">Fecha y Hora</label>
+                    <input asp-for="FechaHoraFactura" class="form-control" type="datetime-local" />
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Comprobante" class="form-label">Comprobante</label>
+                    <input asp-for="Comprobante" class="form-control" />
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="FotoComprobante" class="form-label">Foto del Comprobante</label>
+                    <input asp-for="FotoComprobante" class="form-control" type="file" accept="image/*" capture="environment" />
+                    <span asp-validation-for="FotoComprobante" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ReservacionId" class="form-label">ID de Reservación</label>
+                    <input asp-for="ReservacionId" class="form-control" type="number" />
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="UsuarioId" class="form-label">ID de Usuario</label>
+                    <input asp-for="UsuarioId" class="form-control" type="number" />
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="MetodoPagoId" class="form-label">ID de Método de Pago</label>
+                    <input asp-for="MetodoPagoId" class="form-control" type="number" />
+                </div>
+
+                <button type="submit" class="btn btn-success w-100">Registrar Factura</button>
+            </form>
+        </div>
+    </div>
+</div>

@@ -30,7 +30,12 @@ builder.Services.AddScoped<ICanchasRepository, CanchasRepository>();
 
 
 builder.Services.AddScoped<IEquipoService, EquipoService>();
-builder.Services.AddScoped<IEquipoRepository, EquipoRepository>();  
+builder.Services.AddScoped<IEquipoRepository, EquipoRepository>();
+
+builder.Services.AddScoped<IFacturaService, FacturasService>();
+builder.Services.AddScoped<IFacturaRepository, FacturaRepository>();
+
+
 
 
 
