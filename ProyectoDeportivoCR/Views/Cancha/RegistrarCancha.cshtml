@@ -4,81 +4,116 @@
     ViewBag.Title = "Registrar Cancha";
 }
 
+<!-- CSS de Bootstrap -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" />
+<!-- Bootstrap Icons (opcional) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+<!-- Hoja de estilos personalizada -->
+<link rel="stylesheet" href="~/css/registrarCancha.css" />
+
 <div class="container mt-5">
-    <h2 class="mb-4">Registrar Cancha</h2>
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="mb-0">Registrar Cancha</h2>
+                </div>
+                <div class="card-body">
+                    @if (ViewBag.Mensaje != null)
+                    {
+                        <div class="alert alert-info">
+                            @ViewBag.Mensaje
+                        </div>
+                    }
 
-    @if (ViewBag.Mensaje != null)
-    {
-        <div class="alert alert-info">
-            @ViewBag.Mensaje
-        </div>
-    }
+                    <form asp-action="RegistrarCancha" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
-    <div class="container mt-5">
-        <div class="card shadow-sm">
-            <div class="card-body">
-                <form asp-action="RegistrarCancha" method="post">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <!-- Nombre Cancha -->
+                        <div class="mb-3">
+                            <label asp-for="NombreCancha" class="form-label">Nombre de la Cancha</label>
+                            <input asp-for="NombreCancha" class="form-control" placeholder="Ingrese el nombre" />
+                        </div>
 
-                    <div class="mb-3">
-                        <label asp-for="NombreCancha" class="form-label">Nombre de la Cancha</label>
-                        <input asp-for="NombreCancha" class="form-control" />
-                    </div>
+                        <!-- Correo -->
+                        <div class="mb-3">
+                            <label asp-for="CorreoCancha" class="form-label">Correo</label>
+                            <input asp-for="CorreoCancha" class="form-control" type="email" placeholder="ejemplo@correo.com" />
+                        </div>
 
-                    <div class="mb-3">
-                        <label asp-for="CorreoCancha" class="form-label">Correo</label>
-                        <input asp-for="CorreoCancha" class="form-control" type="email" />
-                    </div>
+                        <!-- Teléfono -->
+                        <div class="mb-3">
+                            <label asp-for="TelefonoCancha" class="form-label">Teléfono</label>
+                            <input asp-for="TelefonoCancha" class="form-control" type="tel" placeholder="0000-0000" />
+                        </div>
 
-                    <div class="mb-3">
-                        <label asp-for="TelefonoCancha" class="form-label">Teléfono</label>
-                        <input asp-for="TelefonoCancha" class="form-control" type="tel" />
-                    </div>
+                        <!-- Precio por Hora -->
+                        <div class="mb-3">
+                            <label asp-for="PrecioHora" class="form-label">Precio por Hora</label>
+                            <input asp-for="PrecioHora" class="form-control" step="0.01" placeholder="00.00" />
+                        </div>
 
-                    <div class="mb-3">
-                        <label asp-for="PrecioHora" class="form-label">Precio por Hora</label>
-                        <input asp-for="PrecioHora" class="form-control" step="0.01" />
+                        <!-- Dirección -->
+                        <div class="mb-3">
+                            <label asp-for="DetalleDireccion" class="form-label">Dirección</label>
+                            <input asp-for="DetalleDireccion" class="form-control" placeholder="Ingrese la dirección" />
+                        </div>
 
-                    </div>
+                        <!-- Descripción -->
+                        <div class="mb-3">
+                            <label asp-for="DescripcionCancha" class="form-label">Descripción</label>
+                            <textarea asp-for="DescripcionCancha" class="form-control" placeholder="Descripción detallada" rows="3"></textarea>
+                        </div>
 
-                    <div class="mb-3">
-                        <label asp-for="DetalleDireccion" class="form-label">Dirección</label>
-                        <input asp-for="DetalleDireccion" class="form-control" />
-                    </div>
+                        <!-- ID de Usuario -->
+                        <div class="mb-3">
+                            <label asp-for="UsuarioId" class="form-label">ID de Usuario</label>
+                            <input asp-for="UsuarioId" class="form-control" placeholder="Ingrese su ID" />
+                        </div>
 
-                    <div class="mb-3">
-                        <label asp-for="DescripcionCancha" class="form-label">Descripción</label>
-                        <textarea asp-for="DescripcionCancha" class="form-control"></textarea>
-                    </div>
+                        <!-- ID de Deporte -->
+                        <div class="mb-3">
+                            <label asp-for="DeporteId" class="form-label">ID de Deporte</label>
+                            <input asp-for="DeporteId" class="form-control" placeholder="Seleccione el deporte" />
+                        </div>
 
-                    <div class="mb-3">
-                        <label asp-for="UsuarioId" class="form-label">ID de Usuario</label>
-                        <input asp-for="UsuarioId" class="form-control" />
-                    </div>
+                        <!-- Provincia -->
+                        <div class="mb-3">
+                            <label asp-for="ProvinciaId" class="form-label">Provincia</label>
+                            <select asp-for="ProvinciaId" class="form-select"
+                                    asp-items="@(new SelectList(ViewBag.Provincias, "ProvinciaId", "NombreProvincia"))">
+                                <option value="">Seleccione una Provincia</option>
+                            </select>
+                        </div>
 
-                    <div class="mb-3">
-                        <label asp-for="DeporteId" class="form-label">ID de Deporte</label>
-                        <input asp-for="DeporteId" class="form-control"  />
-                    </div>
+                        <!-- Cantón -->
+                        <div class="mb-3">
+                            <label asp-for="CantonId" class="form-label">Cantón</label>
+                            <select asp-for="CantonId" class="form-select"
+                                    asp-items="@(new SelectList(ViewBag.Cantones, "CantonId", "NombreCanton"))">
+                                <option value="">Seleccione un Cantón</option>
+                            </select>
+                        </div>
 
-                    <div class="mb-3">
-                        <label asp-for="ProvinciaId" class="form-label">Provincia</label>
-                        <input asp-for="ProvinciaId" class="form-control" />
-                    </div>
+                        <!-- Distrito -->
+                        <div class="mb-3">
+                            <label asp-for="DistritoId" class="form-label">Distrito</label>
+                            <select asp-for="DistritoId" class="form-select"
+                                    asp-items="@(new SelectList(ViewBag.Distritos, "DistritoId", "NombreDistrito"))">
+                                <option value="">Seleccione un Distrito</option>
+                            </select>
+                        </div>
 
-                    <div class="mb-3">
-                        <label asp-for="CantonId" class="form-label">Cantón</label>
-                        <input asp-for="CantonId" class="form-control" />
-                    </div>
-
-                    <div class="mb-3">
-                        <label asp-for="DistritoId" class="form-label">Distrito</label>
-                        <input asp-for="DistritoId" class="form-control"/>
-                    </div>
-
-                    <button type="submit" class="btn btn-success w-100">Registrar Cancha</button>
-                </form>
+                        <!-- Botón de registrar -->
+                        <button type="submit" class="btn btn-success btn-submit">
+                            <i class="bi bi-check-circle"></i> Registrar Cancha
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Scripts de Bootstrap (opcional si requieres componentes interactivos) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>

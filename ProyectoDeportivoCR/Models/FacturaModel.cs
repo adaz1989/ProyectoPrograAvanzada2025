@@ -11,9 +11,9 @@ namespace ProyectoDeportivoCR.Models
         public string? Comprobante { get; set; }
 
         [JsonIgnore]
-        public IFormFile? FotoComprobante { get; set; }
+        public IFormFile? FotoComprobanteWeb { get; set; }
 
-        public byte[]? FotoComprobanteByte { get; set; }
+        public byte[]? FotoComprobante { get; set; }
 
         public long ReservacionId { get; set; }
         public long UsuarioId { get; set; }

@@ -54,5 +54,13 @@ namespace ProyectoApi.Controllers
             var respuesta = await _deporteService.ObtenerInformacionDeporte(DeporteId);
             return Ok(respuesta);
         }
+
+        [HttpGet]
+        [Route("ObtenerInformacionDeporte")]
+        public async Task<IActionResult> ObtenerTodasLasCanchas()
+        {
+            var respuesta = await _deporteService.ObtenerTodosLosDeportes();
+            return Ok(respuesta);
+        }
     }
 }

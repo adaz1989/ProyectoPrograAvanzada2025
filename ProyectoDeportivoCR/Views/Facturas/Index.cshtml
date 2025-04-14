@@ -43,9 +43,9 @@
             {
                 <div class="col-md-4 mb-4">
                     <div class="card shadow">
-                        @if (factura.FotoComprobanteByte != null && factura.FotoComprobanteByte.Length > 0)
+                        @if (factura.FotoComprobante != null && factura.FotoComprobante.Length > 0)
                         {
-                            <img src="data:image/jpeg;base64,@Convert.ToBase64String(factura.FotoComprobanteByte)"
+                            <img src="data:image/jpeg;base64,@Convert.ToBase64String(factura.FotoComprobante)"
                                  alt="Imagen de Comprobante"
                                  class="card-img-top"
                                  style="height:200px; object-fit:cover;" />

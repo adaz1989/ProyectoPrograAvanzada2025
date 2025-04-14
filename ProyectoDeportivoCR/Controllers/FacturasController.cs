@@ -37,11 +37,11 @@ namespace ProyectoDeportivoCR.Controllers
         [HttpPost]
         public async Task<IActionResult> RegistrarFactura(FacturaModel model)
         {
-            if (model.FotoComprobante != null && model.FotoComprobante.Length > 0)
+            if (model.FotoComprobanteWeb != null && model.FotoComprobanteWeb.Length > 0)
             {
                 using var memoryStream = new MemoryStream();
-                await model.FotoComprobante.CopyToAsync(memoryStream);
-                model.FotoComprobanteByte = memoryStream.ToArray(); 
+                await model.FotoComprobanteWeb.CopyToAsync(memoryStream);
+                model.FotoComprobante = memoryStream.ToArray(); 
             }
 
             var resultado = await _facturaService.RegistrarFactura(model);

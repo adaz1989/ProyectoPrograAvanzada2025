@@ -80,7 +80,7 @@ namespace ProyectoDeportivoCR.Services
             var respuesta = await _canchaRepository.ObtenerTodasLasCanchas();
             if (respuesta.IsSuccessStatusCode)
             {
-                // Suponiendo que este método deserializa correctamente a Respuesta2Model<List<CanchaModel>>
+               
                 return await respuesta.LeerRespuesta2Model<List<CanchaModel>>();
             }
 

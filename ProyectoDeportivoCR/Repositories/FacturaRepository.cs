@@ -37,7 +37,7 @@ namespace ProyectoDeportivoCR.Repositories
                 model.FacturaId,
                 model.Monto,
                 model.FechaHoraFactura,
-                FotoComprobante = model.FotoComprobanteByte, // ⚠️ ¡Cambiar el nombre aquí!
+                FotoComprobanteWeb = model.FotoComprobante, 
                 model.Comprobante,
                 model.ReservacionId,
                 model.UsuarioId,
@@ -59,9 +59,16 @@ namespace ProyectoDeportivoCR.Repositories
         // Notar que la ruta ya no requiere un parámetro en la URL, de acuerdo a tu controlador.
         public async Task<HttpResponseMessage> ObtenerTodasLasFacturas()
         {
-            using var http = _httpClient.CreateClient();
-            var url = _apiEndpoints["ObtenerTodasLasFacturas"];
-            return await http.GetAsync(url);
+            try
+            {
+                using var http = _httpClient.CreateClient();
+                var url = _apiEndpoints["ObtenerTodasLasFacturas"];
+                return await http.GetAsync(url);
+            }
+            catch (HttpRequestException ex)
+            {
+                throw new Exception("Error al comunicarse con el API: " + ex.Message);
+            }
         }
 
     }
