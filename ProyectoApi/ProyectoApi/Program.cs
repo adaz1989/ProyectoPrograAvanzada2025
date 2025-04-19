@@ -80,6 +80,7 @@ app.UseExceptionHandler("/api/Error/CapturarError");
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
