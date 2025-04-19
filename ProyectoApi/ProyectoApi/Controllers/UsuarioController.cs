@@ -9,9 +9,12 @@ namespace ProyectoApi.Controllers
     public class UsuarioController : Controller
     {
         private readonly IUsuarioService _usuarioService;
-        public UsuarioController(IUsuarioService usuarioService)
+        private readonly IJwtService _jwtService;
+
+        public UsuarioController(IUsuarioService usuarioService, IJwtService jwtService)
         {
             _usuarioService = usuarioService;
+            _jwtService = jwtService;
         }
 
         [HttpPut]
@@ -22,7 +25,6 @@ namespace ProyectoApi.Controllers
             return Ok(respuesta);
         }
 
-        
         [HttpPut]
         // Es buena practica incluir {parametro} en el Route cuando es por la URL
         [Route("DeshabilitarUsuario/{usuarioId}")]
@@ -33,11 +35,12 @@ namespace ProyectoApi.Controllers
         }
 
         [HttpGet]
-        [Route("ObtenerInformacionUsuario/{usuarioId}")]
-        public async Task<IActionResult> ObtenerInformacionUsuario(int usuarioId)
+        [Route("ObtenerInformacionUsuario")]
+        public async Task<IActionResult> ObtenerInformacionUsuario()
         {
-            var respuesta = await _usuarioService.ObtenerInformacionUsuario(usuarioId);
+            var respuesta = await _usuarioService.ObtenerInformacionUsuario(HttpContext);
             return Ok(respuesta);
+
         }
     }
 }

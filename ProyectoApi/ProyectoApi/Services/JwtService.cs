@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -36,5 +37,15 @@ namespace ProyectoApi.Services
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
+        public long ObtenerUsuarioJwt(IEnumerable<Claim> valores)
+        {
+            if (valores.Any())
+            {
+                var UsuarioId = valores.FirstOrDefault(x => x.Type == "UsuarioId")?.Value;
+                return long.Parse(UsuarioId!);
+            }
+            return 0;
+        }        
     }
 }
