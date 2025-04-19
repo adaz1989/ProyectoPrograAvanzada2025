@@ -41,17 +41,6 @@ namespace ProyectoApi.Controllers
             var respuesta = await _usuarioService.ObtenerInformacionUsuario(HttpContext);
             return Ok(respuesta);
 
-
-
-            // Obtener el ID del usuario del token
-            //var userId = User.FindFirst("userId")?.Value;
-            //if (string.IsNullOrEmpty(userId))
-            //{
-            //    return Unauthorized();
-            //}
-
-            //var respuesta = await _usuarioService.ObtenerInformacionUsuario(int.Parse(userId));
-            //return Ok(respuesta);
         }
     }
 }

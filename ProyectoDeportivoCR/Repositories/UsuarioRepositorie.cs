@@ -42,6 +42,7 @@ namespace ProyectoDeportivoCR.Repositories
         {
             using var http = _httpClient.CreateClient();
             var url = _apiEndpoints["ObtenerInformacionUsuario"];
+
             http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
             return await http.GetAsync(url);
