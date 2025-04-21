@@ -1,4 +1,6 @@
 ﻿using ProyectoDeportivoCR.Services.Extensions;
+using System.Net.Http.Headers;
+using System.Net.Http;
 
 namespace ProyectoDeportivoCR.Services
 {
@@ -91,7 +93,5 @@ namespace ProyectoDeportivoCR.Services
                 Datos = null
             };
         }
-
-
     }
 }

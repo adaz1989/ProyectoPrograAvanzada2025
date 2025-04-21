@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProyectoDeportivoCR.Services;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using ProyectoDeportivoCR.Models;
 
 namespace ProyectoDeportivoCR.Controllers
 {
@@ -10,33 +12,31 @@ namespace ProyectoDeportivoCR.Controllers
         private readonly IProvinciaService _provinciaService;
         private readonly ICantonService _cantonService;
         private readonly IDistritoService _distritoService;
+        private readonly IDeporteService _deporteService;
 
-        // En el constructor se inyectan todos los servicios requeridos
-        public CanchaController(ICanchaService canchaService,
-                                IProvinciaService provinciaService,
-                                ICantonService cantonService,
-                                IDistritoService distritoService)
+        public CanchaController(
+            ICanchaService canchaService,
+            IProvinciaService provinciaService,
+            ICantonService cantonService,
+            IDistritoService distritoService,
+            IDeporteService deporteService)
         {
             _canchaService = canchaService;
             _provinciaService = provinciaService;
             _cantonService = cantonService;
             _distritoService = distritoService;
+            _deporteService = deporteService;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
             var respuesta = await _canchaService.ObtenerTodasLasCanchas();
-
             if (respuesta.Exito)
-            {
-                return View(respuesta.Datos);  // Retorna la lista de canchas a la vista
-            }
-            else
-            {
-                ViewBag.ErrorMessage = respuesta.Mensaje; // Muestra mensaje de error
-                return View();
-            }
+                return View(respuesta.Datos);
+
+            ViewBag.ErrorMessage = respuesta.Mensaje;
+            return View(new List<CanchaModel>());
         }
 
         [HttpGet]
@@ -47,43 +47,51 @@ namespace ProyectoDeportivoCR.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> RegistrarCancha(CanchaModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                await CargarListasDesplegables();
+                return View(model);
+            }
+
             var resultado = await _canchaService.RegistrarCancha(model);
-            ViewBag.Mensaje = resultado.Mensaje;
-
             if (resultado.Exito)
-                return RedirectToAction("ObtenerCancha");
- 
-            return View();
-        }
+                return RedirectToAction(nameof(ObtenerCancha), new { canchaId = model.CanchaId });
 
+            ViewBag.Mensaje = resultado.Mensaje;
+            await CargarListasDesplegables();
+            return View(model);
+        }
 
         [HttpGet]
         public async Task<IActionResult> ActualizarCancha(int canchaId)
         {
             var resultado = await _canchaService.ObtenerCancha(canchaId);
+            if (!resultado.Exito)
+                return RedirectToAction(nameof(Index));
 
-            if (resultado.Exito && resultado.Datos != null)
-            {
-
-                return View(resultado.Datos);
-            }
-
-            ViewBag.Mensaje = resultado.Mensaje;
-            return RedirectToAction("ObtenerCancha");
+            await CargarListasDesplegables();
+            return View(resultado.Datos);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ActualizarCancha(CanchaModel model)
         {
-            var resultado = await _canchaService.ActualizarInformacionCancha(model);
-            ViewBag.Mensaje = resultado.Mensaje;
-
-            if (resultado.Exito)
+            if (!ModelState.IsValid)
             {
-                return RedirectToAction("ObtenerCancha", new { canchaId = model.CanchaId });
+                await CargarListasDesplegables();
+                return View(model);
             }
+
+            var resultado = await _canchaService.ActualizarInformacionCancha(model);
+            if (resultado.Exito)
+                return RedirectToAction(nameof(ObtenerCancha), new { canchaId = model.CanchaId });
+
+            ViewBag.Mensaje = resultado.Mensaje;
+            await CargarListasDesplegables();
             return View(model);
         }
 
@@ -91,46 +99,36 @@ namespace ProyectoDeportivoCR.Controllers
         public async Task<IActionResult> ObtenerCancha(int canchaId)
         {
             var resultado = await _canchaService.ObtenerCancha(canchaId);
-
-            if (resultado.Exito && resultado.Datos != null)
+            if (!resultado.Exito)
             {
-                return View(resultado.Datos);
+                ViewBag.Mensaje = resultado.Mensaje;
+                return RedirectToAction(nameof(Index));
             }
 
-            ViewBag.Mensaje = resultado.Mensaje;
-            return View();
+            return View(resultado.Datos);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeshabilitarCancha(int canchaId)
         {
-            var resultado = await _canchaService.DeshabilitarCancha(canchaId);
-            ViewBag.Mensaje = resultado.Mensaje;
-
-            return RedirectToAction("ObtenerCancha");
+            await _canchaService.DeshabilitarCancha(canchaId);
+            return RedirectToAction(nameof(ObtenerCancha), new { canchaId });
         }
 
-
-        #region Metodo auxiliar para cargar los datos de la BD 
+        #region Métodos auxiliares
 
         private async Task CargarListasDesplegables()
         {
-            // Llamada a los servicios para obtener las listas
-            var respuestaProvincias = await _provinciaService.ObtenerTodasProvincias();
-            var respuestaCantones = await _cantonService.ObtenerTodosCantones();
-            var respuestaDistritos = await _distritoService.ObtenerTodosDistritos();
+            var respProv = await _provinciaService.ObtenerTodasProvincias();
+            var respCant = await _cantonService.ObtenerTodosCantones();
+            var respDist = await _distritoService.ObtenerTodosDistritos();
+            var respDeport = await _deporteService.ObtenerTodosLosDeportes();
 
-            ViewBag.Provincias = (respuestaProvincias.Exito && respuestaProvincias.Datos != null)
-                                ? respuestaProvincias.Datos
-                                : new List<ProvinciaModel>();
-
-            ViewBag.Cantones = (respuestaCantones.Exito && respuestaCantones.Datos != null)
-                                ? respuestaCantones.Datos
-                                : new List<CantonModel>();
-
-            ViewBag.Distritos = (respuestaDistritos.Exito && respuestaDistritos.Datos != null)
-                                ? respuestaDistritos.Datos
-                                : new List<DistritoModel>();
+            ViewBag.Provincias = respProv.Exito ? respProv.Datos : new List<ProvinciaModel>();
+            ViewBag.Cantones = respCant.Exito ? respCant.Datos : new List<CantonModel>();
+            ViewBag.Distritos = respDist.Exito ? respDist.Datos : new List<DistritoModel>();
+            ViewBag.Deportes = respDeport.Exito ? respDeport.Datos : new List<DeporteModel>();
         }
 
         #endregion

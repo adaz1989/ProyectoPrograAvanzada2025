@@ -6,5 +6,7 @@
 
         public Task<Respuesta2Model<DeporteModel>> ObtenerInformacionDeporte(int deporteId);
 
+        public Task<Respuesta2Model<List<DeporteModel>>> ObtenerTodosLosDeportes();
+
     }
 }

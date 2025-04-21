@@ -56,7 +56,7 @@ namespace ProyectoApi.Controllers
         }
 
         [HttpGet]
-        [Route("ObtenerInformacionDeporte")]
+        [Route("ObtenerTodosLosDeportes")]
         public async Task<IActionResult> ObtenerTodasLasCanchas()
         {
             var respuesta = await _deporteService.ObtenerTodosLosDeportes();
