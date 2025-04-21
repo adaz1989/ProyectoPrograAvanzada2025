@@ -1,5 +1,9 @@
 ﻿@model ProyectoDeportivoCR.Models.UsuarioModel
 
+@{
+    Layout = "~/Views/Shared/_LayoutExterno.cshtml";
+}
+
 <section class="section section-variant-1 bg-gray-100">
     <div class="container">
         <div class="row row-50 justify-content-center">
@@ -7,31 +11,47 @@
                 <div class="card-login-register" id="card-l-r">
                     <div class="card-top-panel">
                         <div class="card-top-panel-left">
-                            <h5 class="card-title card-title-login">Información del Usuario</h5>
+                            <h5 class="card-title card-title-login">Registro de usuario</h5>
                         </div>
                     </div>
+
                     <div class="card-form card-form-login">
-                        <div class="form-wrap">
-                            <p><strong>Nombre:</strong></p>
-                            <p>@Model.NombreUsuario</p>
-                        </div>
+                        <form class="rd-form rd-mailform" method="post" asp-controller="Login" asp-action="RegistrarUsuario">
 
-                        <div class="form-wrap">
-                            <p><strong>Apellidos:</strong></p>
-                            <p>@Model.ApellidosUsuario</p>
-                        </div>
+                            <div class="form-wrap">
+                                <p>Nombre.</p>
+                                <input class="form-input form-control-has-validation form-control-last-child" type="text" name="NombreUsuario" required />
+                            </div>
 
-                        <div class="form-wrap">
-                            <p><strong>Correo:</strong></p>
-                            <p>@Model.CorreoUsuario</p>
-                        </div>
+                            <div class="form-wrap">
+                                <p>Apellidos.</p>
+                                <input class="form-input form-control-has-validation form-control-last-child" type="text" name="ApellidosUsuario" required />
+                            </div>
 
-                        <div class="form-wrap">
-                            <p><strong>Teléfono:</strong></p>
-                            <p>@Model.TelefonoUsuario</p>
-                        </div>
+                            <div class="form-wrap">
+                                <p>Correo electrónico.</p>
+                                <input class="form-input form-control-has-validation form-control-last-child" type="email" name="CorreoUsuario" required />
+                            </div>
 
-                        @* <a href="@Url.Action("EditarUsuario", "Login", new { id = Model.IdUsuario })" class="button button-lg button-primary button-block">Editar Información</a> *@
+                            <div class="form-wrap">
+                                <p>Teléfono.</p>
+                                <input class="form-input form-control-has-validation form-control-last-child" type="tel" name="TelefonoUsuario" required />
+                            </div>
+
+                            <div class="form-wrap">
+                                <p>Contraseña.</p>
+                                <input class="form-input form-control-has-validation form-control-last-child" type="password" name="Contrasenna" required />
+                            </div>
+
+                            <button type="submit" class="button button-lg button-primary button-block">Registrar cuenta</button>
+                        </form>
+
+                        <p>¿Ya tienes una cuenta? <a asp-controller="Login" asp-action="IniciarSesion">Iniciar sesión</a></p>
+
+                        @if (ViewBag.Mensaje != null)
+                        {
+                            <div class="alert alert-info mt-3">@ViewBag.Mensaje</div>
+                        }
                     </div>
                 </div>
             </div>
