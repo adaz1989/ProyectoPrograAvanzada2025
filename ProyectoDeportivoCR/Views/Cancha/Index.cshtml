@@ -28,59 +28,85 @@
                 Registrar Cancha
             </a>
         </div>
-
         <div class="col-md-6 text-center mb-2">
             <a asp-controller="Cancha" asp-action="ObtenerCancha" class="btn btn-primary btn-lg">
-                Obtener Cancha Específica
+                Buscar Cancha
             </a>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-12">
-            <div class="card shadow">
-                <div class="card-header bg-info text-white">
-                    <h4 class="mb-0">Canchas Disponibles</h4>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var cancha in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow">
+                        @if (cancha.FotoCancha != null && cancha.FotoCancha.Length > 0)
+                        {
+                            <img src="data:image/jpeg;base64,@Convert.ToBase64String(cancha.FotoCancha)"
+                                 class="card-img-top"
+                                 alt="Foto de @cancha.NombreCancha"
+                                 style="height: 200px; object-fit: cover;">
+                        }
+                        else
+                        {
+                            <img src="~/images/cancha-default.png"
+                                 class="card-img-top"
+                                 alt="Sin imagen"
+                                 style="height: 200px; object-fit: cover;">
+                        }
+
+                        <div class="card-body">
+                            <h5 class="card-title">@cancha.NombreCancha</h5>
+                            <p class="card-text">
+                                <strong>Deporte:</strong> @cancha.NombreDeporte<br>
+                                <strong>Precio:</strong> @cancha.PrecioHora.ToString("C")<br>
+                                <strong>Dirección:</strong> @cancha.DetalleDireccion<br>
+                                <strong>Ubicación:</strong> @cancha.NombreProvincia > @cancha.NombreCanton > @cancha.NombreDistrito
+                            </p>
+                            <div class="d-flex justify-content-between">
+                                <a asp-controller="Cancha"
+                                   asp-action="ObtenerCancha"
+                                   asp-route-canchaId="@cancha.CanchaId"
+                                   class="btn btn-outline-primary btn-sm">
+                                    Detalles
+                                </a>
+                                <a href="#" class="btn btn-outline-success btn-sm">
+                                    Reservar
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-body p-0">
-                    <table class="table table-striped mb-0">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Deporte</th>
-                                <th>Precio Hora</th>
-                                <th>Dirección</th>
-                                <th>Provincia</th>
-                                <th>Cantón</th>
-                                <th>Distrito</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if (Model != null && Model.Any())
-                            {
-                                foreach (var cancha in Model)
-                                {
-                                    <tr>
-                                        <td>@cancha.NombreCancha</td>
-                                        <td>@cancha.NombreDeporte</td>
-                                        <td>@cancha.PrecioHora.ToString("C")</td>
-                                        <td>@cancha.DetalleDireccion</td>
-                                        <td>@cancha.NombreProvincia</td>
-                                        <td>@cancha.NombreCanton</td>
-                                        <td>@cancha.NombreDistrito</td>
-                                    </tr>
-                                }
-                            }
-                            else
-                            {
-                                <tr>
-                                    <td colspan="7" class="text-center">No se encontraron canchas.</td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12">
+                <p class="text-center">No se encontraron canchas registradas.</p>
             </div>
-        </div>
+        }
     </div>
 </div>
+
+<style>
+    .card {
+        transition: transform 0.3s;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+        .card:hover {
+            transform: translateY(-3px);
+        }
+
+    .card-text {
+        font-size: 0.9rem;
+    }
+
+    .btn-sm {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.8rem;
+    }
+</style>

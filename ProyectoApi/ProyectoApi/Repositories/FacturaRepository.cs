@@ -17,6 +17,7 @@ namespace ProyectoApi.Repositories
         public async Task<(int CodigoError, string Mensaje)> RegistrarFactura(FacturaModel model)
         {
             using var conexion = _context.CrearConexion();
+
             var parametros = new DynamicParameters(new
             {
                 model.Monto,
@@ -26,6 +27,7 @@ namespace ProyectoApi.Repositories
                 model.UsuarioId,
                 model.MetodoPagoId,
                 model.FotoComprobante
+
             });
 
             parametros.Add("@CodigoError", dbType: DbType.Int32, direction: ParameterDirection.Output);

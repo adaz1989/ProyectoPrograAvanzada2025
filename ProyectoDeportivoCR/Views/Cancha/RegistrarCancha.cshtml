@@ -1,5 +1,4 @@
-﻿<!-- RegistrarCancha.cshtml ajustado para dropdowns inline -->
-@model ProyectoDeportivoCR.Models.CanchaModel
+﻿@model ProyectoDeportivoCR.Models.CanchaModel
 
 @{
     ViewBag.Title = "Registrar Cancha";
@@ -7,8 +6,7 @@
 
 <head>
     <link rel="stylesheet" href="~/css/EstilosCRUD.css" />
-    <!-- Incluir Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" />
 </head>
 
 <div class="container mt-5">
@@ -28,141 +26,161 @@
                     </div>
                 }
 
-                <form asp-action="RegistrarCancha" method="post" class="form-container">
+                <form asp-action="RegistrarCancha"
+                      method="post"
+                      enctype="multipart/form-data"
+                      class="form-container">
                     <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
 
-                    <!-- Sección de Información Básica -->
+                    <!-- Información Básica -->
                     <div class="form-grid">
-                        <!-- Nombre Cancha -->
                         <div class="form-group">
                             <label asp-for="NombreCancha" class="form-label">
-                                <i class="bi bi-building"></i>
-                                Nombre de la Cancha
+                                <i class="bi bi-building"></i> Nombre de la Cancha
                             </label>
-                            <input asp-for="NombreCancha" class="form-control"
+                            <input asp-for="NombreCancha"
+                                   class="form-control"
                                    placeholder="Ej: Cancha Futbol 5 Los Ángeles" />
-                            <span asp-validation-for="NombreCancha" class="validation-message"></span>
+                            <span asp-validation-for="NombreCancha"
+                                  class="validation-message"></span>
                         </div>
-
-                        <!-- Precio por Hora -->
                         <div class="form-group">
                             <label asp-for="PrecioHora" class="form-label">
-                                <i class="bi bi-currency-dollar"></i>
-                                Precio por Hora
+                                <i class="bi bi-currency-dollar"></i> Precio por Hora
                             </label>
                             <div class="input-group">
                                 <span class="input-icon">₡</span>
-                                <input asp-for="PrecioHora" step="0.01"
-                                       class="form-control" placeholder="00.00" />
+                                <input asp-for="PrecioHora"
+                                       step="0.01"
+                                       class="form-control"
+                                       placeholder="00.00" />
                             </div>
-                            <span asp-validation-for="PrecioHora" class="validation-message"></span>
+                            <span asp-validation-for="PrecioHora"
+                                  class="validation-message"></span>
                         </div>
                     </div>
 
-                    <!-- Sección de Contacto -->
+                    <!-- Contacto -->
                     <div class="form-grid">
-                        <!-- Correo -->
                         <div class="form-group">
                             <label asp-for="CorreoCancha" class="form-label">
-                                <i class="bi bi-envelope"></i>
-                                Correo Electrónico
+                                <i class="bi bi-envelope"></i> Correo Electrónico
                             </label>
-                            <input asp-for="CorreoCancha" type="email"
-                                   class="form-control" placeholder="contacto@cancha.com" />
-                            <span asp-validation-for="CorreoCancha" class="validation-message"></span>
+                            <input asp-for="CorreoCancha"
+                                   type="email"
+                                   class="form-control"
+                                   placeholder="contacto@cancha.com" />
+                            <span asp-validation-for="CorreoCancha"
+                                  class="validation-message"></span>
                         </div>
-
-                        <!-- Teléfono -->
                         <div class="form-group">
                             <label asp-for="TelefonoCancha" class="form-label">
-                                <i class="bi bi-telephone"></i>
-                                Teléfono
+                                <i class="bi bi-telephone"></i> Teléfono
                             </label>
-                            <input asp-for="TelefonoCancha" type="tel"
-                                   class="form-control" placeholder="8888-8888" />
-                            <span asp-validation-for="TelefonoCancha" class="validation-message"></span>
+                            <input asp-for="TelefonoCancha"
+                                   type="tel"
+                                   class="form-control"
+                                   placeholder="8888-8888" />
+                            <span asp-validation-for="TelefonoCancha"
+                                  class="validation-message"></span>
                         </div>
                     </div>
 
-                    <!-- Sección de Ubicación e Información Deportiva inline -->
+                    <!-- Ubicación e Información Deportiva -->
                     <h3 class="form-subtitle">
-                        <i class="bi bi-geo-alt"></i>
-                        Ubicación e Información Deportiva
+                        <i class="bi bi-geo-alt"></i> Ubicación e Información Deportiva
                     </h3>
                     <div class="form-grid four">
-                        <!-- Provincia -->
                         <div class="form-group">
                             <label asp-for="ProvinciaId" class="form-label">Provincia</label>
-                            <select asp-for="ProvinciaId" class="form-select"
+                            <select asp-for="ProvinciaId"
+                                    class="form-select"
                                     asp-items="@(new SelectList(ViewBag.Provincias, "ProvinciaId", "NombreProvincia"))">
                                 <option value="">Seleccione una Provincia</option>
                             </select>
-                            <span asp-validation-for="ProvinciaId" class="validation-message"></span>
+                            <span asp-validation-for="ProvinciaId"
+                                  class="validation-message"></span>
                         </div>
-
-                        <!-- Cantón -->
                         <div class="form-group">
                             <label asp-for="CantonId" class="form-label">Cantón</label>
-                            <select asp-for="CantonId" class="form-select"
+                            <select asp-for="CantonId"
+                                    class="form-select"
                                     asp-items="@(new SelectList(ViewBag.Cantones, "CantonId", "NombreCanton"))">
                                 <option value="">Seleccione un Cantón</option>
                             </select>
-                            <span asp-validation-for="CantonId" class="validation-message"></span>
+                            <span asp-validation-for="CantonId"
+                                  class="validation-message"></span>
                         </div>
-
-                        <!-- Distrito -->
                         <div class="form-group">
                             <label asp-for="DistritoId" class="form-label">Distrito</label>
-                            <select asp-for="DistritoId" class="form-select"
+                            <select asp-for="DistritoId"
+                                    class="form-select"
                                     asp-items="@(new SelectList(ViewBag.Distritos, "DistritoId", "NombreDistrito"))">
                                 <option value="">Seleccione un Distrito</option>
                             </select>
-                            <span asp-validation-for="DistritoId" class="validation-message"></span>
+                            <span asp-validation-for="DistritoId"
+                                  class="validation-message"></span>
                         </div>
-
-                        <!-- Deporte -->
                         <div class="form-group">
                             <label asp-for="DeporteId" class="form-label">Deporte</label>
-                            <select asp-for="DeporteId" class="form-select"
+                            <select asp-for="DeporteId"
+                                    class="form-select"
                                     asp-items="@(new SelectList(ViewBag.Deportes, "DeporteId", "NombreDeporte"))">
                                 <option value="">Seleccione un Deporte</option>
                             </select>
-                            <span asp-validation-for="DeporteId" class="validation-message"></span>
+                            <span asp-validation-for="DeporteId"
+                                  class="validation-message"></span>
                         </div>
                     </div>
 
-                    <!-- Dirección Detallada -->
+                    <!-- Dirección y Descripción -->
                     <div class="form-group">
                         <label asp-for="DetalleDireccion" class="form-label">
-                            <i class="bi bi-signpost"></i>
-                            Dirección Exacta
+                            <i class="bi bi-signpost"></i> Dirección Exacta
                         </label>
-                        <input asp-for="DetalleDireccion" class="form-control"
+                        <input asp-for="DetalleDireccion"
+                               class="form-control"
                                placeholder="Ej: 200 metros norte del supermercado" />
-                        <span asp-validation-for="DetalleDireccion" class="validation-message"></span>
+                        <span asp-validation-for="DetalleDireccion"
+                              class="validation-message"></span>
                     </div>
-
-                    <!-- Descripción -->
                     <div class="form-group">
                         <label asp-for="DescripcionCancha" class="form-label">
-                            <i class="bi bi-text-paragraph"></i>
-                            Descripción
+                            <i class="bi bi-text-paragraph"></i> Descripción
                         </label>
-                        <textarea asp-for="DescripcionCancha" class="form-control"
-                                  placeholder="Ej: Cancha sintética con iluminación LED, vestidores y parqueo..."
-                                  rows="4"></textarea>
-                        <span asp-validation-for="DescripcionCancha" class="validation-message"></span>
+                        <textarea asp-for="DescripcionCancha"
+                                  class="form-control"
+                                  rows="4"
+                                  placeholder="Ej: Cancha sintética con iluminación LED, vestidores y parqueo..."></textarea>
+                        <span asp-validation-for="DescripcionCancha"
+                              class="validation-message"></span>
+                    </div>
+
+                    <!-- Sección de Foto de la Cancha -->
+                    <div class="form-section-group mt-4">
+                        <h4 class="form-subtitle">
+                            <i class="bi bi-image"></i> Foto de la Cancha
+                        </h4>
+                        <label for="fotoCancha" id="dropzoneCancha" class="dropzone">
+                            <i class="bi bi-cloud-upload-fill dropzone-icon"></i>
+                            <p class="dropzone-text">Haz clic o arrastra la imagen aquí</p>
+                            <p class="dropzone-subtext">JPEG/PNG, máx. 2 MB</p>
+                            <input asp-for="FotoCanchaWeb"
+                                   id="fotoCancha"
+                                   type="file"
+                                   accept="image/jpeg, image/png"
+                                   class="d-none" />
+                        </label>
+                        <span asp-validation-for="FotoCanchaWeb"
+                              class="validation-message"></span>
                     </div>
 
                     <!-- Botón de Registrar -->
                     <button type="submit" class="btn-register">
-                        <i class="bi bi-check-circle-fill"></i>
-                        Registrar Cancha
+                        <i class="bi bi-check-circle-fill"></i> Registrar Cancha
                     </button>
                 </form>
             </section>
         </div>
     </div>
 </div>
-
-

@@ -17,6 +17,8 @@ namespace ProyectoApi.Models
         [StringLength(100)]
         public string? DescripcionCancha { get; set; }
 
+        public byte[]? FotoCancha { get; set; }
+
         // Llaves foraneas
         public long UsuarioId { get; set; }
         public long DeporteId { get; set; }

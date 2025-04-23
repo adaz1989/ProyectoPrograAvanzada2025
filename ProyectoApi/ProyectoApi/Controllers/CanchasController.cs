@@ -17,7 +17,7 @@ namespace ProyectoApi.Controllers
         }
 
 
-        [HttpPut]
+        [HttpPost]
         [Route("RegistrarCancha")]
         public async Task<IActionResult> RegistrarCancha(CanchaModel model)
         {

@@ -47,23 +47,26 @@ namespace ProyectoDeportivoCR.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> RegistrarCancha(CanchaModel model)
         {
-            if (!ModelState.IsValid)
+            if (model.FotoCanchaWeb != null && model.FotoCanchaWeb.Length > 0)
             {
-                await CargarListasDesplegables();
-                return View(model);
+                using var memoryStream = new MemoryStream();
+                await model.FotoCanchaWeb.CopyToAsync(memoryStream);
+                model.FotoCancha = memoryStream.ToArray();
             }
 
             var resultado = await _canchaService.RegistrarCancha(model);
-            if (resultado.Exito)
-                return RedirectToAction(nameof(ObtenerCancha), new { canchaId = model.CanchaId });
 
             ViewBag.Mensaje = resultado.Mensaje;
+
+            if (resultado.Exito)
+                return RedirectToAction("Index");
+
             await CargarListasDesplegables();
             return View(model);
         }
+
 
         [HttpGet]
         public async Task<IActionResult> ActualizarCancha(int canchaId)
@@ -101,9 +104,10 @@ namespace ProyectoDeportivoCR.Controllers
             var resultado = await _canchaService.ObtenerCancha(canchaId);
             if (!resultado.Exito)
             {
-                ViewBag.Mensaje = resultado.Mensaje;
+                TempData["ErrorMessage"] = resultado.Mensaje;
                 return RedirectToAction(nameof(Index));
             }
+
 
             return View(resultado.Datos);
         }

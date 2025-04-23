@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace ProyectoDeportivoCR.Models
 {
@@ -17,7 +18,10 @@ namespace ProyectoDeportivoCR.Models
         [StringLength(100)]
         public string? DescripcionCancha { get; set; }
         public bool Estado { get; set; }
+        public byte[]? FotoCancha { get; set; }
 
+        [JsonIgnore]
+        public IFormFile? FotoCanchaWeb { get; set; }
 
         // Llaves foraneas
         public long UsuarioId { get; set; }

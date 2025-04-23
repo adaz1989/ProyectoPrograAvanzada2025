@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using ProyectoDeportivoCR.Models;
 using ProyectoDeportivoCR.Services;
 using System.Threading.Tasks;
@@ -31,8 +32,16 @@ namespace ProyectoDeportivoCR.Controllers
         [HttpGet]
         public IActionResult RegistrarFactura()
         {
+            ViewBag.MetodosPago = new List<MetodoPagoModel>
+            {
+                new MetodoPagoModel { MetodoPagoId = 1, DescripcionMetodoPago = "Efectivo" },
+                new MetodoPagoModel { MetodoPagoId = 2, DescripcionMetodoPago = "Tarjeta" },
+                new MetodoPagoModel { MetodoPagoId = 3, DescripcionMetodoPago = "SINPE" }
+            };
+
             return View();
         }
+
 
         [HttpPost]
         public async Task<IActionResult> RegistrarFactura(FacturaModel model)

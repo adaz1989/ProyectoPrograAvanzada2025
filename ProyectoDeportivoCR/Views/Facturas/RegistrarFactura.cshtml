@@ -70,7 +70,6 @@
 
                     </div>
 
-                    <!-- Sección Comprobante Mejorada Estilo “Card” -->
                     <div class="form-section-group">
                         <h4 class="form-subtitle">
                             <i class="bi bi-paperclip"></i> COMPROBANTE
@@ -105,11 +104,17 @@
                             </div>
                         </div>
 
-                        <label asp-for="MetodoPagoId" class="form-label">ID de Método de Pago</label>
-                        <input asp-for="MetodoPagoId"
-                               class="form-control"
-                               type="text"
-                               placeholder="Ingrese el ID del Método de Pago" />
+                        <div class="form-group">
+                            <label asp-for="MetodoPagoId" class="form-label">
+                                <i class="bi bi-credit-card"></i> Método de Pago
+                            </label>
+                            <select asp-for="MetodoPagoId" class="form-select"
+                                    asp-items="@(new SelectList(ViewBag.MetodosPago,"MetodoPagoId","DescripcionMetodoPago"))">
+                                <option value="">Seleccione un método de pago</option>
+                            </select>
+                            <span asp-validation-for="MetodoPagoId" class="validation-message"></span>
+                        </div>
+
                     </div>
 
                     <div class="form-footer text-center mt-5">

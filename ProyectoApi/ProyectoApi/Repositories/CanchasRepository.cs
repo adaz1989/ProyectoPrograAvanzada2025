@@ -29,6 +29,7 @@ namespace ProyectoApi.Repositories
             parametros.Add("@DescripcionCancha", model.DescripcionCancha);
             parametros.Add("@Estado", model.Estado);
             parametros.Add("@UsuarioId", model.UsuarioId);
+            parametros.Add("@FotoCancha", model.FotoCancha);
 
             // Parámetros de salida
             parametros.Add("@CodigoError", dbType: DbType.Int32, direction: ParameterDirection.Output);
@@ -87,6 +88,7 @@ namespace ProyectoApi.Repositories
             using var conexion = _context.CrearConexion();
 
             var parametros = new DynamicParameters();
+
             parametros.Add("@NombreCancha", model.NombreCancha);
             parametros.Add("@CorreoCancha", model.CorreoCancha);
             parametros.Add("@TelefonoCancha", model.TelefonoCancha);
@@ -98,6 +100,7 @@ namespace ProyectoApi.Repositories
             parametros.Add("@DetalleDireccion", model.DetalleDireccion);
             parametros.Add("@DescripcionCancha", model.DescripcionCancha);
             parametros.Add("@UsuarioId", model.UsuarioId);
+            parametros.Add("@FotoCancha", model.FotoCancha);
 
             parametros.Add("@CodigoError", dbType: DbType.Int32, direction: ParameterDirection.Output);
             parametros.Add("@Mensaje", dbType: DbType.String, size: 255, direction: ParameterDirection.Output);

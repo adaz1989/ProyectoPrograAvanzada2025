@@ -14,6 +14,7 @@ CREATE OR ALTER PROCEDURE dbo.RegistrarCancha
     @DetalleDireccion     VARCHAR(100),
     @DescripcionCancha    VARCHAR(100),
     @UsuarioId            BIGINT,
+    @FotoCancha           VARBINARY(MAX) = NULL,  
     @CodigoError          INT OUTPUT,
     @Mensaje              VARCHAR(255) OUTPUT
 AS
@@ -31,13 +32,11 @@ BEGIN
         )
         BEGIN
             SET @CodigoError = 1;
-            SET @Mensaje = 'La cancha ya est  registrada y activa para este usuario.';
-            SET @Mensaje = 'La cancha ya est  registrada y activa para este usuario.';
-
+            SET @Mensaje = 'La cancha ya está registrada y activa para este usuario.';
             RETURN;
         END;
 
-        -- Insertar la nueva cancha con Estado = 1 (activo) por defecto
+        -- Insertar la nueva cancha incluyendo FotoCancha
         INSERT INTO dbo.Canchas (
             NombreCancha,
             CorreoCancha,
@@ -50,7 +49,8 @@ BEGIN
             DetalleDireccion,
             DescripcionCancha,
             UsuarioId,
-            Estado
+            Estado,
+            FotoCancha         
         )
         VALUES (
             @NombreCancha,
@@ -64,17 +64,11 @@ BEGIN
             @DetalleDireccion,
             @DescripcionCancha,
             @UsuarioId,
-
-            1  -- Estado = 1 indica que est  activa
+            1,                  
+            @FotoCancha          
         );
 
-        -- Verificar si la inserci n fue exitosa
-
-            1  -- Estado = 1 indica que est  activa
-        );
-
-        -- Verificar si la inserci n fue exitosa
-
+        -- Verificar si la inserción fue exitosa
         IF @@ROWCOUNT = 0
         BEGIN
             SET @CodigoError = 1;
@@ -251,6 +245,7 @@ BEGIN
             c.PrecioHora,
             c.DetalleDireccion,
             c.DescripcionCancha,
+            c.FotoCancha, 
             d.NombreDeporte,
             u.NombreUsuario,
             p.NombreProvincia,
@@ -269,7 +264,6 @@ BEGIN
     END CATCH
 END;
 GO
-
 
 DROP PROCEDURE IF EXISTS dbo.ObtenerCancha;
 GO

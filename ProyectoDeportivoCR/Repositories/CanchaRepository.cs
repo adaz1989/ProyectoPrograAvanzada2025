@@ -9,7 +9,7 @@ namespace ProyectoDeportivoCR.Repositories
         private readonly IConfiguration _configuration;
         private readonly Dictionary<string, string> _apiEndpoints;
 
-        public CanchaRepository(IHttpClientFactory httpClient, IConfiguration configuration )
+        public CanchaRepository(IHttpClientFactory httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
             _configuration = configuration;
@@ -31,16 +31,30 @@ namespace ProyectoDeportivoCR.Repositories
         public async Task<HttpResponseMessage> RegistrarCancha(CanchaModel model, string? token)
         {
             using var http = _httpClient.CreateClient();
-            var url = _apiEndpoints["RegistrarCancha"];
 
             if (!string.IsNullOrEmpty(token))
             {
                 http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             }
 
-            // El controlador usa [HttpPut("RegistrarCancha")]
-            // Enviamos el modelo en el cuerpo de la solicitud como JSON
-            return await http.PutAsJsonAsync(url, model);
+            var payload = new
+            {
+                model.NombreCancha,
+                model.CorreoCancha,
+                model.TelefonoCancha,
+                model.PrecioHora,
+                model.DetalleDireccion,
+                model.DescripcionCancha,
+                model.UsuarioId,
+                model.DeporteId,
+                model.ProvinciaId,
+                model.CantonId,
+                model.DistritoId,
+                model.FotoCancha
+            };
+
+            var url = _apiEndpoints["RegistrarCancha"];
+            return await http.PostAsJsonAsync(url, payload);
         }
 
         public async Task<HttpResponseMessage> ActualizarInformacionCancha(CanchaModel model, string? token)
@@ -56,7 +70,7 @@ namespace ProyectoDeportivoCR.Repositories
             // El controlador usa [HttpPut("ActualizarInformacionCanchas")]
             // Enviamos el modelo en el cuerpo de la solicitud como JSON
             return await http.PutAsJsonAsync(url, model);
-        } 
+        }
 
         public async Task<HttpResponseMessage> DeshabilitarCancha(int canchaId, string? token)
         {
@@ -94,6 +108,7 @@ namespace ProyectoDeportivoCR.Repositories
             // Realizamos una petición GET para obtener la lista de todas las canchas activas
             return await http.GetAsync(url);
         }
+
 
     }
 }
