@@ -1,4 +1,6 @@
 ﻿
+using System.Net.Http.Headers;
+
 namespace ProyectoDeportivoCR.Repositories
 {
     public class UsuarioRepositorie : IUsuarioRepositorie
@@ -16,7 +18,8 @@ namespace ProyectoDeportivoCR.Repositories
             _apiEndpoints = new Dictionary<string, string>
             {
                 { "RegistrarUsuario", $"{baseUrl}Sesion/RegistrarUsuario" },
-                { "IniciarSesion",    $"{baseUrl}Sesion/IniciarSesion" }
+                { "IniciarSesion",    $"{baseUrl}Sesion/IniciarSesion" },
+                { "ObtenerInformacionUsuario", $"{baseUrl}Usuario/ObtenerInformacionUsuario" }
             };
         }
 
@@ -33,6 +36,16 @@ namespace ProyectoDeportivoCR.Repositories
             using var http = _httpClient.CreateClient();
             var url = _apiEndpoints["RegistrarUsuario"];            
             return await http.PostAsJsonAsync(url, model);
+        }
+
+        public async Task<HttpResponseMessage> ObtenerInformacionUsuario(string token)
+        {
+            using var http = _httpClient.CreateClient();
+            var url = _apiEndpoints["ObtenerInformacionUsuario"];
+
+            http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            return await http.GetAsync(url);
         }
     }
 }

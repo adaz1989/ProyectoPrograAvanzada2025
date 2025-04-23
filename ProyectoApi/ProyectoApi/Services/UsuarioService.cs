@@ -1,4 +1,6 @@
-﻿namespace ProyectoApi.Services
+﻿using System.Security.Claims;
+
+namespace ProyectoApi.Services
 {
     public class UsuarioService : IUsuarioService
     {
@@ -78,8 +80,10 @@
             };
         }
 
-        public async Task<RespuestaModel> ObtenerInformacionUsuario(int usuarioId)
+        public async Task<RespuestaModel> ObtenerInformacionUsuario(HttpContext httpContext)
         {
+            var usuarioId = _jwtService.ObtenerUsuarioJwt(httpContext.User.Claims);
+
             var resultado = await _usuarioRepository.ObtenerPerfilUsuario(usuarioId);
 
             var respuesta = new RespuestaModel();

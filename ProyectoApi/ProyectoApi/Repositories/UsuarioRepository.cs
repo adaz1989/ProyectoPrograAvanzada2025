@@ -100,7 +100,7 @@ namespace ProyectoApi.Repositories
             return (CodigoError, Mensaje);
         }
 
-        public async Task<UsuarioModel> ObtenerPerfilUsuario(int UsuarioId)
+        public async Task<UsuarioModel> ObtenerPerfilUsuario(long UsuarioId)
         {
             using var conexion = _context.CrearConexion();
 
