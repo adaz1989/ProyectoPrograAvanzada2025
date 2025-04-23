@@ -1,6 +1,11 @@
-﻿using System.Net.Http;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using static System.Net.WebRequestMethods;
 
 namespace ProyectoDeportivoCR.Repositories
 {
@@ -28,41 +33,50 @@ namespace ProyectoDeportivoCR.Repositories
         }
 
         // Método para registrar una factura utilizando PUT
-        public async Task<HttpResponseMessage> RegistrarFactura(FacturaModel model)
+        public async Task<HttpResponseMessage> RegistrarFactura(FacturaModel model, string? token)
         {
-            using var httpClient = _httpClient.CreateClient();
+            using var http = _httpClient.CreateClient();
             var url = _apiEndpoints["RegistrarFactura"];
+
+            http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
             var payload = new
             {
                 model.FacturaId,
                 model.Monto,
                 model.FechaHoraFactura,
-                FotoComprobanteWeb = model.FotoComprobante, 
+                model.FotoComprobante,
                 model.Comprobante,
                 model.ReservacionId,
                 model.UsuarioId,
                 model.MetodoPagoId,
             };
 
-            return await httpClient.PutAsJsonAsync(url, payload);
+            return await http.PutAsJsonAsync(url, payload);
         }
 
         // Método para obtener una factura por Id utilizando GET
-        public async Task<HttpResponseMessage> ObtenerFacturaPorId(int facturaId)
+        public async Task<HttpResponseMessage> ObtenerFacturaPorId(int facturaId, string? token)
         {
             using var http = _httpClient.CreateClient();
             var url = $"{_apiEndpoints["ObtenerFacturaPorId"]}/{facturaId}";
+
+            http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
             return await http.GetAsync(url);
         }
 
         // Método para obtener todas las facturas utilizando GET
         // Notar que la ruta ya no requiere un parámetro en la URL, de acuerdo a tu controlador.
-        public async Task<HttpResponseMessage> ObtenerTodasLasFacturas()
+        public async Task<HttpResponseMessage> ObtenerTodasLasFacturas(string? token)
         {
             try
             {
                 using var http = _httpClient.CreateClient();
                 var url = _apiEndpoints["ObtenerTodasLasFacturas"];
+
+                http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
                 return await http.GetAsync(url);
             }
             catch (HttpRequestException ex)
@@ -70,6 +84,7 @@ namespace ProyectoDeportivoCR.Repositories
                 throw new Exception("Error al comunicarse con el API: " + ex.Message);
             }
         }
+
 
     }
 }

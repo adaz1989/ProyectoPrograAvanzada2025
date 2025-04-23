@@ -7,15 +7,19 @@ namespace ProyectoDeportivoCR.Services
     public class CanchaService : ICanchaService
     {
         private readonly ICanchaRepository _canchaRepository;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public CanchaService(ICanchaRepository canchaRepository)
+        public CanchaService(ICanchaRepository canchaRepository, IHttpContextAccessor httpContextAccessor)
         {
             _canchaRepository = canchaRepository;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<Respuesta2Model<CanchaModel>> RegistrarCancha(CanchaModel model)
         {
-            var respuesta = await _canchaRepository.RegistrarCancha(model);
+            var token = _httpContextAccessor.HttpContext?.Session.GetString("Token");
+
+            var respuesta = await _canchaRepository.RegistrarCancha(model, token);
 
             if (respuesta.IsSuccessStatusCode)
             {
@@ -31,7 +35,9 @@ namespace ProyectoDeportivoCR.Services
 
         public async Task<Respuesta2Model<CanchaModel>> ActualizarInformacionCancha(CanchaModel model)
         {
-            var respuesta = await _canchaRepository.ActualizarInformacionCancha(model);
+            var token = _httpContextAccessor.HttpContext?.Session.GetString("Token");
+
+            var respuesta = await _canchaRepository.ActualizarInformacionCancha(model, token);
 
             if (respuesta.IsSuccessStatusCode)
             {
@@ -47,7 +53,9 @@ namespace ProyectoDeportivoCR.Services
 
         public async Task<Respuesta2Model<CanchaModel>> ObtenerCancha(int canchaId)
         {
-            var respuesta = await _canchaRepository.ObtenerCancha(canchaId);
+            var token = _httpContextAccessor.HttpContext?.Session.GetString("Token");
+
+            var respuesta = await _canchaRepository.ObtenerCancha(canchaId, token);
 
             if (respuesta.IsSuccessStatusCode)
             {
@@ -63,7 +71,9 @@ namespace ProyectoDeportivoCR.Services
 
         public async Task<Respuesta2Model<CanchaModel>> DeshabilitarCancha(int canchaId)
         {
-            var respuesta = await _canchaRepository.DeshabilitarCancha(canchaId);
+            var token = _httpContextAccessor.HttpContext?.Session.GetString("Token");
+
+            var respuesta = await _canchaRepository.DeshabilitarCancha(canchaId, token);
 
             if (respuesta.IsSuccessStatusCode)
             {
@@ -79,7 +89,9 @@ namespace ProyectoDeportivoCR.Services
 
         public async Task<Respuesta2Model<List<CanchaModel>>> ObtenerTodasLasCanchas()
         {
-            var respuesta = await _canchaRepository.ObtenerTodasLasCanchas();
+            var token = _httpContextAccessor.HttpContext?.Session.GetString("Token");
+
+            var respuesta = await _canchaRepository.ObtenerTodasLasCanchas(token);
             if (respuesta.IsSuccessStatusCode)
             {
                

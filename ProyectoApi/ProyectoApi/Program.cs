@@ -79,7 +79,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
                 return expires > DateTime.UtcNow;
             }
             return false;
-        }
+        },
+        NameClaimType = "UsuarioId"
     };
 });
 

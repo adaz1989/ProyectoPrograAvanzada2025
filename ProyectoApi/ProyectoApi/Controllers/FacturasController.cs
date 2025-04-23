@@ -5,7 +5,7 @@ using ProyectoApi.Services;
 
 namespace ProyectoApi.Controllers
 {
-    [AllowAnonymous]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class FacturasController : ControllerBase

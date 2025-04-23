@@ -6,7 +6,7 @@ namespace ProyectoApi.Models
     {
         public long CanchaId { get; set; }
         [StringLength(255)]
-        public string? Url { get; set; }
+        public byte[]? FotoCancha { get; set; }
 
     }
 }

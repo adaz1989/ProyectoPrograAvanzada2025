@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Text.Json;
 using ProyectoDeportivoCR.Services.Extensions;
 
 namespace ProyectoDeportivoCR.Services
@@ -6,15 +7,39 @@ namespace ProyectoDeportivoCR.Services
     public class FacturaService : IFacturaService
     {
         private readonly IFacturaRepository _facturaRepository;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public FacturaService(IFacturaRepository facturaRepository)
+        public FacturaService(IFacturaRepository facturaRepository, IHttpContextAccessor httpContextAccessor)
         {
             _facturaRepository = facturaRepository;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<Respuesta2Model<FacturaModel>> RegistrarFactura(FacturaModel model)
         {
-            var respuesta = await _facturaRepository.RegistrarFactura(model);
+            var token = _httpContextAccessor.HttpContext?.Session.GetString("Token");
+
+            if (!string.IsNullOrEmpty(token))
+            {
+                var handler = new JwtSecurityTokenHandler();
+                var jwtToken = handler.ReadJwtToken(token);
+
+                var claim = jwtToken.Claims.FirstOrDefault(c => c.Type == "UsuarioId");
+                if (claim != null && long.TryParse(claim.Value, out var usuarioId))
+                {
+                    model.UsuarioId = usuarioId;
+                }
+                else
+                {
+                    return new Respuesta2Model<FacturaModel>
+                    {
+                        Exito = false,
+                        Mensaje = "No se encontró el UsuarioId en el token."
+                    };
+                }
+            }
+
+            var respuesta = await _facturaRepository.RegistrarFactura(model, token);
 
             if (respuesta.IsSuccessStatusCode)
             {
@@ -28,9 +53,12 @@ namespace ProyectoDeportivoCR.Services
             };
         }
 
+
         public async Task<Respuesta2Model<FacturaModel>> ObtenerFacturaPorId(int facturaId)
         {
-            var respuesta = await _facturaRepository.ObtenerFacturaPorId(facturaId);
+            var token = _httpContextAccessor.HttpContext?.Session.GetString("Token");
+
+            var respuesta = await _facturaRepository.ObtenerFacturaPorId(facturaId, token);
 
             if (respuesta.IsSuccessStatusCode)
             {
@@ -46,12 +74,13 @@ namespace ProyectoDeportivoCR.Services
 
         public async Task<Respuesta2Model<List<FacturaModel>>> ObtenerTodasLasFacturas()
         {
-            var respuesta = await _facturaRepository.ObtenerTodasLasFacturas();
+            var token = _httpContextAccessor.HttpContext?.Session.GetString("Token");
+
+            var respuesta = await _facturaRepository.ObtenerTodasLasFacturas(token);
 
             if (respuesta.IsSuccessStatusCode)
             {
                 string jsonResponse = await respuesta.Content.ReadAsStringAsync();
-                Console.WriteLine("JSON Response: " + jsonResponse);
 
                 if (string.IsNullOrWhiteSpace(jsonResponse))
                 {
@@ -61,7 +90,6 @@ namespace ProyectoDeportivoCR.Services
                         Datos = new List<FacturaModel>()
                     };
                 }
-
                 try
                 {
                     var options = new JsonSerializerOptions

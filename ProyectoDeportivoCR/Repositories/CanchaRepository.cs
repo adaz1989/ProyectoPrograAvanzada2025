@@ -1,4 +1,5 @@
-﻿using System.Net.Http.Json;
+﻿using System.Net.Http.Headers;
+using System.Net.Http.Json;
 
 namespace ProyectoDeportivoCR.Repositories
 {
@@ -8,7 +9,7 @@ namespace ProyectoDeportivoCR.Repositories
         private readonly IConfiguration _configuration;
         private readonly Dictionary<string, string> _apiEndpoints;
 
-        public CanchaRepository(IHttpClientFactory httpClient, IConfiguration configuration)
+        public CanchaRepository(IHttpClientFactory httpClient, IConfiguration configuration )
         {
             _httpClient = httpClient;
             _configuration = configuration;
@@ -27,52 +28,68 @@ namespace ProyectoDeportivoCR.Repositories
             };
         }
 
-        public async Task<HttpResponseMessage> RegistrarCancha(CanchaModel model)
+        public async Task<HttpResponseMessage> RegistrarCancha(CanchaModel model, string? token)
         {
             using var http = _httpClient.CreateClient();
             var url = _apiEndpoints["RegistrarCancha"];
+
+            if (!string.IsNullOrEmpty(token))
+            {
+                http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            }
 
             // El controlador usa [HttpPut("RegistrarCancha")]
             // Enviamos el modelo en el cuerpo de la solicitud como JSON
             return await http.PutAsJsonAsync(url, model);
         }
 
-        public async Task<HttpResponseMessage> ActualizarInformacionCancha(CanchaModel model)
+        public async Task<HttpResponseMessage> ActualizarInformacionCancha(CanchaModel model, string? token)
         {
             using var http = _httpClient.CreateClient();
             var url = _apiEndpoints["ActualizarInformacionCancha"];
+
+            if (!string.IsNullOrEmpty(token))
+            {
+                http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            }
 
             // El controlador usa [HttpPut("ActualizarInformacionCanchas")]
             // Enviamos el modelo en el cuerpo de la solicitud como JSON
             return await http.PutAsJsonAsync(url, model);
         } 
 
-        public async Task<HttpResponseMessage> DeshabilitarCancha(int canchaId)
+        public async Task<HttpResponseMessage> DeshabilitarCancha(int canchaId, string? token)
         {
             using var http = _httpClient.CreateClient();
             // La ruta de la API es [HttpPut("DeshabilitarCanchas/{canchaId}")]
             // Se pasa el ID en la URL
             var url = $"{_apiEndpoints["DeshabilitarCancha"]}/{canchaId}";
 
+            http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
             // No se envía cuerpo (model) porque solo deshabilitamos por ID
             // Se usa PUT con el cuerpo vacío (null) o un StringContent vacío
             return await http.PutAsync(url, content: null);
         }
 
-        public async Task<HttpResponseMessage> ObtenerCancha(int canchaId)
+        public async Task<HttpResponseMessage> ObtenerCancha(int canchaId, string? token)
         {
             using var http = _httpClient.CreateClient();
             // La ruta de la API es [HttpGet("ObtenerInformacionCanchas/{canchaId}")]
             var url = $"{_apiEndpoints["ObtenerCancha"]}/{canchaId}";
 
+            http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
             // GET para obtener la información de la cancha
             return await http.GetAsync(url);
         }
 
-        public async Task<HttpResponseMessage> ObtenerTodasLasCanchas()
+        public async Task<HttpResponseMessage> ObtenerTodasLasCanchas(string? token)
         {
             using var http = _httpClient.CreateClient();
             var url = _apiEndpoints["ObtenerTodasLasCanchas"];  // Ruta configurada en _apiEndpoints
+
+            http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
             // Realizamos una petición GET para obtener la lista de todas las canchas activas
             return await http.GetAsync(url);
