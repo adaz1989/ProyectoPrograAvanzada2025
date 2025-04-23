@@ -1,0 +1,63 @@
+﻿@model EquipoTorneoModel
+
+<form asp-controller="EquipoTorneo" asp-action="RegistrarEquipoTorneo" method="post">
+
+    <input type="hidden" asp-for="TorneoId" />
+
+    <div class="form-group">
+        <label asp-for="NombreEquipo">Nombre del equipo</label>
+        <input asp-for="NombreEquipo" class="form-control" required />
+    </div>
+
+    <div id="integrantes-container">
+        <div class="integrante">
+            <div class="form-group">
+                <label>Cédula del integrante</label>
+                <input name="Integrantes[0].Cedula" class="form-control" required />
+            </div>
+
+            <div class="form-group">
+                <label>Rol</label>
+                <input type="number" name="Integrantes[0].Rol" class="form-control" required />
+            </div>
+        </div>
+    </div>
+
+    <!--
+    <div class="form-group">
+        <label asp-for="Cedula">Cédula</label>
+        <input asp-for="Cedula" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Rol">Rol</label>
+        <input asp-for="Rol" class="form-control" required />
+    </div> -->
+
+    <button type="button" id="agregar-integrante" class="btn btn-info">Agregar Integrante</button>
+    <button type="submit" class="btn btn-success">Registrar</button>
+</form>
+
+<script>
+    let index = 1;
+    document.getElementById('agregar-integrante').onclick = function () {
+        const container = document.getElementById('integrantes-container');
+        const newIntegrante = document.createElement('div');
+        newIntegrante.classList.add('integrante');
+
+        newIntegrante.innerHTML = `
+            <div class="form-group">
+                <label>Nombre del integrante</label>
+                <input name="Integrantes[${index}].Cedula" class="form-control" required />
+            </div>
+
+            <div class="form-group">
+                <label>Rol</label>
+                <input name="Integrantes[${index}].Rol" class="form-control" required />
+            </div>
+        `;
+
+        container.appendChild(newIntegrante);
+        index++;
+    };
+</script>
