@@ -79,13 +79,20 @@ namespace ProyectoDeportivoCR.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ActualizarCancha(CanchaModel model)
         {
+
             if (!ModelState.IsValid)
             {
                 await CargarListasDesplegables();
                 return View(model);
+            }
+
+            if (model.FotoCanchaWeb != null && model.FotoCanchaWeb.Length > 0)
+            {
+                using var memoryStream = new MemoryStream();
+                await model.FotoCanchaWeb.CopyToAsync(memoryStream);
+                model.FotoCancha = memoryStream.ToArray();
             }
 
             var resultado = await _canchaService.ActualizarInformacionCancha(model);

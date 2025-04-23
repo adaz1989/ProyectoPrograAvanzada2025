@@ -67,9 +67,23 @@ namespace ProyectoDeportivoCR.Repositories
                 http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             }
 
+            var payload = new
+            {
+                model.CanchaId,
+                model.NombreCancha,
+                model.CorreoCancha,
+                model.TelefonoCancha,
+                model.PrecioHora,
+                model.DetalleDireccion,
+                model.DescripcionCancha,
+                model.DeporteId,
+                model.FotoCancha,
+                model.Estado
+            };
+
             // El controlador usa [HttpPut("ActualizarInformacionCanchas")]
             // Enviamos el modelo en el cuerpo de la solicitud como JSON
-            return await http.PutAsJsonAsync(url, model);
+            return await http.PutAsJsonAsync(url, payload);
         }
 
         public async Task<HttpResponseMessage> DeshabilitarCancha(long canchaId, string? token)
