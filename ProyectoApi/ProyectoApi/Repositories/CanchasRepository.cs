@@ -28,14 +28,17 @@ namespace ProyectoApi.Repositories
             parametros.Add("@DetalleDireccion", model.DetalleDireccion);
             parametros.Add("@DescripcionCancha", model.DescripcionCancha);
             parametros.Add("@Estado", model.Estado);
-            parametros.Add("@UsuarioId", model.UsuarioId);
-            parametros.Add("@FotoCancha", model.FotoCancha);
+            parametros.Add("@FotoCancha", model.FotoCancha, dbType: DbType.Binary);
 
             // Parámetros de salida
             parametros.Add("@CodigoError", dbType: DbType.Int32, direction: ParameterDirection.Output);
             parametros.Add("@Mensaje", dbType: DbType.String, size: 255, direction: ParameterDirection.Output);
 
-            await conexion.ExecuteAsync("dbo.ActualizarInformacionCancha", parametros, commandType: CommandType.StoredProcedure);
+            await conexion.ExecuteAsync(
+                "dbo.ActualizarInformacionCancha",
+                parametros,
+                commandType: CommandType.StoredProcedure
+            );
 
             int codigoError = parametros.Get<int>("@CodigoError");
             string mensaje = parametros.Get<string>("@Mensaje");

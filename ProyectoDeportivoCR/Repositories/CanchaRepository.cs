@@ -60,7 +60,7 @@ namespace ProyectoDeportivoCR.Repositories
         public async Task<HttpResponseMessage> ActualizarInformacionCancha(CanchaModel model, string? token)
         {
             using var http = _httpClient.CreateClient();
-            var url = _apiEndpoints["ActualizarInformacionCancha"];
+            var url = _apiEndpoints["ActualizarCancha"];
 
             if (!string.IsNullOrEmpty(token))
             {
@@ -72,7 +72,7 @@ namespace ProyectoDeportivoCR.Repositories
             return await http.PutAsJsonAsync(url, model);
         }
 
-        public async Task<HttpResponseMessage> DeshabilitarCancha(int canchaId, string? token)
+        public async Task<HttpResponseMessage> DeshabilitarCancha(long canchaId, string? token)
         {
             using var http = _httpClient.CreateClient();
             // La ruta de la API es [HttpPut("DeshabilitarCanchas/{canchaId}")]
@@ -86,7 +86,7 @@ namespace ProyectoDeportivoCR.Repositories
             return await http.PutAsync(url, content: null);
         }
 
-        public async Task<HttpResponseMessage> ObtenerCancha(int canchaId, string? token)
+        public async Task<HttpResponseMessage> ObtenerCancha(long canchaId, string? token)
         {
             using var http = _httpClient.CreateClient();
             // La ruta de la API es [HttpGet("ObtenerInformacionCanchas/{canchaId}")]

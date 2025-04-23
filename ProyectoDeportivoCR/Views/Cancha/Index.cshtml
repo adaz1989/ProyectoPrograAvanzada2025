@@ -1,4 +1,5 @@
-﻿@model List<ProyectoDeportivoCR.Models.CanchaModel>
+﻿@using System.Linq
+@model List<ProyectoDeportivoCR.Models.CanchaModel>
 
 @{
     ViewData["Title"] = "Listado de Canchas";
@@ -26,11 +27,6 @@
         <div class="col-md-6 text-center mb-2">
             <a asp-controller="Cancha" asp-action="RegistrarCancha" class="btn btn-success btn-lg">
                 Registrar Cancha
-            </a>
-        </div>
-        <div class="col-md-6 text-center mb-2">
-            <a asp-controller="Cancha" asp-action="ObtenerCancha" class="btn btn-primary btn-lg">
-                Buscar Cancha
             </a>
         </div>
     </div>
@@ -72,8 +68,12 @@
                                    class="btn btn-outline-primary btn-sm">
                                     Detalles
                                 </a>
-                                <a href="#" class="btn btn-outline-success btn-sm">
-                                    Reservar
+
+                                <a asp-controller="Cancha"
+                                   asp-action="ActualizarCancha"
+                                   asp-route-canchaId="@cancha.CanchaId"
+                                   class="btn btn-outline-warning btn-sm">
+                                    Actualizar
                                 </a>
                             </div>
                         </div>

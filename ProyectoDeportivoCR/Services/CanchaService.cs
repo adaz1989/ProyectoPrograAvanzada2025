@@ -72,7 +72,7 @@ namespace ProyectoDeportivoCR.Services
             };
         }
 
-        public async Task<Respuesta2Model<CanchaModel>> ObtenerCancha(int canchaId)
+        public async Task<Respuesta2Model<CanchaModel>> ObtenerCancha(long canchaId)
         {
             var token = _httpContextAccessor.HttpContext?.Session.GetString("Token");
 
@@ -90,7 +90,7 @@ namespace ProyectoDeportivoCR.Services
             };
         }
 
-        public async Task<Respuesta2Model<CanchaModel>> DeshabilitarCancha(int canchaId)
+        public async Task<Respuesta2Model<CanchaModel>> DeshabilitarCancha(long canchaId)
         {
             var token = _httpContextAccessor.HttpContext?.Session.GetString("Token");
 

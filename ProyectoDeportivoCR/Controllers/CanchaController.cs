@@ -3,6 +3,7 @@ using ProyectoDeportivoCR.Services;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using ProyectoDeportivoCR.Models;
+using System.IO;
 
 namespace ProyectoDeportivoCR.Controllers
 {
@@ -57,7 +58,6 @@ namespace ProyectoDeportivoCR.Controllers
             }
 
             var resultado = await _canchaService.RegistrarCancha(model);
-
             ViewBag.Mensaje = resultado.Mensaje;
 
             if (resultado.Exito)
@@ -67,13 +67,12 @@ namespace ProyectoDeportivoCR.Controllers
             return View(model);
         }
 
-
         [HttpGet]
-        public async Task<IActionResult> ActualizarCancha(int canchaId)
+        public async Task<IActionResult> ActualizarCancha(long canchaId)
         {
             var resultado = await _canchaService.ObtenerCancha(canchaId);
             if (!resultado.Exito)
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index");
 
             await CargarListasDesplegables();
             return View(resultado.Datos);
@@ -91,7 +90,7 @@ namespace ProyectoDeportivoCR.Controllers
 
             var resultado = await _canchaService.ActualizarInformacionCancha(model);
             if (resultado.Exito)
-                return RedirectToAction(nameof(ObtenerCancha), new { canchaId = model.CanchaId });
+                return RedirectToAction("ObtenerCancha", new { canchaId = model.CanchaId });
 
             ViewBag.Mensaje = resultado.Mensaje;
             await CargarListasDesplegables();
@@ -99,25 +98,26 @@ namespace ProyectoDeportivoCR.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ObtenerCancha(int canchaId)
+        public async Task<IActionResult> ObtenerCancha(long canchaId)
         {
+      
             var resultado = await _canchaService.ObtenerCancha(canchaId);
             if (!resultado.Exito)
             {
                 TempData["ErrorMessage"] = resultado.Mensaje;
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index");
             }
 
-
+            await CargarListasDesplegables();
             return View(resultado.Datos);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeshabilitarCancha(int canchaId)
+        public async Task<IActionResult> DeshabilitarCancha(long canchaId)
         {
             await _canchaService.DeshabilitarCancha(canchaId);
-            return RedirectToAction(nameof(ObtenerCancha), new { canchaId });
+            return RedirectToAction("ObtenerCancha", new { canchaId });
         }
 
         #region Métodos auxiliares

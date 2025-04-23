@@ -8,8 +8,8 @@ namespace ProyectoDeportivoCR.Services
     {
         Task<Respuesta2Model<CanchaModel>> RegistrarCancha(CanchaModel model);
         Task<Respuesta2Model<CanchaModel>> ActualizarInformacionCancha(CanchaModel model);
-        Task<Respuesta2Model<CanchaModel>> DeshabilitarCancha(int canchaId);
-        Task<Respuesta2Model<CanchaModel>> ObtenerCancha(int canchaId);
+        Task<Respuesta2Model<CanchaModel>> DeshabilitarCancha(long canchaId);
+        Task<Respuesta2Model<CanchaModel>> ObtenerCancha(long canchaId);
         Task<Respuesta2Model<List<CanchaModel>>> ObtenerTodasLasCanchas();
     }
 }
