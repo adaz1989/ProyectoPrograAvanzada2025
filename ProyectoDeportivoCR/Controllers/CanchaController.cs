@@ -7,6 +7,7 @@ using System.IO;
 
 namespace ProyectoDeportivoCR.Controllers
 {
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]    
     public class CanchaController : Controller
     {
         private readonly ICanchaService _canchaService;
@@ -14,7 +15,7 @@ namespace ProyectoDeportivoCR.Controllers
         private readonly ICantonService _cantonService;
         private readonly IDistritoService _distritoService;
         private readonly IDeporteService _deporteService;
-        private readonly DiasService _diasService; // Si tienes una interfaz, usar: IDiasService
+        private readonly DiasService _diasService;
 
         public CanchaController(
             ICanchaService canchaService,
@@ -22,7 +23,7 @@ namespace ProyectoDeportivoCR.Controllers
             ICantonService cantonService,
             IDistritoService distritoService,
             IDeporteService deporteService,
-            DiasService diasService // Si existe interfaz: IDiasService diasService
+            DiasService diasService 
         )
         {
             _canchaService = canchaService;
@@ -46,13 +47,14 @@ namespace ProyectoDeportivoCR.Controllers
             return View(new List<CanchaModel>());
         }
 
+        [FiltroSesion]
         [HttpGet]
         public async Task<IActionResult> RegistrarCancha()
         {
             await CargarListasDesplegables();
             return View();
         }
-
+        [FiltroSesion]
         [HttpPost]
         public async Task<IActionResult> RegistrarCancha(CanchaModel model)
         {
@@ -72,7 +74,7 @@ namespace ProyectoDeportivoCR.Controllers
             await CargarListasDesplegables();
             return View(model);
         }
-
+        [FiltroSesion]
         [HttpGet]
         public async Task<IActionResult> ActualizarCancha(long canchaId)
         {
@@ -83,7 +85,7 @@ namespace ProyectoDeportivoCR.Controllers
             await CargarListasDesplegables();
             return View(resultado.Datos);
         }
-
+        [FiltroSesion]
         [HttpPost]
         public async Task<IActionResult> ActualizarCancha(CanchaModel model)
         {
@@ -124,7 +126,7 @@ namespace ProyectoDeportivoCR.Controllers
             await CargarListasDesplegables();
             return View(resultado.Datos);
         }
-
+        [FiltroSesion]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeshabilitarCancha(long canchaId)
@@ -132,7 +134,7 @@ namespace ProyectoDeportivoCR.Controllers
             await _canchaService.DeshabilitarCancha(canchaId);
             return RedirectToAction("ObtenerCancha", new { canchaId });
         }
-
+        [FiltroSesion]
         [HttpGet]
         public async Task<IActionResult> GestionarHorarioCancha(int canchaId)
         {
@@ -145,7 +147,7 @@ namespace ProyectoDeportivoCR.Controllers
             ViewBag.Dias = resultadoDias.Datos;
             return View(resultadoHorario.Datos);
         }
-
+        [FiltroSesion]
         [HttpPost]
         public async Task<IActionResult> RegistrarHorarioCancha(HorarioCanchaModel model)
         {

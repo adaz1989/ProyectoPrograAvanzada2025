@@ -2,6 +2,7 @@
 
 namespace ProyectoDeportivoCR.Controllers
 {
+    [FiltroSesion]
     public class UsuarioController : Controller
     {
         private readonly IUsuarioService _usuarioService;

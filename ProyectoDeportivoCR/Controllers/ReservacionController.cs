@@ -30,7 +30,7 @@ namespace ProyectoDeportivoCR.Controllers
         public async Task<IActionResult> Reservacion(DateTime? fecha, long canchaId)
         {
             // 1. Fecha de consulta
-            var fechaConsulta = fecha?.Date ?? DateTime.Today;
+            var fechaConsulta = fecha?.Date ?? DateTime.Today.Date;
 
             // 2. Obtener datos de la cancha
             var respCancha = await _canchaService.ObtenerCancha(canchaId);
@@ -124,8 +124,13 @@ namespace ProyectoDeportivoCR.Controllers
                     var inicioSlot = horaActual;
                     var finSlot = horaActual.AddHours(1);
 
-                    var reserva = reservas
-                        .FirstOrDefault(r => r.HoraInicio == inicioSlot.ToTimeSpan());
+                    // Verificar si el slot actual está contenido en alguna reserva
+                    var reserva = reservas.FirstOrDefault(r =>
+                    {
+                        var inicioReserva = TimeOnly.FromTimeSpan(r.HoraInicio);
+                        var finReserva = TimeOnly.FromTimeSpan(r.HoraFin);
+                        return inicioSlot >= inicioReserva && inicioSlot < finReserva;
+                    });
 
                     string estado = reserva == null
                         ? "Disponible"

@@ -3,6 +3,7 @@
 namespace ProyectoDeportivoCR.Controllers
 {
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    
     public class LoginController : Controller
     {
         private readonly IUsuarioService _usuarioService;
@@ -39,9 +40,7 @@ namespace ProyectoDeportivoCR.Controllers
         public IActionResult IniciarSesion()
         {
             return View();
-        }
-
-        
+        }        
 
         [HttpPost]
         public async Task<IActionResult> IniciarSesion(UsuarioModel model)
@@ -61,13 +60,11 @@ namespace ProyectoDeportivoCR.Controllers
             return View();
         }
 
-
+        
         [HttpGet]
         public IActionResult CerrarSesion()
         {
-            // Limpia toda la sesión
             HttpContext.Session.Clear();
-            // Redirige al login
             return RedirectToAction("IniciarSesion");
         }
 

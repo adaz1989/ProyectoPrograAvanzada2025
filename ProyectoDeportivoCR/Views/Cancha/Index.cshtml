@@ -1,8 +1,15 @@
 ﻿@using System.Linq
 @model List<ProyectoDeportivoCR.Models.CanchaModel>
+@inject IHttpContextAccessor HttpContextAccessor
 
 @{
     ViewData["Title"] = "Listado de Canchas";
+}
+@{
+    // Recupera datos de sesión
+    var token = HttpContextAccessor.HttpContext!.Session.GetString("Token");
+    var nombre = HttpContextAccessor.HttpContext.Session.GetString("Nombre");
+    var rolNombre = HttpContextAccessor.HttpContext.Session.GetString("DescripcionTipoUsuario");
 }
 
 <div class="container my-5">
@@ -69,18 +76,23 @@
                                     Detalles
                                 </a>
 
-                                <a asp-controller="Cancha"
-                                   asp-action="ActualizarCancha"
-                                   asp-route-canchaId="@cancha.CanchaId"
-                                   class="btn btn-outline-warning btn-sm">
-                                    Actualizar
-                                </a>
                                 <a asp-controller="Resennas"
                                    asp-action="RegistrarResenna"
                                    asp-route-canchaId="@cancha.CanchaId"
                                    class="btn btn-outline-success btn-sm">
                                     Registrar Reseña
                                 </a>
+
+                                @if(rolNombre == "Administrador"){
+                                    <a asp-controller="Cancha"
+                                       asp-action="ActualizarCancha"
+                                       asp-route-canchaId="@cancha.CanchaId"
+                                       class="btn btn-outline-warning btn-sm">
+                                        Actualizar
+                                    </a>
+                                }
+                                
+                                
                             </div>
                         </div>
                     </div>
