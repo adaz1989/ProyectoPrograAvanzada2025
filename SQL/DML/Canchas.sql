@@ -36,7 +36,7 @@ BEGIN
             RETURN;
         END;
 
-        -- Insertar la nueva cancha incluyendo FotoCancha
+
         INSERT INTO dbo.Canchas (
             NombreCancha,
             CorreoCancha,
@@ -86,36 +86,6 @@ BEGIN
 END;
 GO
 
-DELETE FROM dbo.Canchas;
-
-select * from dbo.Canchas
-
-
-DECLARE @CodigoError INT, @Mensaje VARCHAR(255);
-
-EXEC dbo.RegistrarCancha
-    @NombreCancha = 'Cancha Ejemplo',
-    @CorreoCancha = 'cancha@example.com',
-    @TelefonoCancha = '12345678',
-    @PrecioHora = 10000,
-    @DeporteId = 1,
-    @ProvinciaId = 1,
-    @CantonId = 1,
-    @DistritoId = 2,
-    @DetalleDireccion = 'Calle 123, Barrio Deportivo',
-
-    @DescripcionCancha = 'Cancha sint tica con iluminaci n',
-
-    @DescripcionCancha = 'Cancha sint tica con iluminaci n',
-
-    @UsuarioId = 1,
-    @CodigoError = @CodigoError OUTPUT,
-    @Mensaje = @Mensaje OUTPUT;
-
--- Verificar los resultados
-SELECT @CodigoError AS CodigoError, @Mensaje AS Mensaje;
-
-
 GO
 CREATE OR ALTER PROCEDURE dbo.ActualizarInformacionCancha
     @CanchaId           BIGINT,
@@ -127,109 +97,79 @@ CREATE OR ALTER PROCEDURE dbo.ActualizarInformacionCancha
     @DetalleDireccion   VARCHAR(100),
     @DescripcionCancha  VARCHAR(100),
     @Estado             BIT,
-    @UsuarioId          BIGINT,
-    @CodigoError        INT OUTPUT,
+    @FotoCancha         VARBINARY(MAX),
+    @CodigoError        INT         OUTPUT,
     @Mensaje            VARCHAR(255) OUTPUT
 AS
 BEGIN
     SET NOCOUNT ON;
 
     BEGIN TRY
+        BEGIN TRANSACTION;
 
-
-        -- Verificar que la cancha exista, pertenezca al usuario y est  activa
-
+        -- Verificar que la cancha exista y esté activa
         IF NOT EXISTS (
-            SELECT 1 
-            FROM dbo.Canchas 
-            WHERE CanchaId = @CanchaId
-              AND UsuarioId = @UsuarioId
+            SELECT 1
+              FROM dbo.Canchas
+             WHERE CanchaId = @CanchaId
+               AND Estado    = 1
         )
         BEGIN
             SET @CodigoError = 1;
-            SET @Mensaje = 'La cancha no existe, est  deshabilitada o no pertenece al usuario.';
-            RETURN;
-        END
-
-
+            SET @Mensaje     = 'La cancha no existe o está deshabilitada.';
             ROLLBACK TRANSACTION;
             RETURN;
         END
 
-        -- Verificar que el deporte especificado existe
+        -- Verificar que el deporte exista
         IF NOT EXISTS (
             SELECT 1
-            FROM dbo.Deportes
-            WHERE DeporteId = @DeporteId
+              FROM dbo.Deportes
+             WHERE DeporteId = @DeporteId
         )
         BEGIN
             SET @CodigoError = 2;
-            SET @Mensaje = 'El deporte especificado no existe.';
+            SET @Mensaje     = 'El deporte especificado no existe.';
             ROLLBACK TRANSACTION;
             RETURN;
         END
 
-
-        -- Actualizar la informaci n de la cancha
-
-        -- Actualizar la informaci n de la cancha s lo si est  activa
+        -- Actualizar los datos (y conservar foto si @FotoCancha es NULL)
         UPDATE dbo.Canchas
-        SET NombreCancha      = @NombreCancha,
-            CorreoCancha      = @CorreoCancha,
-            TelefonoCancha    = @TelefonoCancha,
-            PrecioHora        = @PrecioHora,
-            DeporteId         = @DeporteId,
-            DetalleDireccion  = @DetalleDireccion,
-            DescripcionCancha = @DescripcionCancha,
-            Estado            = @Estado
-        WHERE CanchaId = @CanchaId 
-          AND UsuarioId = @UsuarioId;
-        IF @@ROWCOUNT = 0
-        BEGIN
-            SET @CodigoError = 1;
-            SET @Mensaje = 'No se pudo actualizar la informaci n de la cancha.';
-
-          AND UsuarioId = @UsuarioId
-          AND Estado = 1;
+           SET NombreCancha      = @NombreCancha,
+               CorreoCancha      = @CorreoCancha,
+               TelefonoCancha    = @TelefonoCancha,
+               PrecioHora        = @PrecioHora,
+               DeporteId         = @DeporteId,
+               DetalleDireccion  = @DetalleDireccion,
+               DescripcionCancha = @DescripcionCancha,
+               Estado            = @Estado,
+               FotoCancha        = COALESCE(@FotoCancha, FotoCancha)
+         WHERE CanchaId = @CanchaId
+           AND Estado    = 1;
 
         IF @@ROWCOUNT = 0
         BEGIN
-            SET @CodigoError = 1;
-            SET @Mensaje = 'No se pudo actualizar la informaci n de la cancha, o los datos eran iguales a los registrados.';
+            SET @CodigoError = 3;
+            SET @Mensaje     = 'No se pudo actualizar la cancha (quizá sin cambios).';
+            ROLLBACK TRANSACTION;
             RETURN;
         END
-        SELECT 
-            c.CanchaId,
-            c.NombreCancha,
-            c.CorreoCancha,
-            c.TelefonoCancha,
-            c.PrecioHora,
-            d.NombreDeporte AS NombreDeporte,
-            c.DetalleDireccion,
-            c.DescripcionCancha,
-            c.Estado
-        FROM dbo.Canchas c
-        INNER JOIN dbo.Deportes d ON c.DeporteId = d.DeporteId
-        WHERE c.CanchaId = @CanchaId;
 
         COMMIT TRANSACTION;
 
         SET @CodigoError = 0;
-        SET @Mensaje = 'Informaci n de la cancha actualizada correctamente.';
+        SET @Mensaje     = 'Información de la cancha actualizada correctamente.';
     END TRY
     BEGIN CATCH
         IF @@TRANCOUNT > 0
             ROLLBACK TRANSACTION;
         SET @CodigoError = ERROR_NUMBER();
-        SET @Mensaje = ERROR_MESSAGE();
+        SET @Mensaje     = ERROR_MESSAGE();
     END CATCH
 END;
 GO
 
-
-
-USE ProyectoAspNetCore;
-GO
 
 CREATE OR ALTER PROCEDURE dbo.ObtenerTodasLasCanchas
 AS
@@ -237,8 +177,9 @@ BEGIN
     SET NOCOUNT ON;
 
     BEGIN TRY
-        -- Retorna todas las canchas activas sin mostrar los IDs
+
         SELECT 
+            c.CanchaId,            
             c.NombreCancha,
             c.CorreoCancha,
             c.TelefonoCancha,
@@ -252,11 +193,11 @@ BEGIN
             ca.NombreCanton,
             dts.NombreDistrito
         FROM dbo.Canchas c
-        INNER JOIN dbo.Deportes d ON c.DeporteId = d.DeporteId
-        INNER JOIN dbo.Usuarios u ON c.UsuarioId = u.UsuarioId
+        INNER JOIN dbo.Deportes d  ON c.DeporteId    = d.DeporteId
+        INNER JOIN dbo.Usuarios u  ON c.UsuarioId    = u.UsuarioId
         INNER JOIN dbo.Provincias p ON c.ProvinciaId = p.ProvinciaId
-        INNER JOIN dbo.Cantones ca ON c.CantonId = ca.CantonId
-        INNER JOIN dbo.Distritos dts ON c.DistritoId = dts.DistritoId
+        INNER JOIN dbo.Cantones ca  ON c.CantonId     = ca.CantonId
+        INNER JOIN dbo.Distritos dts ON c.DistritoId  = dts.DistritoId
         WHERE c.Estado = 1; -- Solo canchas activas
     END TRY
     BEGIN CATCH
@@ -265,10 +206,6 @@ BEGIN
 END;
 GO
 
-DROP PROCEDURE IF EXISTS dbo.ObtenerCancha;
-GO
-
-
 CREATE OR ALTER PROCEDURE dbo.ObtenerCancha
     @CanchaId    BIGINT,
     @CodigoError INT            OUTPUT,
@@ -276,6 +213,8 @@ CREATE OR ALTER PROCEDURE dbo.ObtenerCancha
 AS
 BEGIN
     SET NOCOUNT ON;
+
+    -- Verificar existencia y estado
     IF NOT EXISTS (
         SELECT 1 
           FROM dbo.Canchas 
@@ -288,6 +227,7 @@ BEGIN
         RETURN;
     END
 
+    -- Seleccionar todos los campos, incluida la foto
     SELECT 
         c.CanchaId,
         c.NombreCancha,
@@ -302,7 +242,8 @@ BEGIN
         c.DetalleDireccion,
         c.DescripcionCancha,
         c.UsuarioId,
-        c.Estado
+        c.Estado,
+        c.FotoCancha            
     FROM dbo.Canchas c
     INNER JOIN dbo.Deportes d 
         ON c.DeporteId = d.DeporteId
@@ -313,32 +254,5 @@ BEGIN
     SET @Mensaje     = 'Operación exitosa.';
 END;
 GO
-
-select * from dbo.Canchas
-
-USE ProyectoAspNetCore;
-GO
-DECLARE @CodigoError INT,
-        @Mensaje VARCHAR(255);
-
-EXEC dbo.ActualizarInformacionCancha 
-    @CanchaId = 4,
-    @NombreCancha = 'Nombre de prueba',
-    @CorreoCancha = 'correo@prueba.com',
-    @TelefonoCancha = '123456789',
-    @PrecioHora = 100.00,
-    @DeporteId = 1,
-    @DetalleDireccion = 'Calle de prueba 123',
-    @DescripcionCancha = 'Cancha en excelente estado',
-    @Estado = 1,
-    @UsuarioId = 1,
-    @CodigoError = @CodigoError OUTPUT,
-    @Mensaje = @Mensaje OUTPUT;
-
-SELECT @CodigoError AS CodigoError, @Mensaje AS Mensaje;
-
-
-
-
 
 

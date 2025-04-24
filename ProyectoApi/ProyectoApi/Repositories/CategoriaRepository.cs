@@ -109,5 +109,16 @@ namespace ProyectoApi.Repositories
 
             return (CodigoError, Mensaje);
         }
+        public async Task<IEnumerable<CategoriaModel>> ObtenerTodasLasCategorias()
+        {
+            using var conexion = _context.CrearConexion();
+
+            var resultado = await conexion.QueryAsync<CategoriaModel>(
+                "dbo.ObtenerTodasLasCategorias",
+                commandType: CommandType.StoredProcedure
+            );
+
+            return resultado;
+        }
     }
 }

@@ -13,9 +13,20 @@ namespace ProyectoDeportivoCR.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            // Llamamos al servicio que obtiene todas las categorías
+            var resultado = await _categoriaService.ObtenerTodasLasCategorias();
+
+            if (resultado.Exito && resultado.Datos != null)
+            {
+                // Pasamos la lista de categorías al View
+                return View(resultado.Datos);
+            }
+
+            // Si hay un error, mostramos mensaje y enviamos una lista vacía
+            ViewBag.Mensaje = resultado.Mensaje;
+            return View(new List<CategoriaModel>());
         }
 
         [HttpGet]
@@ -31,7 +42,7 @@ namespace ProyectoDeportivoCR.Controllers
 
             ViewBag.Mensaje = resultado.Mensaje;
 
-            if (resultado.Exito) return RedirectToAction("ObtenerCategorias");
+            if (resultado.Exito) return RedirectToAction("Index");
 
             return View();
         }
@@ -50,7 +61,7 @@ namespace ProyectoDeportivoCR.Controllers
 
             ViewBag.Mensaje = resultado.Mensaje;
             // Si no se encontró o hubo un error, redirige a la vista de búsqueda
-            return RedirectToAction("ObtenerCategorias");
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -65,7 +76,7 @@ namespace ProyectoDeportivoCR.Controllers
             {
                 // Si se actualiza con éxito, podrías volver a mostrar la misma categoría
                 // o redirigir a otra acción (por ejemplo, al listado o a la vista de búsqueda).
-                return RedirectToAction("ObtenerCategorias", new { categoriaId = model.CategoriaId });
+                return RedirectToAction("Index", new { categoriaId = model.CategoriaId });
             }
 
             // Si ocurre algún error, vuelve a la vista con el modelo para mostrar mensajes.
@@ -86,15 +97,15 @@ namespace ProyectoDeportivoCR.Controllers
             ViewBag.Mensaje = resultado.Mensaje;
             return View();
         }
-
+            
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DesabilitarCategoria(int categoriaId)
         {
             var resultado = await _categoriaService.DesabilitarCategoria(categoriaId);
-
             ViewBag.Mensaje = resultado.Mensaje;
-
-            return RedirectToAction("ObtenerCategorias");
+            return RedirectToAction("Index");
         }
+
     }
 }
