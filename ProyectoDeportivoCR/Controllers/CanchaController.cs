@@ -161,7 +161,8 @@ namespace ProyectoDeportivoCR.Controllers
             ViewBag.Cancha = resultadoCancha.Datos;
             ViewBag.Dias = resultadoDias.Datos;
 
-            return View("HorarioCancha", resultadoHorario.Datos);
+            return RedirectToAction("GestionarHorarioCancha", new { canchaId = model.CanchaId });
+
         }
         #region Métodos auxiliares
 

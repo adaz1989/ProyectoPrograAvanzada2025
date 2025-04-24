@@ -5,7 +5,7 @@
     // Recupera datos de sesión
     var token = HttpContextAccessor.HttpContext!.Session.GetString("Token");
     var nombre = HttpContextAccessor.HttpContext.Session.GetString("Nombre");
-    var rolNombre = HttpContextAccessor.HttpContext.Session.GetString("RolNombre");
+    var rolNombre = HttpContextAccessor.HttpContext.Session.GetString("DescripcionTipoUsuario");
 }
 
 <!DOCTYPE html>
@@ -146,25 +146,28 @@
                                         <a class="rd-nav-link" asp-controller="Usuario" asp-action="PerfilUsuario">Mi perfil</a>
                                     </li>
                                     <li class="rd-nav-item">
-                                        <a class="rd-nav-link" asp-controller="Torneos" asp-action="ConsultarTorneos">Torneos</a>
-                                    </li>
-                                    <li class="rd-nav-item">
                                         <a class="rd-nav-link" asp-controller="Cancha" asp-action="Index">Canchas</a>
                                     </li>
-                                    <li class="rd-nav-item">                                    
-                                        <a class="rd-nav-link" asp-controller="Categoria" asp-action="Index">Categorias</a>
-                                    </li>
                                     <li class="rd-nav-item">
-                                        <a class="rd-nav-link" asp-controller="Cancha" asp-action="ObtenerCancha">Canchas</a>
+                                        <a class="rd-nav-link" asp-controller="Torneos" asp-action="ConsultarTorneos">Torneos</a>
                                     </li>
-                                    <li class="rd-nav-item">
-                                        <a class="rd-nav-link" asp-controller="Cancha" asp-action="HorarioCancha">Horario Cancha</a>
-                                    </li>
+
+                                    @* Solo visible para Administradores *@
+                                    @if (rolNombre == "Administrador")
+                                    {
+                                        <li class="rd-nav-item">
+                                            <a class="rd-nav-link" asp-controller="Categoria" asp-action="Index">Categorías</a>
+                                        </li>
+                                        <li class="rd-nav-item">
+                                            <a class="rd-nav-link" asp-controller="Facturas" asp-action="Index">Facturas</a>
+                                        </li>
+                                    }
+
                                     <li class="rd-nav-item">
                                         <a class="rd-nav-link" href="Partidos">Partidos</a>
-                                        <a class="rd-nav-link" asp-controller="Facturas" asp-action="Index">Facturas</a>
                                     </li>
                                 </ul>
+
 
                                 <div class="rd-navbar-main-element">
                                     <ul class="list-inline list-inline-sm">

@@ -8,110 +8,111 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" />
 </head>
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-7 col-md-9">
-            <div class="card shadow">
-                <div class="card-header bg-primary text-white text-center">
-                    <h3 class="mb-0">@ViewBag.Title</h3>
-                </div>
-
-                <div class="card-body">
-                    @if (ViewBag.Mensaje != null)
-                    {
-                        <div class="alert alert-info text-center" role="alert">
-                            @ViewBag.Mensaje
+<section class="section section-variant-1 bg-gray-100">
+    <div class="container">
+        <div class="row row-50 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-6">
+                <div class="card-login-register" id="card-l-r">
+                    <div class="card-top-panel">
+                        <div class="card-top-panel-left">
+                            <h5 class="card-title card-title-login">
+                                <i class="bi bi-pencil-square"></i> @ViewBag.Title
+                            </h5>
                         </div>
-                    }
+                    </div>
 
-                    <form asp-action="ActualizarCancha" method="post" enctype="multipart/form-data">
-                        @Html.AntiForgeryToken()
-                        <input asp-for="CanchaId" type="hidden" />
+                    <div class="card-form card-form-login">
+                        @if (ViewBag.Mensaje != null)
+                        {
+                            <div class="alert alert-info text-center" role="alert">
+                                @ViewBag.Mensaje
+                            </div>
+                        }
 
-                        <!-- Datos Generales -->
-                        <div class="mb-3">
-                            <label asp-for="NombreCancha" class="form-label fw-bold"></label>
-                            <input asp-for="NombreCancha" class="form-control" />
-                            <span asp-validation-for="NombreCancha" class="text-danger"></span>
-                        </div>
+                        <form asp-action="ActualizarCancha" method="post" enctype="multipart/form-data" class="rd-form">
+                            @Html.AntiForgeryToken()
+                            <input asp-for="CanchaId" type="hidden" />
 
-                        <div class="mb-3">
-                            <label asp-for="CorreoCancha" class="form-label fw-bold"></label>
-                            <input asp-for="CorreoCancha" type="email" class="form-control" />
-                            <span asp-validation-for="CorreoCancha" class="text-danger"></span>
-                        </div>
+                            <!-- Datos Generales -->
+                            <div class="form-wrap">
+                                <p><i class="bi bi-building"></i> Nombre de la Cancha</p>
+                                <input asp-for="NombreCancha" class="form-input" />
+                                <span asp-validation-for="NombreCancha" class="text-danger small"></span>
+                            </div>
 
-                        <div class="mb-3">
-                            <label asp-for="TelefonoCancha" class="form-label fw-bold"></label>
-                            <input asp-for="TelefonoCancha" class="form-control" />
-                            <span asp-validation-for="TelefonoCancha" class="text-danger"></span>
-                        </div>
+                            <div class="form-wrap">
+                                <p><i class="bi bi-envelope"></i> Correo Electrónico</p>
+                                <input asp-for="CorreoCancha" type="email" class="form-input" />
+                                <span asp-validation-for="CorreoCancha" class="text-danger small"></span>
+                            </div>
 
-                        <!-- Precio y Dirección -->
-                        <div class="mb-3">
-                            <label asp-for="PrecioHora" class="form-label fw-bold"></label>
-                            <input asp-for="PrecioHora" type="number" step="0.01" class="form-control" />
-                            <span asp-validation-for="PrecioHora" class="text-danger"></span>
-                        </div>
+                            <div class="form-wrap">
+                                <p><i class="bi bi-telephone"></i> Teléfono</p>
+                                <input asp-for="TelefonoCancha" class="form-input" />
+                                <span asp-validation-for="TelefonoCancha" class="text-danger small"></span>
+                            </div>
 
-                        <div class="mb-3">
-                            <label asp-for="DetalleDireccion" class="form-label fw-bold"></label>
-                            <input asp-for="DetalleDireccion" class="form-control" />
-                            <span asp-validation-for="DetalleDireccion" class="text-danger"></span>
-                        </div>
+                            <!-- Precio y Dirección -->
+                            <div class="form-wrap">
+                                <p><i class="bi bi-currency-dollar"></i> Precio por Hora</p>
+                                <input asp-for="PrecioHora" type="number" step="0.01" class="form-input" />
+                                <span asp-validation-for="PrecioHora" class="text-danger small"></span>
+                            </div>
 
-                        <!-- Descripción -->
-                        <div class="mb-3">
-                            <label asp-for="DescripcionCancha" class="form-label fw-bold"></label>
-                            <textarea asp-for="DescripcionCancha" class="form-control" rows="3"></textarea>
-                            <span asp-validation-for="DescripcionCancha" class="text-danger"></span>
-                        </div>
+                            <div class="form-wrap">
+                                <p><i class="bi bi-signpost"></i> Dirección Exacta</p>
+                                <input asp-for="DetalleDireccion" class="form-input" />
+                                <span asp-validation-for="DetalleDireccion" class="text-danger small"></span>
+                            </div>
 
-                        <!-- Imagen -->
-                        <div class="form-section-group mt-4">
-                            <h4 class="form-subtitle">
-                                <i class="bi bi-image"></i> Foto de la Cancha
-                            </h4>
-                            <label for="fotoCancha" id="dropzoneCancha" class="dropzone">
-                                <i class="bi bi-cloud-upload-fill dropzone-icon"></i>
-                                <p class="dropzone-text">Haz clic o arrastra la imagen aquí</p>
-                                <p class="dropzone-subtext">JPEG/PNG, máx. 2 MB</p>
-                                <input asp-for="FotoCanchaWeb" id="fotoCancha" type="file"
-                                       accept="image/jpeg, image/png" class="d-none" />
-                            </label>
-                            <span asp-validation-for="FotoCanchaWeb" class="validation-message"></span>
-                        </div>
+                            <!-- Descripción -->
+                            <div class="form-wrap">
+                                <p><i class="bi bi-text-paragraph"></i> Descripción</p>
+                                <textarea asp-for="DescripcionCancha" class="form-input" rows="3"></textarea>
+                                <span asp-validation-for="DescripcionCancha" class="text-danger small"></span>
+                            </div>
 
-                        <!-- Deporte -->
-                        <div class="form-group mt-3">
-                            <label asp-for="DeporteId" class="form-label">Deporte</label>
-                            <select asp-for="DeporteId" class="form-select"
-                                    asp-items="@(new SelectList(ViewBag.Deportes, "DeporteId", "NombreDeporte"))">
-                                <option value="">Seleccione un Deporte</option>
-                            </select>
-                            <span asp-validation-for="DeporteId" class="validation-message"></span>
-                        </div>
+                            <!-- Imagen -->
+                            <div class="form-wrap text-center">
+                                <p><i class="bi bi-image"></i> Foto de la Cancha</p>
+                                <label for="fotoCancha" class="dropzone">
+                                    <i class="bi bi-cloud-upload-fill dropzone-icon"></i>
+                                    <p class="dropzone-text">Haz clic o arrastra la imagen aquí</p>
+                                    <p class="dropzone-subtext">JPEG/PNG, máx. 2 MB</p>
+                                    <input asp-for="FotoCanchaWeb" id="fotoCancha" type="file" accept="image/jpeg, image/png" class="d-none" />
+                                </label>
+                                <span asp-validation-for="FotoCanchaWeb" class="text-danger small"></span>
+                            </div>
 
-                        <!-- Estado -->
-                        <div class="form-check mt-3">
-                            <input asp-for="Estado" class="form-check-input" type="checkbox" />
-                            <label asp-for="Estado" class="form-check-label fw-bold"></label>
-                            <span asp-validation-for="Estado" class="text-danger"></span>
-                        </div>
+                            <!-- Deporte -->
+                            <div class="form-wrap">
+                                <p><i class="bi bi-dribbble"></i> Deporte</p>
+                                <select asp-for="DeporteId" class="form-input"
+                                        asp-items="@(new SelectList(ViewBag.Deportes, "DeporteId", "NombreDeporte"))">
+                                    <option value="">Seleccione un Deporte</option>
+                                </select>
+                                <span asp-validation-for="DeporteId" class="text-danger small"></span>
+                            </div>
 
-                        <!-- Botones -->
-                        <div class="text-center mt-4 d-grid gap-2 d-md-flex justify-content-md-center">
-                            <button type="submit" class="btn btn-success px-4">
-                                <i class="bi bi-save me-2"></i>Guardar Cambios
-                            </button>
-                            <a asp-action="ObtenerCancha" asp-route-canchaId="@Model.CanchaId"
-                               class="btn btn-outline-secondary px-4">
-                                <i class="bi bi-arrow-left me-2"></i>Volver
-                            </a>
-                        </div>
-                    </form>
+                            <!-- Estado -->
+                            <div class="form-wrap">
+                                <div class="form-check d-flex align-items-center gap-2">
+                                    <input asp-for="Estado" class="form-check-input" type="checkbox" />
+                                    <label asp-for="Estado" class="form-check-label fw-bold"></label>
+                                </div>
+                                <span asp-validation-for="Estado" class="text-danger small"></span>
+                            </div>
+
+                            <!-- Botones -->
+                            <div class="form-wrap text-center mt-4">
+                                <button type="submit" class="button button-lg button-primary me-2">
+                                    <i class="bi bi-save me-2"></i> Guardar Cambios
+                                </button>                                
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</section>

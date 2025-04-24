@@ -11,10 +11,12 @@ namespace ProyectoApi.Controllers
     public class CanchasController : ControllerBase
     {
         private readonly ICanchasService _canchasService;
+        private readonly IJwtService _jwtService;
 
-        public CanchasController(ICanchasService canchasService)
+        public CanchasController(ICanchasService canchasService, IJwtService jwtService)
         {
             _canchasService = canchasService;
+            _jwtService = jwtService;
         }
 
 

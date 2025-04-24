@@ -2,6 +2,7 @@
 
 namespace ProyectoDeportivoCR.Controllers
 {
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public class LoginController : Controller
     {
         private readonly IUsuarioService _usuarioService;
@@ -59,6 +60,8 @@ namespace ProyectoDeportivoCR.Controllers
             ViewBag.Mensaje = resultado.Mensaje;
             return View();
         }
+
+
         [HttpGet]
         public IActionResult CerrarSesion()
         {
