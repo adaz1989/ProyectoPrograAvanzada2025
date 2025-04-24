@@ -1,24 +1,18 @@
-CREATE or ALTER PROCEDURE ObtenerCantonesPorProvincia
+CREATE OR ALTER PROCEDURE ObtenerCantonesPorProvincia
     @ProvinciaId INT
 AS
 BEGIN
-    SET NOCOUNT ON;
-
-    SELECT C.CantonId, C.NombreCanton
-    FROM Cantones C
-    WHERE C.ProvinciaId = @ProvinciaId
-    ORDER BY C.NombreCanton;
-END;
+    SELECT CantonId, NombreCanton
+    FROM Cantones
+    WHERE ProvinciaId = @ProvinciaId
+END
 
 
 CREATE OR ALTER PROCEDURE ObtenerDistritosPorCanton
     @CantonId INT
 AS
 BEGIN
-    SET NOCOUNT ON;
-
-    SELECT D.DistritoId, D.NombreDistrito
-    FROM Distritos D
-    WHERE D.CantonId = @CantonId
-    ORDER BY D.NombreDistrito;
-END;
+    SELECT DistritoId, NombreDistrito
+    FROM Distritos
+    WHERE CantonId = @CantonId
+END

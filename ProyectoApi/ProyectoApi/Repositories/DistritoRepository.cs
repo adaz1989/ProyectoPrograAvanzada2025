@@ -24,5 +24,16 @@ namespace ProyectoApi.Repositories
 
             return resultado;
         }
+
+        public async Task<IEnumerable<DistritoModel>> ObtenerDistritosPorCanton(int cantonId)
+        {
+            using var conexion = _context.CrearConexion();
+
+            return await conexion.QueryAsync<DistritoModel>(
+                "ObtenerDistritosPorCanton",
+                new { CantonId = cantonId },
+                commandType: CommandType.StoredProcedure
+            );
+        }
     }
 }

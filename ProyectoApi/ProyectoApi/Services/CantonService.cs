@@ -95,6 +95,11 @@ namespace ProyectoApi.Services
                 }
             };
         }
-            
+
+        public async Task<IEnumerable<CantonModel>> ObtenerCantonesPorProvincia(int provinciaId)
+        {
+            return await _cantonRepository.ObtenerCantonesPorProvincia(provinciaId);
+        }
+
     }
 }

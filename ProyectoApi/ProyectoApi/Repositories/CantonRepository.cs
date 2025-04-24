@@ -88,5 +88,16 @@ namespace ProyectoApi.Repositories
 
             return (codigoError, mensaje);
         }
+
+        public async Task<IEnumerable<CantonModel>> ObtenerCantonesPorProvincia(int provinciaId)
+        {
+            using var conexion = _context.CrearConexion();
+
+            return await conexion.QueryAsync<CantonModel>(
+                "ObtenerCantonesPorProvincia",
+                new { ProvinciaId = provinciaId },
+                commandType: CommandType.StoredProcedure
+            );
+        }
     }
 }

@@ -53,5 +53,10 @@ namespace ProyectoApi.Services
 
             return respuesta;
         }
+
+        public async Task<IEnumerable<DistritoModel>> ObtenerDistritosPorCanton(int cantonId)
+        {
+            return await _repository.ObtenerDistritosPorCanton(cantonId);
+        }
     }
 }
