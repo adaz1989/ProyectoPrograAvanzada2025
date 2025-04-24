@@ -8,5 +8,7 @@
         public Task<RespuestaModel> EliminarDeporte(long deporteId);
 
         public Task<RespuestaModel> ObtenerInformacionDeporte(long deporteId);
+
+        public Task<RespuestaModel> ObtenerTodosLosDeportes();
     }
 }

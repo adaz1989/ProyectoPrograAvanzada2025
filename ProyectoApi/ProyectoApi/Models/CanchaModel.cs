@@ -3,7 +3,7 @@
 namespace ProyectoApi.Models
 {
     public class CanchaModel
-    { 
+    {
         public long CanchaId { get; set; }
         [StringLength(50)]
         public string? NombreCancha { get; set; }
@@ -16,6 +16,8 @@ namespace ProyectoApi.Models
         public string? DetalleDireccion { get; set; }
         [StringLength(100)]
         public string? DescripcionCancha { get; set; }
+
+        public byte[]? FotoCancha { get; set; }
 
         // Llaves foraneas
         public long UsuarioId { get; set; }
@@ -32,6 +34,8 @@ namespace ProyectoApi.Models
         public string? NombreDistrito { get; set; }
 
         public HorarioCanchaModel? Horario { get; set; }
+        // Estado 
+        public bool Estado { get; set; }
 
 
 

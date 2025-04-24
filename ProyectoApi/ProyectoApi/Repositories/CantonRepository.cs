@@ -50,6 +50,19 @@ namespace ProyectoApi.Repositories
             return resultado!;
         }
 
+        public async Task<IEnumerable<CantonModel>> ObtenerTodosCantones()
+        {
+            using var conexion = _context.CrearConexion();
+
+            var resultado = await conexion.QueryAsync<CantonModel>(
+                "dbo.ObtenerTodosLosCantones",
+                commandType: CommandType.StoredProcedure
+            );
+
+            return resultado;
+        }
+
+
         public async Task<(int CodigoError, string Mensaje)> RegistrarCanton(CantonModel model)
         {
             using var conexion = _context.CrearConexion();

@@ -15,28 +15,32 @@ namespace ProyectoDeportivoCR.Controllers
         }
 
         [HttpGet]
-        public IActionResult RegistrarEquipo(long torneoId)
+        public IActionResult RegistrarEquipoTorneo(long torneoId)
         {
             var model = new EquipoTorneoModel
             {
-                TorneoId = torneoId
+                TorneoId = torneoId,
+                Integrantes = new List<IntegranteModel>
+                {
+                    new IntegranteModel()
+                }
             };
 
             return View(model);
         }
 
         [HttpPost]
-        public IActionResult RegistrarEquipo(EquipoTorneoModel model)
+        public IActionResult RegistrarEquipoTorneo(EquipoTorneoModel model)
         {
-            if (model.TorneoId <= 0)
+            if (model.TorneoId <= 0 || model.Integrantes == null || !model.Integrantes.Any() )
             {
-                ModelState.AddModelError("", "Error: No se encontró el torneo.");
+                ModelState.AddModelError("", "Debe agregar al menos un integrante.");
                 return View(model);
             }
 
             using (var http = _httpClient.CreateClient())
             {
-                var url = _configuration.GetSection("Variables:urlWebApi").Value + "EquipoTorneo/RegistrarEquipo";
+                var url = _configuration.GetSection("Variables:urlWebApi").Value + "EquipoTorneo/RegistrarEquipoTorneo";
 
                 // http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
                 var response = http.PostAsJsonAsync(url, model).Result;

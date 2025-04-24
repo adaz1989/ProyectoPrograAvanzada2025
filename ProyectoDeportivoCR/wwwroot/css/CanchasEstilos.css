@@ -1,0 +1,76 @@
+﻿/* ===========================
+   General
+=========================== */
+body {
+    background-color: #eef2f7;
+}
+
+/* Contenedor principal del formulario */
+.card {
+    margin-top: 1rem;
+}
+
+/* Cabecera de la tarjeta */
+.card-header {
+    padding: 1rem 1.5rem;
+    border-bottom: none;
+}
+
+/* Cuerpo de la tarjeta */
+.card-body {
+    padding: 2rem 1.5rem;
+}
+
+/* Títulos en el formulario */
+h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+}
+
+/* Estilos para los labels */
+.form-label {
+    font-weight: 600;
+}
+
+/* Inputs y selects con margen adicional inferior */
+.form-control,
+textarea {
+    margin-bottom: 1.5rem;
+}
+
+/* Botón de envío */
+.btn-submit {
+    width: 100%;
+    padding: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    transition: background-color 0.2s ease-in-out;
+}
+
+    .btn-submit:hover {
+        background-color: #198754; /* Un verde más oscuro en hover */
+    }
+
+/* Alertas o mensajes en el formulario */
+.alert {
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+}
+.form-select {
+    -webkit-appearance: none; /* Safari / Chrome */
+    -moz-appearance: none; /* Firefox */
+    appearance: none; /* Estándar */
+    background-image: none; /* Remueve ícono por defecto en algunos navegadores */
+    /* Si deseas usar tu ícono personalizado, descomenta:
+    background: url("ruta_a_tu_icono.svg") no-repeat right 1rem center / 1rem auto;
+    */
+    padding-right: 2rem; /* Espacio para el ícono si lo agregas */
+}
+
+
+/* Responsive: Ajustes en pantallas más pequeñas */
+@media (max-width: 576px) {
+    .card-body {
+        padding: 1rem;
+    }
+}

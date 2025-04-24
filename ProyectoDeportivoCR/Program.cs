@@ -14,7 +14,7 @@ builder.Services.AddScoped<IUsuarioRepositorie, UsuarioRepositorie>();
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 
 
-//Agregados por Josue
+// -------------------Agregados por Josue -------------------------
 builder.Services.AddScoped<ICategoriaService, CategoriaService>();
 builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
 
@@ -25,6 +25,24 @@ builder.Services.AddScoped<ICanchaRepository, CanchaRepository>();
 builder.Services.AddScoped<ICanchaService, CanchaService>();
 
 builder.Services.AddScoped<DiasService>();
+builder.Services.AddScoped<IFacturaRepository, FacturaRepository>();
+builder.Services.AddScoped<IFacturaService, FacturaService>();
+
+builder.Services.AddScoped<IProvinciaRepository, ProvinciaRepository>();
+builder.Services.AddScoped<ICantonRepository, CantonRepository>();
+builder.Services.AddScoped<IDistritoRepository, DistritoRepository>();
+builder.Services.AddScoped<ICanchaRepository, CanchaRepository>();
+
+builder.Services.AddScoped<IProvinciaService, ProvinciaService>();
+builder.Services.AddScoped<ICantonService, CantonService>();
+builder.Services.AddScoped<IDistritoService, DistritoService>();
+builder.Services.AddScoped<ICanchaService, CanchaService>();
+
+builder.Services.AddScoped<IResennaService, ResennaService>();
+builder.Services.AddScoped<IResennaRepository, ResennaRepository>();
+
+
+
 //-----------------------------------------------------------------
 
 var app = builder.Build();

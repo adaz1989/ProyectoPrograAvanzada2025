@@ -154,3 +154,26 @@ GO
 
 
 select * from dbo.Categorias
+
+
+CREATE OR ALTER PROCEDURE dbo.ObtenerTodosLosCantones
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        SELECT 
+            CantonId,
+            NombreCanton,
+            ProvinciaId
+        FROM dbo.Cantones
+        ORDER BY NombreCanton;
+    END TRY
+    BEGIN CATCH
+        DECLARE @ErrorMessage NVARCHAR(4000) = ERROR_MESSAGE();
+        RAISERROR(@ErrorMessage, 16, 1);
+    END CATCH
+END;
+GO
+
+EXEC dbo.ObtenerTodosLosCantones;

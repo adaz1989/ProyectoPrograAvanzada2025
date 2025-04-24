@@ -4,7 +4,7 @@
     {
 
         public Task<HttpResponseMessage> IniciarSesion(UsuarioModel model);
-        public Task<HttpResponseMessage> RegistrarUsuario(UsuarioModel model);
+        Task<HttpResponseMessage> RegistrarUsuario(UsuarioModel model, string? token);
         public Task<HttpResponseMessage> ObtenerInformacionUsuario(string token);
         public Task<HttpResponseMessage> ActualizarInformacionUsuario(string token, UsuarioModel model);
     }

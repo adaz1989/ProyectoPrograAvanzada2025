@@ -32,10 +32,16 @@ namespace ProyectoDeportivoCR.Repositories
 
         }
 
-        public async Task<HttpResponseMessage> RegistrarUsuario(UsuarioModel model)
+        public async Task<HttpResponseMessage> RegistrarUsuario(UsuarioModel model, string? token)
         {
             using var http = _httpClient.CreateClient();
-            var url = _apiEndpoints["RegistrarUsuario"];            
+            var url = _apiEndpoints["RegistrarUsuario"];
+
+            if (!string.IsNullOrEmpty(token))
+            {
+                http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            }
+
             return await http.PostAsJsonAsync(url, model);
         }
 

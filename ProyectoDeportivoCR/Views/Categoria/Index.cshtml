@@ -1,0 +1,101 @@
+﻿@using System.Linq
+@model List<ProyectoDeportivoCR.Models.CategoriaModel>
+
+@{
+    ViewData["Title"] = "Listado de Categorías";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/EstilosCRUD.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+</head>
+
+
+<div class="container my-5">
+    <div class="row mb-4">
+        <div class="col-12 text-center">
+            <h2 class="mb-4">Listado de Categorías</h2>
+        </div>
+    </div>
+
+    @if (ViewBag.Mensaje != null)
+    {
+        <div class="row mb-3">
+            <div class="col-12">
+                <div class="alert alert-info" role="alert">
+                    @ViewBag.Mensaje
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="row mb-3">
+        <div class="col-md-8 text-end">
+            <a asp-controller="Categoria"
+               asp-action="RegistrarCategoria"
+               class="btn btn-success">
+                <i class="bi bi-plus-circle-fill me-1"></i> Registrar Categoría
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            @if (Model != null && Model.Any())
+            {
+                <div class="table-responsive">
+                    <table id="categoriasTable"
+                           class="table table-striped table-hover table-bordered align-middle">
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col" style="width:5%">#</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col" style="width:15%">Edad Mínima</th>
+                                <th scope="col" style="width:15%">Edad Máxima</th>
+                                <th scope="col" class="text-center" style="width:15%">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var cat in Model)
+                            {
+                                <tr>
+                                    <th scope="row">@cat.CategoriaId</th>
+                                    <td>@cat.NombreCategoria</td>
+                                    <td>@cat.EdadMinima</td>
+                                    <td>@cat.EdadMaxima</td>
+                                    <td class="text-center">
+                                        <div class="btn-group" role="group" aria-label="Acciones">
+                                            <a asp-action="ActualizarCategoria"
+                                               asp-route-categoriaId="@cat.CategoriaId"
+                                               class="btn btn-sm btn-primary"
+                                               title="Editar">
+                                                <i class="bi bi-pencil-fill"></i>
+                                            </a>
+                                            <form asp-controller="Categoria"
+                                                  asp-action="DesabilitarCategoria"
+                                                  asp-route-categoriaId="@cat.CategoriaId"
+                                                  method="post"
+                                                  onsubmit="return confirm('¿Está seguro que desea deshabilitar esta categoría?');"
+                                                  style="display:inline;">
+                                                @Html.AntiForgeryToken()
+                                                <button type="submit"
+                                                        class="btn btn-sm btn-danger"
+                                                        title="Deshabilitar">
+                                                    <i class="bi bi-trash2-fill"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <p class="text-center">No se encontraron categorías.</p>
+            }
+        </div>
+    </div>
+</div>

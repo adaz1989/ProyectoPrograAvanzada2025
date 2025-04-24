@@ -181,3 +181,26 @@ BEGIN
 END;
 GO
 
+CREATE OR ALTER PROCEDURE dbo.ObtenerTodosLosDeportes
+    @CodigoError INT OUTPUT,
+    @Mensaje VARCHAR(255) OUTPUT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        -- Retornar todos los deportes ordenados por su ID
+        SELECT * 
+        FROM dbo.Deportes 
+        ORDER BY DeporteId;
+
+        SET @CodigoError = 0;
+        SET @Mensaje = 'Consulta exitosa.';
+    END TRY
+    BEGIN CATCH
+        SET @CodigoError = 2;
+        SET @Mensaje = ERROR_MESSAGE();
+    END CATCH
+END;
+GO
+

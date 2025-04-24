@@ -1,6 +1,7 @@
 ﻿using System.Net.Http.Headers;
 using System.Security.Cryptography.Xml;
 using System.Text.Json;
+using Microsoft.AspNetCore.Http;
 using ProyectoDeportivoCR.Services.Extensions;
 
 
@@ -39,21 +40,24 @@ namespace ProyectoDeportivoCR.Services
 
         public async Task<Respuesta2Model<UsuarioModel>> RegistrarUsuario(UsuarioModel model)
         {
-            model.Contrasenna = _encriptacion.Encriptar(model.Contrasenna!);
-
-            var respuesta = await _usuarioRepositorie.RegistrarUsuario(model);
-
-            if (respuesta.IsSuccessStatusCode)
+            try
             {
+                model.Contrasenna = _encriptacion.Encriptar(model.Contrasenna!);
+                var token = _httpContextAccessor.HttpContext?.Session.GetString("Token");
+
+                var respuesta = await _usuarioRepositorie.RegistrarUsuario(model, token);
+
                 return await respuesta.LeerRespuesta2Model<UsuarioModel>();
             }
-
-            return new Respuesta2Model<UsuarioModel>
+            catch (Exception ex)
             {
-                Exito = false,
-                Mensaje = "Error al comunicarse con la API."
-            };
-        }        
+                return new Respuesta2Model<UsuarioModel>
+                {
+                    Exito = false,
+                    Mensaje = $"Error al registrar usuario: {ex.Message}"
+                };
+            }
+        }
 
         public async Task<Respuesta2Model<UsuarioModel>> ObtenerInformacionUsuario()
         {

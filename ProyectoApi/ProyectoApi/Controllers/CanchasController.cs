@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ProyectoApi.Controllers
 {
 
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CanchasController : ControllerBase
@@ -17,7 +18,7 @@ namespace ProyectoApi.Controllers
         }
 
 
-        [HttpPut]
+        [HttpPost]
         [Route("RegistrarCancha")]
         public async Task<IActionResult> RegistrarCancha(CanchaModel model)
         {
@@ -49,6 +50,14 @@ namespace ProyectoApi.Controllers
         {
             var respuesta = await _canchasService.ObtenerInformacionCanchas(canchaId);
             return Ok(respuesta);
+        }
+
+        [HttpGet]
+        [Route("ObtenerTodasLasCanchas")]
+        public async Task<IActionResult> ObtenerTodasLasCanchas()
+        {
+            var canchas = await _canchasService.ObtenerTodasLasCanchas();
+            return Ok(canchas); // Devuelve la lista directamente, no un objeto envoltorio.
         }
 
 

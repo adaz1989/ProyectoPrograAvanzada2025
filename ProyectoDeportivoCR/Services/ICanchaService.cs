@@ -1,4 +1,8 @@
-﻿namespace ProyectoDeportivoCR.Services
+﻿using ProyectoDeportivoCR.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace ProyectoDeportivoCR.Services
 {
     public interface ICanchaService
     {

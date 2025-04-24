@@ -89,6 +89,31 @@ namespace ProyectoApi.Repositories
             return resultado!;
         }
 
+        public async Task<IEnumerable<DeporteModel>> ObtenerTodosLosDeportes()
+        {
+            using var conexion = _context.CrearConexion();
+
+            var parameters = new DynamicParameters();
+            parameters.Add("CodigoError", dbType: DbType.Int32, direction: ParameterDirection.Output);
+            parameters.Add("Mensaje", dbType: DbType.String, direction: ParameterDirection.Output, size: 255);
+
+            var resultado = await conexion.QueryAsync<DeporteModel>(
+                "dbo.ObtenerTodosLosDeportes",
+                parameters,
+                commandType: CommandType.StoredProcedure
+            );
+
+            int codigoError = parameters.Get<int>("CodigoError");
+            string mensaje = parameters.Get<string>("Mensaje");
+
+            if (codigoError != 0)
+            {
+                throw new Exception($"Error {codigoError}: {mensaje}");
+            }
+
+            return resultado;
+        }
+
         public async Task<(int CodigoError, string Mensaje)> RegistrarDeporte(DeporteModel model)
         {
             using var conexion = _context.CrearConexion();

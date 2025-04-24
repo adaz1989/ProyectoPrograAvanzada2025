@@ -9,5 +9,7 @@
         public Task<Respuesta2Model<CategoriaModel>> ObtenerCategorias(int categoriaId);
 
         public Task<Respuesta2Model<CategoriaModel>> DesabilitarCategoria(int categoriaId);
+
+        Task<Respuesta2Model<List<CategoriaModel>>> ObtenerTodasLasCategorias();
     }
 }
