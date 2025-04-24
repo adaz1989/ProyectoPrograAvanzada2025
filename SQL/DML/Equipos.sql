@@ -1,80 +1,75 @@
-
-
 USE ProyectoAspNetCore;
 GO
 
--- Procedimiento para registrar un nuevo equipo
+-- ================================================
+-- 1) Registrar un nuevo equipo
+-- ================================================
 CREATE OR ALTER PROCEDURE dbo.RegistrarEquipo
     @NombreEquipo VARCHAR(50),
-    @DeporteId BIGINT,
-    @CategoriaId BIGINT,
-    @UsuarioId BIGINT,
-    @CodigoError INT OUTPUT,
-    @Mensaje VARCHAR(255) OUTPUT
+    @DeporteId    BIGINT,
+    @CategoriaId  BIGINT,
+    @UsuarioId    BIGINT,
+    @CodigoError  INT OUTPUT,
+    @Mensaje      VARCHAR(255) OUTPUT
 AS
 BEGIN
     SET NOCOUNT ON;
-
     BEGIN TRY
-        -- Verificar si ya existe un equipo activo con el mismo nombre
         IF EXISTS (
-            SELECT 1 
+            SELECT 1
             FROM dbo.Equipos
-            WHERE NombreEquipo = @NombreEquipo 
+            WHERE NombreEquipo = @NombreEquipo
               AND Estado = 1
         )
         BEGIN
             SET @CodigoError = 1;
-            SET @Mensaje = 'El equipo ya existe.';
+            SET @Mensaje     = 'El equipo ya existe.';
             RETURN;
-        END;
+        END
 
-        -- Insertar el nuevo equipo
         INSERT INTO dbo.Equipos (NombreEquipo, DeporteId, CategoriaId, UsuarioId, Estado)
         VALUES (@NombreEquipo, @DeporteId, @CategoriaId, @UsuarioId, 1);
 
         IF @@ROWCOUNT = 0
         BEGIN
             SET @CodigoError = 1;
-            SET @Mensaje = 'No se pudo registrar el equipo.';
+            SET @Mensaje     = 'No se pudo registrar el equipo.';
             RETURN;
-        END;
+        END
 
         SET @CodigoError = 0;
-        SET @Mensaje = 'Equipo registrado correctamente.';
+        SET @Mensaje     = 'Equipo registrado correctamente.';
     END TRY
     BEGIN CATCH
         SET @CodigoError = 2;
-        SET @Mensaje = ERROR_MESSAGE();
+        SET @Mensaje     = ERROR_MESSAGE();
     END CATCH
 END;
 GO
 
--- Procedimiento para deshabilitar un equipo
+-- ================================================
+-- 2) Deshabilitar un equipo
+-- ================================================
 CREATE OR ALTER PROCEDURE dbo.DeshabilitarEquipo
-    @EquipoId BIGINT,
+    @EquipoId    BIGINT,
     @CodigoError INT OUTPUT,
-    @Mensaje VARCHAR(255) OUTPUT
+    @Mensaje     VARCHAR(255) OUTPUT
 AS
 BEGIN
     SET NOCOUNT ON;
-
     BEGIN TRY
         IF NOT EXISTS (
-            SELECT 1 
+            SELECT 1
             FROM dbo.Equipos
-            WHERE EquipoId = @EquipoId 
+            WHERE EquipoId = @EquipoId
               AND Estado = 1
         )
         BEGIN
             SET @CodigoError = 1;
-            SET @Mensaje = 'El equipo no existe o ya est� deshabilitado.';
-            SET @Mensaje = 'El equipo no existe o ya est  deshabilitado.';
-
+            SET @Mensaje     = 'El equipo no existe o ya está deshabilitado.';
             RETURN;
-        END;
+        END
 
-        -- Deshabilitar el equipo
         UPDATE dbo.Equipos
            SET Estado = 0
          WHERE EquipoId = @EquipoId;
@@ -82,164 +77,132 @@ BEGIN
         IF @@ROWCOUNT = 0
         BEGIN
             SET @CodigoError = 1;
-            SET @Mensaje = 'No se pudo deshabilitar el equipo.';
+            SET @Mensaje     = 'No se pudo deshabilitar el equipo.';
             RETURN;
-        END;
+        END
 
         SET @CodigoError = 0;
-        SET @Mensaje = 'Equipo deshabilitado correctamente.';
+        SET @Mensaje     = 'Equipo deshabilitado correctamente.';
     END TRY
     BEGIN CATCH
         SET @CodigoError = 2;
-        SET @Mensaje = ERROR_MESSAGE();
+        SET @Mensaje     = ERROR_MESSAGE();
     END CATCH
 END;
 GO
 
--- Procedimiento para editar la informaci�n de un equipo
--- Procedimiento para editar la informaci n de un equipo
-
+-- ================================================
+-- 3) Editar la información de un equipo
+-- ================================================
 CREATE OR ALTER PROCEDURE dbo.EditarEquipo
-    @EquipoId BIGINT,
+    @EquipoId    BIGINT,
     @NombreEquipo VARCHAR(50),
-    @DeporteId BIGINT,
-    @CategoriaId BIGINT,
-    @UsuarioId BIGINT,
-    @CodigoError INT OUTPUT,
-    @Mensaje VARCHAR(255) OUTPUT
+    @DeporteId    BIGINT,
+    @CategoriaId  BIGINT,
+    @UsuarioId    BIGINT,
+    @CodigoError  INT OUTPUT,
+    @Mensaje      VARCHAR(255) OUTPUT
 AS
 BEGIN
     SET NOCOUNT ON;
-
     BEGIN TRY
-
-        -- Verificar que el equipo exista y est� activo
-        -- Verificar que el equipo exista y est  activo
-
+        -- Existe y está activo?
         IF NOT EXISTS (
-            SELECT 1 
+            SELECT 1
             FROM dbo.Equipos
-            WHERE EquipoId = @EquipoId 
+            WHERE EquipoId = @EquipoId
               AND Estado = 1
         )
         BEGIN
             SET @CodigoError = 1;
-            SET @Mensaje = 'El equipo no existe o est� deshabilitado.';
+            SET @Mensaje     = 'El equipo no existe o está deshabilitado.';
             RETURN;
-        END;
+        END
 
-        -- Verificar que el nuevo nombre no est� duplicado en otro equipo activo
-
-            SET @Mensaje = 'El equipo no existe o est  deshabilitado.';
-            RETURN;
-        END;
-
-        -- Verificar que el nuevo nombre no est  duplicado en otro equipo activo
-
+        -- Nombre duplicado?
         IF EXISTS (
-            SELECT 1 
+            SELECT 1
             FROM dbo.Equipos
-            WHERE NombreEquipo = @NombreEquipo 
+            WHERE NombreEquipo = @NombreEquipo
               AND EquipoId <> @EquipoId
               AND Estado = 1
         )
         BEGIN
             SET @CodigoError = 1;
-
-            SET @Mensaje = 'El nombre del equipo ya est� registrado en otro equipo.';
+            SET @Mensaje     = 'El nombre del equipo ya está registrado en otro equipo.';
             RETURN;
-        END;
+        END
 
-        -- Actualizar la informaci�n del equipo
-
-            SET @Mensaje = 'El nombre del equipo ya est  registrado en otro equipo.';
-            RETURN;
-        END;
-
-        -- Actualizar la informaci n del equipo
-
+        -- Actualizar datos
         UPDATE dbo.Equipos
            SET NombreEquipo = @NombreEquipo,
-               DeporteId = @DeporteId,
-               CategoriaId = @CategoriaId,
-               UsuarioId = @UsuarioId
+               DeporteId    = @DeporteId,
+               CategoriaId  = @CategoriaId,
+               UsuarioId    = @UsuarioId
          WHERE EquipoId = @EquipoId
            AND Estado = 1;
 
         IF @@ROWCOUNT = 0
         BEGIN
             SET @CodigoError = 1;
-            SET @Mensaje = 'Todos los datos eran iguales a los registrados.';
+            SET @Mensaje     = 'No hubo cambios en la información.';
             RETURN;
-        END;
+        END
 
         SET @CodigoError = 0;
-        SET @Mensaje = 'Equipo actualizado correctamente.';
+        SET @Mensaje     = 'Equipo actualizado correctamente.';
     END TRY
     BEGIN CATCH
         SET @CodigoError = 2;
-        SET @Mensaje = ERROR_MESSAGE();
+        SET @Mensaje     = ERROR_MESSAGE();
     END CATCH
 END;
 GO
 
--- Procedimiento para obtener equipos (por ID o todos los activos)
-CREATE OR ALTER PROCEDURE dbo.ObtenerEquiposPorId
-   @EquipoId BIGINT = NULL,  -- Par�metro opcional. Si se env�a, se obtiene ese equipo en espec�fico.
-
-    @EquipoId BIGINT = NULL,  -- Par metro opcional. Si se env a, se obtiene ese equipo en espec fico.
-
-    @CodigoError INT OUTPUT,
-    @Mensaje VARCHAR(255) OUTPUT
+-- ================================================
+-- 4) Obtener equipos (por ID o todos los activos)
+-- ================================================
+CREATE OR ALTER PROCEDURE dbo.ObtenerEquipos
+    @EquipoId    BIGINT      = NULL,  -- Si NO se envía, trae todos
+    @CodigoError INT          OUTPUT,
+    @Mensaje     VARCHAR(255) OUTPUT
 AS
 BEGIN
     SET NOCOUNT ON;
-
     BEGIN TRY
         IF @EquipoId IS NOT NULL
         BEGIN
-
-            -- Verificar que el equipo solicitado exista y est� activo
-
-            -- Verificar que el equipo solicitado exista y est  activo
-
             IF NOT EXISTS (
-                SELECT 1 
+                SELECT 1
                 FROM dbo.Equipos
-                WHERE EquipoId = @EquipoId 
+                WHERE EquipoId = @EquipoId
                   AND Estado = 1
             )
             BEGIN
                 SET @CodigoError = 1;
-
-                SET @Mensaje = 'El equipo solicitado no existe o est� deshabilitado.';
-
-                SET @Mensaje = 'El equipo solicitado no existe o est  deshabilitado.';
-
+                SET @Mensaje     = 'El equipo solicitado no existe o está deshabilitado.';
                 RETURN;
-            END;
+            END
 
-            SELECT * 
-            FROM dbo.Equipos 
-            WHERE EquipoId = @EquipoId 
+            SELECT *
+            FROM dbo.Equipos
+            WHERE EquipoId = @EquipoId
               AND Estado = 1;
         END
         ELSE
         BEGIN
-            -- Retornar todos los equipos activos ordenados por ID
-            SELECT * 
-            FROM dbo.Equipos 
+            SELECT *
+            FROM dbo.Equipos
             WHERE Estado = 1
             ORDER BY EquipoId;
-        END;
+        END
 
         SET @CodigoError = 0;
-        SET @Mensaje = 'Consulta realizada correctamente.';
+        SET @Mensaje     = 'Consulta realizada correctamente.';
     END TRY
     BEGIN CATCH
         SET @CodigoError = 2;
-        SET @Mensaje = ERROR_MESSAGE();
+        SET @Mensaje     = ERROR_MESSAGE();
     END CATCH
 END;
 GO
-
