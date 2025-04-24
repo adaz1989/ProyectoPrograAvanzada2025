@@ -24,7 +24,6 @@ namespace ProyectoDeportivoCR.Controllers
             IDeporteService deporteService,
             DiasService diasService // Si existe interfaz: IDiasService diasService
         )
-            IDeporteService deporteService)
         {
             _canchaService = canchaService;
             _provinciaService = provinciaService;
@@ -33,6 +32,7 @@ namespace ProyectoDeportivoCR.Controllers
             _deporteService = deporteService;
             _diasService = diasService;
         }
+
 
 
         [HttpGet]

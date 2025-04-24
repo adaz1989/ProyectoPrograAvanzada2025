@@ -24,8 +24,7 @@ namespace ProyectoDeportivoCR.Repositories
                 { "ObtenerCancha",              $"{baseUrl}Canchas/ObtenerInformacionCanchas" },
                 { "ObtenerTodasLasCanchas",     $"{baseUrl}Canchas/ObtenerTodasLasCanchas" },
                 { "ObtenerHorariosCancha",      $"{baseUrl}HorariosCancha/ObtenerHorariosCancha" },
-                { "RegistrarHorarioCancha",     $"{baseUrl}HorariosCancha/RegistrarHorarioCancha" },
-                { "ObtenerTodasLasCanchas",     $"{baseUrl}Canchas/ObtenerTodasLasCanchas" }
+                { "RegistrarHorarioCancha",     $"{baseUrl}HorariosCancha/RegistrarHorarioCancha" }
             };
         }
 
