@@ -14,17 +14,17 @@ namespace ProyectoDeportivoCR.Repositories
             _httpClient = httpClient;
             _configuration = configuration;
 
-            // Leer la URL base de tu archivo de configuración (appsettings.json)
             var baseUrl = _configuration.GetSection("Variables:urlWebApi").Value!;
 
-            // Definir los endpoints de Canchas según tu CanchasController
             _apiEndpoints = new Dictionary<string, string>
 {
                 { "RegistrarCancha",            $"{baseUrl}Canchas/RegistrarCancha" },
                 { "ActualizarCancha",           $"{baseUrl}Canchas/ActualizarInformacionCanchas" },
                 { "DeshabilitarCancha",         $"{baseUrl}Canchas/DeshabilitarCanchas" },
                 { "ObtenerCancha",              $"{baseUrl}Canchas/ObtenerInformacionCanchas" },
-                { "ObtenerTodasLasCanchas",     $"{baseUrl}Canchas/ObtenerTodasLasCanchas" }
+                { "ObtenerTodasLasCanchas",     $"{baseUrl}Canchas/ObtenerTodasLasCanchas" },
+                { "ObtenerHorariosCancha",      $"{baseUrl}HorariosCancha/ObtenerHorariosCancha" },
+                { "RegistrarHorarioCancha",     $"{baseUrl}HorariosCancha/RegistrarHorarioCancha" }
             };
         }
 
@@ -112,6 +112,21 @@ namespace ProyectoDeportivoCR.Repositories
             return await http.GetAsync(url);
         }
 
+        public async Task<HttpResponseMessage> ObtenerHorariosCancha(long canchaId)
+        {
+            using var http = _httpClient.CreateClient();
+            // La ruta de la API es [HttpGet("ObtenerHorariosCanchas/{canchaId}")]
+            var url = $"{_apiEndpoints["ObtenerHorariosCancha"]}/{canchaId}";
+            // GET para obtener la información de la cancha
+            return await http.GetAsync(url);
+        }
+
+        public async Task<HttpResponseMessage> RegistrarHorarioCancha(HorarioCanchaModel model)
+        {
+            using var http = _httpClient.CreateClient();
+            var url = _apiEndpoints["RegistrarHorarioCancha"];
+            return await http.PostAsJsonAsync(url, model);
+        }
         public async Task<HttpResponseMessage> ObtenerTodasLasCanchas(string? token)
         {
             using var http = _httpClient.CreateClient();

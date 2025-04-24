@@ -11,5 +11,8 @@ namespace ProyectoDeportivoCR.Services
         Task<Respuesta2Model<CanchaModel>> DeshabilitarCancha(long canchaId);
         Task<Respuesta2Model<CanchaModel>> ObtenerCancha(long canchaId);
         Task<Respuesta2Model<List<CanchaModel>>> ObtenerTodasLasCanchas();
+
+        Task<Respuesta2Model<List<HorarioCanchaModel>>> ObtenerHorariosCancha(long canchaId);
+        Task<Respuesta2Model<HorarioCanchaModel>> RegistrarHorarioCancha(HorarioCanchaModel model);
     }
 }

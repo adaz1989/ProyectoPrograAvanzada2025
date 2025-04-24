@@ -67,7 +67,7 @@ BEGIN
             RETURN;
         END;
 
-        -- Verificar que el nuevo nombre no esté duplicado en otra provincia
+        -- Verificar que el nuevo nombre no estï¿½ duplicado en otra provincia
         IF EXISTS (
             SELECT 1 
             FROM dbo.Provincias 
@@ -76,7 +76,7 @@ BEGIN
         )
         BEGIN
             SET @CodigoError = 1;
-            SET @Mensaje = 'El nombre de la provincia ya está registrado en otra provincia.';
+            SET @Mensaje = 'El nombre de la provincia ya estï¿½ registrado en otra provincia.';
             RETURN;
         END;
 
@@ -147,9 +147,7 @@ BEGIN
 END;
 GO
 
-DELETE FROM Provincias;
 
-select * from dbo.Provincias
 
 INSERT INTO Provincias (NombreProvincia) VALUES ('San Jose');
 
@@ -160,7 +158,7 @@ BEGIN
     SET NOCOUNT ON;
 
     BEGIN TRY
-        -- Retorna todas las provincias ordenadas alfabéticamente
+        -- Retorna todas las provincias ordenadas alfabï¿½ticamente
         SELECT 
             ProvinciaId,
             NombreProvincia
@@ -180,12 +178,12 @@ BEGIN
     SET NOCOUNT ON;
 
     BEGIN TRY
-        -- Retorna todos los distritos con el nombre del cantón asociado
+        -- Retorna todos los distritos con el nombre del cantï¿½n asociado
         SELECT 
             d.DistritoId AS DistritoId, 
             d.NombreDistrito,
             d.CantonId,
-            c.NombreCanton               -- Nombre del cantón (desnormalización)
+            c.NombreCanton               -- Nombre del cantï¿½n (desnormalizaciï¿½n)
         FROM dbo.Distritos d
         INNER JOIN dbo.Cantones c ON d.CantonId = c.CantonId
         ORDER BY d.NombreDistrito;

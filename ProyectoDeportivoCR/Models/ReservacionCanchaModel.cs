@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace ProyectoApi.Models
+﻿namespace ProyectoDeportivoCR.Models
 {
     public class ReservacionCanchaModel
     {
@@ -19,6 +17,5 @@ namespace ProyectoApi.Models
         public string? NombreUsuario { get; set; }
         public string? CorreoElectronico { get; set; }
         public string? NombreTorneo { get; set; }
-
     }
 }

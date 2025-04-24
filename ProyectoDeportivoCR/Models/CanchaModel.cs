@@ -36,5 +36,7 @@ namespace ProyectoDeportivoCR.Models
         public string? NombreProvincia { get; set; }
         public string? NombreCanton { get; set; }
         public string? NombreDistrito { get; set; }
+
+        public List<HorarioCanchaModel> Horarios { get; set; } = new();
     }
 }

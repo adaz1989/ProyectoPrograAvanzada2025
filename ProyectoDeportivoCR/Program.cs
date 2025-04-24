@@ -36,6 +36,8 @@ builder.Services.AddScoped<IDeporteService, DeporteService>();
 builder.Services.AddScoped<IDeporteRepository, DeporteRepository>();
 builder.Services.AddScoped<ICanchaRepository, CanchaRepository>();
 builder.Services.AddScoped<ICanchaService, CanchaService>();
+
+builder.Services.AddScoped<DiasService>();
 builder.Services.AddScoped<IFacturaRepository, FacturaRepository>();
 builder.Services.AddScoped<IFacturaService, FacturaService>();
 builder.Services.AddScoped<IProvinciaRepository, ProvinciaRepository>();

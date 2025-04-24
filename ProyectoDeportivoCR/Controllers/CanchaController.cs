@@ -14,20 +14,26 @@ namespace ProyectoDeportivoCR.Controllers
         private readonly ICantonService _cantonService;
         private readonly IDistritoService _distritoService;
         private readonly IDeporteService _deporteService;
+        private readonly DiasService _diasService; // Si tienes una interfaz, usar: IDiasService
 
         public CanchaController(
             ICanchaService canchaService,
             IProvinciaService provinciaService,
             ICantonService cantonService,
             IDistritoService distritoService,
-            IDeporteService deporteService)
+            IDeporteService deporteService,
+            DiasService diasService // Si existe interfaz: IDiasService diasService
+        )
         {
             _canchaService = canchaService;
             _provinciaService = provinciaService;
             _cantonService = cantonService;
             _distritoService = distritoService;
             _deporteService = deporteService;
+            _diasService = diasService;
         }
+
+
 
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -127,6 +133,38 @@ namespace ProyectoDeportivoCR.Controllers
             return RedirectToAction("ObtenerCancha", new { canchaId });
         }
 
+        [HttpGet]
+        public async Task<IActionResult> HorarioCancha(int canchaId)
+        {
+            // CAMBIAR ESTO PARA SI O SI RECIBIR EL ID DE LA CANCHA
+            canchaId = 2;
+            var resultadoCancha = await _canchaService.ObtenerCancha(canchaId);
+            var resultadoHorario = await _canchaService.ObtenerHorariosCancha(canchaId);
+            var resultadoDias = await _diasService.ObtenerDias();
+
+
+            ViewBag.Cancha = resultadoCancha.Datos;
+            ViewBag.Dias = resultadoDias.Datos;
+            return View(resultadoHorario.Datos);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RegistrarHorarioCancha(HorarioCanchaModel model)
+        {
+            var resultado = await _canchaService.RegistrarHorarioCancha(model);
+            ViewBag.Mensaje = resultado.Mensaje;
+
+
+            // PESIMA PRACTICA, PERO POR TIEMPO PREFIERO CASTEAR LONG A INT ANTES QUE ARREGLAR TODO LO DEMAS
+            var resultadoCancha = await _canchaService.ObtenerCancha((int)model.CanchaId);
+            var resultadoHorario = await _canchaService.ObtenerHorariosCancha(model.CanchaId);
+            var resultadoDias = await _diasService.ObtenerDias();
+
+            ViewBag.Cancha = resultadoCancha.Datos;
+            ViewBag.Dias = resultadoDias.Datos;
+
+            return View("HorarioCancha", resultadoHorario.Datos);
+        }
         #region Métodos auxiliares
 
         private async Task CargarListasDesplegables()
