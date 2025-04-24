@@ -6,7 +6,7 @@
 @{
     ViewData["Title"] = "Detalles de Cancha";
     // Recupera el nombre del rol desde la sesión
-    var rolNombre = HttpContextAccessor.HttpContext!.Session.GetString("RolNombre");
+    var rolNombre = HttpContextAccessor.HttpContext!.Session.GetString("DescripcionTipoUsuario");
 }
 
 <div class="container my-5">
@@ -63,6 +63,13 @@
                                             <i class="bi bi-pencil-square"></i> Actualizar
                                         </a>
 
+                                        <a asp-controller="Cancha"
+                                           asp-action="GestionarHorarioCancha"
+                                           asp-route-canchaId="@Model.CanchaId"
+                                           class="btn btn-warning">
+                                            <i class="bi bi-pencil-square"></i> Gestionar horarios
+                                        </a>
+
                                         <form asp-controller="Cancha"
                                               asp-action="DeshabilitarCancha"
                                               method="post"
@@ -80,6 +87,13 @@
                                        asp-action="Index"
                                        class="btn btn-secondary">
                                         <i class="bi bi-arrow-left-circle"></i> Volver
+                                    </a>
+
+                                    <a asp-controller="Reservacion"
+                                       asp-action="Reservacion"
+                                       asp-route-canchaId="@Model.CanchaId"
+                                       class="btn btn-secondary">
+                                        <i class="bi bi-arrow-left-circle"></i> Reservar
                                     </a>
                                 </div>
                             </div>

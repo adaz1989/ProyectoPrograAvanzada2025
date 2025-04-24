@@ -1,0 +1,118 @@
+﻿@using System.Linq
+@model List<ProyectoDeportivoCR.Models.CanchaModel>
+
+@{
+    ViewData["Title"] = "Listado de Canchas";
+}
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="mb-4 text-center">Listado de Canchas</h2>
+        </div>
+    </div>
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="row">
+            <div class="col-12">
+                <div class="alert alert-danger" role="alert">
+                    @ViewBag.ErrorMessage
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="row mb-4">
+        <div class="col-12 text-center">
+            <a asp-controller="Cancha" asp-action="RegistrarCancha" class="btn btn-registrar-cancha">
+                <i class="bi bi-plus-circle me-2"></i> Registrar Cancha
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        @if (Model != null && Model.Any())
+        {
+            foreach (var cancha in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow">
+                        @if (cancha.FotoCancha != null && cancha.FotoCancha.Length > 0)
+                        {
+                            <img src="data:image/jpeg;base64,@Convert.ToBase64String(cancha.FotoCancha)"
+                                 class="card-img-top"
+                                 alt="Foto de @cancha.NombreCancha"
+                                 style="height: 200px; object-fit: cover;">
+                        }
+                        else
+                        {
+                            <img src="~/images/cancha-default.png"
+                                 class="card-img-top"
+                                 alt="Sin imagen"
+                                 style="height: 200px; object-fit: cover;">
+                        }
+
+                        <div class="card-body">
+                            <h5 class="card-title">@cancha.NombreCancha</h5>
+                            <p class="card-text">
+                                <strong>Deporte:</strong> @cancha.NombreDeporte<br>
+                                <strong>Precio:</strong> @cancha.PrecioHora.ToString("C")<br>
+                                <strong>Dirección:</strong> @cancha.DetalleDireccion<br>
+                                <strong>Ubicación:</strong> @cancha.NombreProvincia > @cancha.NombreCanton > @cancha.NombreDistrito
+                            </p>
+                            <div class="d-flex justify-content-between">
+                                <a asp-controller="Cancha"
+                                   asp-action="ObtenerCancha"
+                                   asp-route-canchaId="@cancha.CanchaId"
+                                   class="btn btn-outline-primary btn-sm">
+                                    Detalles
+                                </a>
+
+                                <a asp-controller="Cancha"
+                                   asp-action="ActualizarCancha"
+                                   asp-route-canchaId="@cancha.CanchaId"
+                                   class="btn btn-outline-warning btn-sm">
+                                    Actualizar
+                                </a>
+                                <a asp-controller="Resennas"
+                                   asp-action="RegistrarResenna"
+                                   asp-route-canchaId="@cancha.CanchaId"
+                                   class="btn btn-outline-success btn-sm">
+                                    Registrar Reseña
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12">
+                <p class="text-center">No se encontraron canchas registradas.</p>
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    .card {
+        transition: transform 0.3s;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+        .card:hover {
+            transform: translateY(-3px);
+        }
+
+    .card-text {
+        font-size: 0.9rem;
+    }
+
+    .btn-sm {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.8rem;
+    }
+</style>

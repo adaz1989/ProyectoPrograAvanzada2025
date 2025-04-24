@@ -134,10 +134,8 @@ namespace ProyectoDeportivoCR.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> HorarioCancha(int canchaId)
+        public async Task<IActionResult> GestionarHorarioCancha(int canchaId)
         {
-            // CAMBIAR ESTO PARA SI O SI RECIBIR EL ID DE LA CANCHA
-            canchaId = 2;
             var resultadoCancha = await _canchaService.ObtenerCancha(canchaId);
             var resultadoHorario = await _canchaService.ObtenerHorariosCancha(canchaId);
             var resultadoDias = await _diasService.ObtenerDias();

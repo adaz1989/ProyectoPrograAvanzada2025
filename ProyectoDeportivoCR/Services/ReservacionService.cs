@@ -14,10 +14,18 @@ namespace ProyectoDeportivoCR.Services
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<Respuesta2Model<List<ReservacionCanchaModel>>> ObtenerReservacionesPorFecha(DateTime fecha, long canchaId)
+        public async Task<Respuesta2Model<List<ReservacionCanchaModel>>> ObtenerReservacionesPorFecha(DateTime? fecha, long canchaId)
         {
             var token = _httpContextAccessor.HttpContext!.Session.GetString("Token")!;
-            var response = await _reservacionRepositorie.ObtenerReservacionesPorFecha(token, fecha, canchaId);
+
+            var fechaConsulta = new DateTime();
+
+            if (fecha != null)            
+                fechaConsulta = (DateTime)fecha;            
+            else            
+                fechaConsulta = DateTime.Now;            
+
+            var response = await _reservacionRepositorie.ObtenerReservacionesPorFecha(token, fechaConsulta, canchaId);
 
             if (response.IsSuccessStatusCode)
                 return await response.LeerRespuesta2Model<List<ReservacionCanchaModel>>();
