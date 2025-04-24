@@ -4,57 +4,93 @@
     Layout = "~/Views/Shared/_LayoutExterno.cshtml";
 }
 
-<section class="section section-variant-1 bg-gray-100">
-    <div class="container">
-        <div class="row row-50 justify-content-center">
-            <div class="col-md-10 col-lg-8 col-xl-4">
-                <div class="card-login-register" id="card-l-r">
-                    <div class="card-top-panel">
-                        <div class="card-top-panel-left">
-                            <h5 class="card-title card-title-login">Registro de usuario</h5>
-                        </div>
-                    </div>
+<link rel="stylesheet" href="~/css/loggin.css" />
 
-                    <div class="card-form card-form-login">
-                        <form class="rd-form rd-mailform" method="post" asp-controller="Login" asp-action="RegistrarUsuario">
+<section class="login-container">
+    <!-- Balones animados -->
+    <span class="ball ball1">🎾</span>
+    <span class="ball ball2">🏀</span>
+    <span class="ball ball3">⚽️</span>
+    <span class="ball ball4">🏐</span>
+    <span class="ball ball5">🏓</span>
+    <span class="ball ball6">🏈</span>
+    <span class="ball ball7">🎾</span>
+    <span class="ball ball8">🏀</span>
+    <span class="ball ball9">⚽️</span>
+    <span class="ball ball10">🏈</span>
 
-                            <div class="form-wrap">
-                                <p>Nombre.</p>
-                                <input class="form-input form-control-has-validation form-control-last-child" type="text" name="NombreUsuario" required />
-                            </div>
-
-                            <div class="form-wrap">
-                                <p>Apellidos.</p>
-                                <input class="form-input form-control-has-validation form-control-last-child" type="text" name="ApellidosUsuario" required />
-                            </div>
-
-                            <div class="form-wrap">
-                                <p>Correo electrónico.</p>
-                                <input class="form-input form-control-has-validation form-control-last-child" type="email" name="CorreoUsuario" required />
-                            </div>
-
-                            <div class="form-wrap">
-                                <p>Teléfono.</p>
-                                <input class="form-input form-control-has-validation form-control-last-child" type="tel" name="TelefonoUsuario" required />
-                            </div>
-
-                            <div class="form-wrap">
-                                <p>Contraseña.</p>
-                                <input class="form-input form-control-has-validation form-control-last-child" type="password" name="Contrasenna" required />
-                            </div>
-
-                            <button type="submit" class="button button-lg button-primary button-block">Registrar cuenta</button>
-                        </form>
-
-                        <p>¿Ya tienes una cuenta? <a asp-controller="Login" asp-action="IniciarSesion">Iniciar sesión</a></p>
-
-                        @if (ViewBag.Mensaje != null)
-                        {
-                            <div class="alert alert-info mt-3">@ViewBag.Mensaje</div>
-                        }
-                    </div>
+    <!-- Tarjeta del formulario -->
+    <div class="card-login">
+        <div class="card-header">
+            Registro de Usuario
+        </div>
+        <div class="card-body">
+            <form asp-controller="Login" asp-action="RegistrarUsuario" method="post">
+                <div class="mb-3">
+                    <label for="NombreUsuario" class="form-label">Nombre</label>
+                    <input type="text"
+                           id="NombreUsuario"
+                           name="NombreUsuario"
+                           class="form-control"
+                           value="@Model?.NombreUsuario"
+                           required />
                 </div>
-            </div>
+
+                <div class="mb-3">
+                    <label for="ApellidosUsuario" class="form-label">Apellidos</label>
+                    <input type="text"
+                           id="ApellidosUsuario"
+                           name="ApellidosUsuario"
+                           class="form-control"
+                           value="@Model?.ApellidosUsuario"
+                           required />
+                </div>
+
+                <div class="mb-3">
+                    <label for="CorreoUsuario" class="form-label">Correo electrónico</label>
+                    <input type="email"
+                           id="CorreoUsuario"
+                           name="CorreoUsuario"
+                           class="form-control"
+                           value="@Model?.CorreoUsuario"
+                           required />
+                </div>
+
+                <div class="mb-3">
+                    <label for="TelefonoUsuario" class="form-label">Teléfono</label>
+                    <input type="tel"
+                           id="TelefonoUsuario"
+                           name="TelefonoUsuario"
+                           class="form-control"
+                           value="@Model?.TelefonoUsuario"
+                           required />
+                </div>
+
+                <div class="mb-4">
+                    <label for="Contrasenna" class="form-label">Contraseña</label>
+                    <input type="password"
+                           id="Contrasenna"
+                           name="Contrasenna"
+                           class="form-control"
+                           required />
+                </div>
+
+                <button type="submit" class="btn-login mb-2">Registrar cuenta</button>
+            </form>
+
+            <p class="text-register mt-3">
+                ¿Ya tienes una cuenta?
+                <a asp-controller="Login" asp-action="IniciarSesion">Iniciar sesión</a>
+            </p>
+
+            <p class="text-register mt-2">
+                <a asp-controller="Home" asp-action="Index" class="link-back">← Volver al inicio</a>
+            </p>
+
+            @if (ViewBag.Mensaje != null)
+            {
+                <div class="alert alert-info mt-3">@ViewBag.Mensaje</div>
+            }
         </div>
     </div>
 </section>

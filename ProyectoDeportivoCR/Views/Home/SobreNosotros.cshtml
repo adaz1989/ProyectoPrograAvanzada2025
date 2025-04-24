@@ -1,0 +1,93 @@
+﻿@{
+    ViewData["Title"] = "Sobre Nosotros";
+}
+<link rel="stylesheet" href="~/css/sobre-nosotros.css" />
+
+<section class="section bg-white py-5">
+    <div class="container">
+        <!-- Título Principal -->
+        <div class="text-center mb-5 animate-fade-up">
+            <h1 class="display-4 fw-bold text-uppercase text-green-custom">Impulsamos el Deporte en Costa Rica</h1>
+            <div class="divider mx-auto mb-3"></div>
+            <p class="lead mt-3 text-black">
+                Una plataforma digital que moderniza la manera de reservar canchas y organizar torneos en todo el país.
+            </p>
+        </div>
+
+        <!-- Tarjetas -->
+        <div class="row justify-content-center g-4">
+            <!-- Tarjeta 1 -->
+            <div class="col-md-6 col-lg-4 d-flex">
+                <div class="card funcionalidad-card animate-fade-up delay-1 border-top-green">
+                    <div class="img-wrapper">
+                        <img src="~/images/cancha.png" alt="Reserva de canchas" class="img-cover">
+                        <div class="overlay-content p-4">
+                            <h5 class="fw-bold text-green-custom">Reservas Inteligentes</h5>
+                            <p>
+                                Encontrá canchas disponibles por ubicación y tipo de deporte. Reservá fácil, rápido y sin complicaciones desde cualquier dispositivo.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tarjeta 2 -->
+            <div class="col-md-6 col-lg-4 d-flex">
+                <div class="card funcionalidad-card animate-fade-up delay-2 border-top-green">
+                    <div class="img-wrapper">
+                        <img src="~/images/torneo.png" alt="Organización de torneos" class="img-cover">
+                        <div class="overlay-content p-4">
+                            <h5 class="fw-bold text-green-custom">Gestión de Torneos</h5>
+                            <p>
+                                Creá ligas personalizadas, generá calendarios automáticos y gestioná los resultados de tus torneos de forma ágil e intuitiva.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tarjeta 3 -->
+            <div class="col-md-6 col-lg-4 d-flex">
+                <div class="card funcionalidad-card animate-fade-up delay-3 border-top-green">
+                    <div class="img-wrapper">
+                        <img src="~/images/comunidad.png" alt="Conexión deportiva" class="img-cover">
+                        <div class="overlay-content p-4">
+                            <h5 class="fw-bold text-green-custom">Conexión y Comunidad</h5>
+                            <p class="text-black">
+                                Uní fuerzas con otros jugadores, clubes y centros deportivos. Fortalecé el deporte nacional a través de una comunidad conectada.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección Misión -->
+        <div class="row align-items-center mt-5 g-5">
+            <div class="col-lg-6 animate-fade-left">
+                <img src="~/images/deporte-costa-rica.png" class="img-main-mission w-100 shadow-lg" alt="Deporte en Costa Rica">
+            </div>
+            <div class="col-lg-6 animate-fade-right">
+                <h3 class="fw-bold mb-3 text-green-custom">Nuestra Misión</h3>
+                <div class="mission-text-box">
+                    <p class="fs-5 text-black">
+                        Democratizar el acceso al deporte mediante tecnología moderna, accesible y efectiva.
+                    </p>
+                    <p class="text-black">
+                        Desde jugadores aficionados hasta centros deportivos profesionales, ofrecemos una plataforma centralizada que mejora la experiencia deportiva en Costa Rica.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Llamado a la Acción -->
+        <div class="text-center mt-5 pt-4 animate-fade-up delay-3">
+            <h4 class="fw-bold mb-2 text-green-custom">¿Estás listo para unirte al cambio?</h4>
+            <p class="mb-4 text-black">Explorá las canchas disponibles o comenzá a organizar tu torneo hoy mismo.</p>
+            <a class="btn btn-lg btn-gradient-primary px-5 py-3 shadow-sm" asp-controller="Cancha" asp-action="Index">
+                <i class="bi bi-geo-alt-fill me-2"></i>
+                <span>Buscar Canchas</span>
+            </a>
+        </div>
+    </div>
+</section>

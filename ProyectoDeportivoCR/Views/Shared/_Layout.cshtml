@@ -1,7 +1,16 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    // Recupera datos de sesión
+    var token = HttpContextAccessor.HttpContext!.Session.GetString("Token");
+    var nombre = HttpContextAccessor.HttpContext.Session.GetString("Nombre");
+    var rolNombre = HttpContextAccessor.HttpContext.Session.GetString("RolNombre");
+}
+
+<!DOCTYPE html>
 <html class="wide wow-animation" lang="en">
 <head>
-    <!-- Site Title-->
     <title>@ViewData["Inicio"] - Prueba</title>
 
     <meta name="format-detection" content="telephone=no">
@@ -10,26 +19,11 @@
     <meta charset="utf-8">
 
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Kanit:300,400,500,500i,600,900%7CRoboto:400,900">
+    <link rel="stylesheet" type="text/css"
+          href="//fonts.googleapis.com/css?family=Kanit:300,400,500,500i,600,900%7CRoboto:400,900">
     <link rel="stylesheet" href="~/css/bootstrap.css">
     <link rel="stylesheet" href="~/css/fonts.css">
     <link rel="stylesheet" href="~/css/style.css">
-
-    <style>
-        .ie-panel {
-            display: none;
-            background: #212121;
-            padding: 10px 0;
-            box-shadow: 3px 3px 5px 0 rgba(0,0,0,.3);
-            clear: both;
-            text-align: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        html.ie-10 .ie-panel, html.lt-ie-10 .ie-panel {
-            display: block;
-        }</style>
 </head>
 <body>
     <div class="preloader">
@@ -37,124 +31,129 @@
             <div class="preloader-item"></div>
         </div>
     </div>
-    <!-- Page-->
+
     <div class="page">
-       <!-- Page Header-->
+        <!-- Header -->
         <header class="section page-header rd-navbar-dark">
-            <!-- RD Navbar-->
             <div class="rd-navbar-wrap">
-                <nav class="rd-navbar rd-navbar-classic" data-layout="rd-navbar-fixed" data-sm-layout="rd-navbar-fixed" data-md-layout="rd-navbar-fixed" data-md-device-layout="rd-navbar-fixed" data-lg-layout="rd-navbar-fixed" data-lg-device-layout="rd-navbar-fixed" data-xl-layout="rd-navbar-static" data-xl-device-layout="rd-navbar-static" data-xxl-layout="rd-navbar-static" data-xxl-device-layout="rd-navbar-static" data-lg-stick-up-offset="166px" data-xl-stick-up-offset="166px" data-xxl-stick-up-offset="166px" data-lg-stick-up="true" data-xl-stick-up="true" data-xxl-stick-up="true">
+                <nav class="rd-navbar rd-navbar-classic"
+                     data-layout="rd-navbar-fixed"
+                     data-sm-layout="rd-navbar-fixed"
+                     data-md-layout="rd-navbar-fixed"
+                     data-md-device-layout="rd-navbar-fixed"
+                     data-lg-layout="rd-navbar-fixed"
+                     data-lg-device-layout="rd-navbar-fixed"
+                     data-xl-layout="rd-navbar-static"
+                     data-xl-device-layout="rd-navbar-static"
+                     data-xxl-layout="rd-navbar-static"
+                     data-xxl-device-layout="rd-navbar-static"
+                     data-lg-stick-up-offset="166px"
+                     data-xl-stick-up-offset="166px"
+                     data-xxl-stick-up-offset="166px"
+                     data-lg-stick-up="true"
+                     data-xl-stick-up="true"
+                     data-xxl-stick-up="true">
                     <div class="rd-navbar-panel">
-                        <!-- RD Navbar Toggle-->
                         <button class="rd-navbar-toggle" data-rd-navbar-toggle=".rd-navbar-main"><span></span></button>
-                        <!-- RD Navbar Panel-->
                         <div class="rd-navbar-panel-inner container">
                             <div class="rd-navbar-collapse rd-navbar-panel-item rd-navbar-panel-item-left">
-                                <!-- Owl Carousel-->
                                 <div class="owl-carousel-navbar owl-carousel-inline-outer">
                                     <div class="owl-inline-nav">
                                         <button class="owl-arrow owl-arrow-prev"></button>
                                         <button class="owl-arrow owl-arrow-next"></button>
                                     </div>
                                     <div class="owl-carousel-inline-wrap">
-                                        <div class="owl-carousel owl-carousel-inline" data-items="1" data-dots="false" data-nav="true" data-autoplay="true" data-autoplay-speed="3200" data-stage-padding="0" data-loop="true" data-margin="10" data-mouse-drag="false" data-touch-drag="false" data-nav-custom=".owl-carousel-navbar">
-                                            <!-- Post Inline-->
+                                        <div class="owl-carousel owl-carousel-inline"
+                                             data-items="1" data-dots="false" data-nav="true"
+                                             data-autoplay="true" data-autoplay-speed="3200"
+                                             data-stage-padding="0" data-loop="true"
+                                             data-margin="10" data-mouse-drag="false"
+                                             data-touch-drag="false" data-nav-custom=".owl-carousel-navbar">
                                             <article class="post-inline">
-                                                <time class="post-inline-time" datetime="2020">Octubre 19, 2025</time>
+                                                <time class="post-inline-time">Octubre 19, 2025</time>
                                                 <p class="post-inline-title">Santis vs Chocotorros</p>
                                             </article>
-                                            <!-- Post Inline-->
                                             <article class="post-inline">
-                                                <time class="post-inline-time" datetime="2020">Abril 15, 2025</time>
+                                                <time class="post-inline-time">Abril 15, 2025</time>
                                                 <p class="post-inline-title">Florenses vs Ligax</p>
                                             </article>
-                                            <!-- Post Inline-->
                                             <article class="post-inline">
-                                                <time class="post-inline-time" datetime="2020">Agosto 35, 2025</time>
+                                                <time class="post-inline-time">Agosto 35, 2025</time>
                                                 <p class="post-inline-title">The boys vs SalasTeam</p>
                                             </article>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
                             <div class="rd-navbar-panel-item rd-navbar-panel-item-right">
                                 <ul class="list-inline list-inline-bordered">
-                                    <li>
-                                        <!-- Select 2-->
-                                    <li>
-                                        <a class="link link-icon link-icon-left link-classic" asp-area="" asp-controller="Login" asp-action="IniciarSesion"></span><span class="link-icon-text">Registrarme</span></a></
-                                        
-                                    </li>
-                                    <li>
-                                        <!-- seccion donde estaba el carrito de compras -->
-                                    </li>
-                                    <li><a class="link link-icon link-icon-left link-classic" asp-area="" asp-controller="Login" asp-action="IniciarSesion"></span><span class="link-icon-text">Iniciar Sesión</span></a></li>
+                                    @if (string.IsNullOrEmpty(token))
+                                    {
+                                        <li>
+                                            <a class="link link-classic" asp-controller="Login" asp-action="RegistrarUsuario">
+                                                Registrarme
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="link link-classic" asp-controller="Login" asp-action="IniciarSesion">
+                                                Iniciar Sesión
+                                            </a>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li class="list-inline-item">
+                                            <a class="link link-classic" asp-controller="Usuario" asp-action="PerfilUsuario" title="Ver mi perfil">
+                                                Hola, @nombre!
+                                            </a>
+                                        </li>
+
+                                        <li class="list-inline-item">
+                                            <a class="link link-classic" asp-controller="Login" asp-action="CerrarSesion">
+                                                Cerrar Sesión
+                                            </a>
+                                        </li>
+                                    }
                                 </ul>
                             </div>
-                            <div class="rd-navbar-collapse-toggle rd-navbar-fixed-element-1" data-rd-navbar-toggle=".rd-navbar-collapse"><span></span></div>
+
+                            <div class="rd-navbar-collapse-toggle rd-navbar-fixed-element-1"
+                                 data-rd-navbar-toggle=".rd-navbar-collapse">
+                                <span></span>
+                            </div>
                         </div>
                     </div>
+
                     <div class="rd-navbar-main">
                         <div class="rd-navbar-main-top">
                             <div class="rd-navbar-main-container container">
-                                <!-- RD Navbar List-->
-                                @* <ul class="rd-navbar-list"> *@
-
-                                @*     <li class="rd-navbar-list-item"> *@
-                                @*         <a class="rd-navbar-list-link" href="#"> *@
-                                @*             <img src="~/images/shop/adidas.png" alt="" width="75" height="42" /> *@
-                                @*         </a> *@
-                                @*     </li> *@
-                                @*     <li class="rd-navbar-list-item"> *@
-                                @*         <a class="rd-navbar-list-link" href="#"> *@
-                                @*             <img src="~/images/shop/-gatorade.png" alt="" width="75" height="42" /> *@
-                                @*         </a> *@
-                                @*     </li> *@
-                                @*     <li class="rd-navbar-list-item"> *@
-                                @*         <a class="rd-navbar-list-link" href="#"> *@
-                                @*             <img src="~/images/shop/liga_promerica.svg.png" alt="" width="75" height="42" /> *@
-                                @*         </a> *@
-                                @*     </li> *@
-
-
-                                @* </ul> *@
-                                <!-- RD Navbar Search-->
                                 <div class="rd-navbar-search">
-                                    <button class="rd-navbar-search-toggle" data-rd-navbar-toggle=".rd-navbar-search"><span></span></button>
-                                    <form class="rd-search" action="#" data-search-live="rd-search-results-live" method="GET">
-                                        <div class="form-wrap">
-                                            <label class="form-label" for="rd-navbar-search-form-input">Enter your search request here...</label>
-                                            <input class="rd-navbar-search-form-input form-input" id="rd-navbar-search-form-input" type="text" name="s" autocomplete="off">
-                                            <div class="rd-search-results-live" id="rd-search-results-live"></div>
-                                        </div>
-                                        <button class="rd-search-form-submit fl-budicons-launch-search81" type="submit"></button>
-                                    </form>
+                                    <button class="rd-navbar-search-toggle" data-rd-navbar-toggle=".rd-navbar-search">
+                                        <span></span>
+                                    </button>
                                 </div>
                             </div>
                         </div>
+
                         <div class="rd-navbar-main-bottom rd-navbar-darker">
                             <div class="rd-navbar-main-container container">
-                                <!-- RD Navbar Nav-->
                                 <ul class="rd-navbar-nav">
-                                    <li class="rd-nav-item">
-                                        <a class="rd-nav-link" asp-controller="Home" asp-action="Index">Home</a>
-                                    </li>
-                                    <li class="rd-nav-item">
-                                        <a class="rd-nav-link" asp-controller="Usuario" asp-action="PerfilUsuario">Mi perfil</a>
-                                    </li>
-                                    <li class="rd-nav-item">
-                                        <a class="rd-nav-link" asp-controller="Torneos" asp-action="ConsultarTorneos">Torneos</a>
-                                    </li>
-                                    <li class="rd-nav-item">
-                                        <a class="rd-nav-link" asp-controller="Cancha" asp-action="Index">Canchas</a>
-                                    </li>
-                                    <li class="rd-nav-item">                                    
-                                        <a class="rd-nav-link" asp-controller="Categoria" asp-action="ObtenerCategorias">Categorias</a>
-                                    </li>
-                                    <li class="rd-nav-item">
-                                        <a class="rd-nav-link" asp-controller="Facturas" asp-action="Index">Facturas</a>
-                                    </li>
+                                    <li class="rd-nav-item"><a class="rd-nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
+                                    <li class="rd-nav-item"><a class="rd-nav-link" asp-controller="Usuario" asp-action="PerfilUsuario">Reservar Cancha</a></li>
+                                    <li class="rd-nav-item"><a class="rd-nav-link" asp-controller="Torneos" asp-action="ConsultarTorneos">Torneos</a></li>
+                                    <li class="rd-nav-item"><a class="rd-nav-link" asp-controller="Cancha" asp-action="Index">Canchas</a></li>
+                                    <li class="rd-nav-item"><a class="rd-nav-link" asp-controller="Categoria" asp-action="ObtenerCategorias">Categorías</a></li>
+
+                                    @* Mostrar Facturas solo si es Administrador *@
+                                    @if (!string.IsNullOrEmpty(token) && rolNombre == "Administrador")
+                                    {
+                                        <li class="rd-nav-item">
+                                            <a class="rd-nav-link" asp-controller="Facturas" asp-action="Index">Facturas</a>
+                                        </li>
+                                    }
                                 </ul>
+
                                 <div class="rd-navbar-main-element">
                                     <ul class="list-inline list-inline-sm">
                                         <li><a class="icon icon-xs icon-light fa fa-facebook" href="#"></a></li>
@@ -170,27 +169,22 @@
             </div>
         </header>
 
-
         @RenderBody()
 
-
         <footer class="section footer-classic footer-classic-dark context-dark">
-
             <div class="footer-classic-aside footer-classic-darken">
                 <div class="container">
                     <div class="layout-justify">
-                        <!-- Rights-->
                         <p class="rights">
                             <span>Grupo 4 Proyecto Progra Avanzada</span>
                             <span>&copy;</span>
-                            <span class="copyright-year"></span>
+                            <span class="copyright-year">2025</span>
                         </p>
-
                         <nav class="nav-minimal">
                             <ul class="nav-minimal-list">
                                 <li class="active"><a href="index.html">Inicio</a></li>
-                                <li><a href="">Torneos</a></li>
-                                <li><a href="#">Canchas</a></li>
+                                <li><a href="#">Torneos</a></li>
+                                <li><a href="/Cancha">Canchas</a></li>
                                 <li><a href="#">Partidos</a></li>
                             </ul>
                         </nav>
@@ -198,48 +192,29 @@
                 </div>
             </div>
         </footer>
-        <!-- Modal Video-->
+
         <div class="modal modal-video fade" id="modal1" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
                     <div class="modal-body">
                         <div class="embed-responsive embed-responsive-16by9">
-                            <iframe class="embed-responsive-item" width="560" height="315" data-src="https://www.youtube.com/embed/uSzNA2_y46c"></iframe>
+                            <iframe class="embed-responsive-item" width="560" height="315"
+                                    data-src="https://www.youtube.com/embed/uSzNA2_y46c" allowfullscreen>
+                            </iframe>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Global Mailform Output-->
+
     <div class="snackbars" id="form-output-global"></div>
-    <!-- Javascript-->
     <script src="~/js/core.min.js"></script>
     <script src="~/js/script.js"></script>
 </body>
 </html>
-<style>
-    /* Mantiene opacidad: .15 normal y .8 en hover */
-    .rd-navbar-classic .rd-navbar-list-link {
-        display: block;
-        max-width: 1000px;
-        opacity: .15;
-        transition: opacity 0.3s;
-    }
-
-        .rd-navbar-classic .rd-navbar-list-link:hover {
-            opacity: .8;
-        }
-
-        /* Fuerza que las imágenes internas tengan la misma medida */
-        .rd-navbar-classic .rd-navbar-list-link img {
-            width: 100px;
-            height: 60px;
-            object-fit: contain; /* Evita distorsión si tienen proporciones distintas */
-            display: block; /* Opcional: para que se comporten como bloque dentro del enlace */
-            margin: 0 auto; /* Opcional: centra la imagen horizontalmente en el enlace */
-        }
-</style>
