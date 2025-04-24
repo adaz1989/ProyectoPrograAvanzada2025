@@ -37,6 +37,11 @@ builder.Services.AddScoped<ICantonService, CantonService>();
 builder.Services.AddScoped<IDistritoService, DistritoService>();
 builder.Services.AddScoped<ICanchaService, CanchaService>();
 
+builder.Services.AddScoped<IResennaService, ResennaService>();
+builder.Services.AddScoped<IResennaRepository, ResennaRepository>();
+
+
+
 //-----------------------------------------------------------------
 
 var app = builder.Build();

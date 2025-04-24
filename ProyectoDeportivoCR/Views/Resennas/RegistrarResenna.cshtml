@@ -1,0 +1,86 @@
+﻿@model ProyectoDeportivoCR.Models.ResennaCanchaModel
+
+@{
+    ViewData["Title"] = "Registrar Reseña";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/EstilosCRUD.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+</head>
+
+<div class="container">
+    <div class="form-section">
+        <div class="form-title">
+            <i class="bi bi-chat-square-text"></i>
+            Registrar Reseña
+        </div>
+
+        @if (ViewBag.Mensaje != null)
+        {
+            <div class="custom-alert danger">
+                <i class="bi bi-exclamation-circle"></i>
+                @ViewBag.Mensaje
+            </div>
+        }
+
+        <form asp-action="RegistrarResenna" method="post">
+            <input asp-for="CanchaId" type="hidden" />
+
+            <div class="form-group">
+                <label class="form-label">
+                    <i class="bi bi-star-fill"></i> Calificación
+                </label>
+                <div class="rating-container">
+                    @for (int i = 1; i <= 5; i++)
+                    {
+                        <input type="radio"
+                               asp-for="Calificacion"
+                               value="@i"
+                               id="star@(i)"
+                               required />
+                        <label for="star@(i)" title="@i estrellas">
+                            <i class="bi bi-star-fill"></i>
+                        </label>
+                    }
+                    <!-- Aquí ponemos el contador -->
+                    <div class="star-counter" style="margin-top:0.5rem; font-size:1rem;"></div>
+                </div>
+                <span asp-validation-for="Calificacion" class="validation-message"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">
+                    <i class="bi bi-chat-text"></i> Comentario
+                </label>
+                <textarea asp-for="Comentario"
+                          class="form-control"
+                          rows="4"
+                          placeholder="Escribe tu experiencia detallada aquí…"></textarea>
+                <span asp-validation-for="Comentario" class="validation-message"></span>
+            </div>
+
+            <div class="form-actions">
+                <a asp-action="Index" class="btn-cancel">
+                    <i class="bi bi-arrow-left"></i> Volver
+                </a>
+                <button type="submit" class="btn-register">
+                    <i class="bi bi-save2"></i> Guardar Reseña
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const stars = document.querySelectorAll('.rating-container input');
+        const counter = document.querySelector('.star-counter');
+
+        stars.forEach(star => {
+            star.addEventListener('change', e => {
+                counter.textContent = `Estrellas seleccionadas: ${e.target.value}`;
+            });
+        });
+    });
+</script>
