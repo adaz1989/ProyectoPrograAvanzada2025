@@ -40,6 +40,8 @@ namespace ProyectoDeportivoCR.Controllers
             return View();
         }
 
+        
+
         [HttpPost]
         public async Task<IActionResult> IniciarSesion(UsuarioModel model)
         {
@@ -57,7 +59,14 @@ namespace ProyectoDeportivoCR.Controllers
             ViewBag.Mensaje = resultado.Mensaje;
             return View();
         }
-
+        [HttpGet]
+        public IActionResult CerrarSesion()
+        {
+            // Limpia toda la sesión
+            HttpContext.Session.Clear();
+            // Redirige al login
+            return RedirectToAction("IniciarSesion");
+        }
 
         //public IActionResult Principal(string username, string password)
         //{

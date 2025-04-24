@@ -1,0 +1,155 @@
+﻿/* loggin.css - Animación de subida y bajada suave */
+
+/* Contenedor principal del login */
+section.login-container {
+    position: relative;
+    overflow: hidden;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #23272a 0%, #2c2f33 100%);
+    color: #ffffff;
+}
+
+/* Balones deportivos */
+.login-container .ball {
+    position: absolute;
+    font-size: 3rem;
+    opacity: 0.15;
+    z-index: 0; /* detrás del login */
+    will-change: transform;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-name: subirBajar;
+}
+
+/* Animación completa: subir hasta arriba y luego bajar hasta abajo */
+@keyframes subirBajar {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0.1;
+    }
+
+    50% {
+        transform: translateY(-50vh) rotate(180deg);
+        opacity: 0.3;
+    }
+
+    100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0.1;
+    }
+}
+
+/* Balones con tiempos más lentos */
+.ball1 {
+    left: 10%;
+    animation-duration: 10s;
+}
+
+.ball2 {
+    left: 25%;
+    animation-duration: 11s;
+}
+
+.ball3 {
+    left: 40%;
+    animation-duration: 14s;
+}
+
+.ball4 {
+    left: 55%;
+    animation-duration: 16s;
+}
+
+.ball5 {
+    left: 70%;
+    animation-duration: 20s;
+}
+
+.ball6 {
+    left: 85%;
+    animation-duration: 22s;
+}
+
+/* Tarjeta del formulario login */
+.card-login {
+    position: relative;
+    z-index: 1; /* encima de los balones */
+    width: 100%;
+    max-width: 400px;
+    background-color: #2c2f33;
+    border-radius: 0.75rem;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+    .card-login .card-header {
+        background-color: #35AD79;
+        color: #FFFFFF;
+        text-align: center;
+        padding: 1rem;
+        font-size: 1.5rem;
+        font-weight: 600;
+    }
+
+    .card-login .card-body {
+        padding: 2rem;
+    }
+
+    .card-login label {
+        color: #e2e2e2;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+    }
+
+    .card-login input.form-control {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: none;
+        border-radius: 0.5rem;
+        background-color: #40444b;
+        color: #FFFFFF;
+        margin-bottom: 1rem;
+        transition: background-color 0.2s;
+    }
+
+        .card-login input.form-control:focus {
+            background-color: #4f545c;
+            outline: none;
+            box-shadow: 0 0 0 0.2rem rgba(53, 173, 121, 0.5);
+        }
+
+    .card-login .btn-login {
+        width: 100%;
+        padding: 0.75rem;
+        font-size: 1rem;
+        background-color: #35AD79;
+        border: none;
+        border-radius: 0.5rem;
+        color: #FFFFFF;
+        font-weight: 600;
+        transition: background-color 0.2s;
+    }
+
+        .card-login .btn-login:hover {
+            background-color: #2e986b;
+        }
+
+    .card-login .text-register {
+        text-align: center;
+        margin-top: 1.5rem;
+        font-size: 0.9rem;
+        color: #b9bbbe;
+    }
+
+        .card-login .text-register a {
+            color: #35AD79;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+            .card-login .text-register a:hover {
+                text-decoration: underline;
+            }

@@ -1,0 +1,290 @@
+/* === SOBRE NOSOTROS - ESTILOS COMPLETOS Y MODERNOS === */
+
+:root {
+	--accent-green: #35AD79;
+}
+
+/* ===== Tipografía general ===== */
+h1, h2, h3, h4, h5 {
+	font-family: 'Kanit', sans-serif;
+	color: #1a1a1a;
+}
+
+p {
+	font-family: 'Roboto', sans-serif;
+	color: #111 !important;
+	line-height: 1.7;
+	margin-bottom: 1rem;
+	font-size: 1rem;
+}
+
+/* ===== HERO portada ===== */
+.hero-banner {
+	height: 100vh;
+	position: relative;
+	overflow: hidden;
+}
+
+	.hero-banner .hero-img {
+		object-fit: cover;
+		height: 100%;
+		width: 100%;
+	}
+
+	.hero-banner .overlay {
+		background: linear-gradient(to bottom, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.65));
+		z-index: 1;
+	}
+
+/* ===== Sombra de texto ===== */
+.text-shadow {
+	text-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+}
+
+.text-shadow-sm {
+	text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+/* ===== Botón gradiente principal ===== */
+.btn-gradient-primary {
+	background: linear-gradient(135deg, var(--accent-green), #00b894);
+	border: none;
+	color: white;
+	font-weight: 600;
+	padding: 0.75rem 2.5rem;
+	font-size: 1.1rem;
+	border-radius: 50px;
+	box-shadow: 0 8px 20px rgba(53, 173, 121, 0.4);
+	transition: all 0.35s ease-in-out;
+	position: relative;
+	overflow: hidden;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+}
+
+	.btn-gradient-primary::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: -100%;
+		width: 100%;
+		height: 100%;
+		background: linear-gradient(to right, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
+		transform: skewX(-30deg);
+		transition: left 0.5s ease;
+		z-index: 1;
+	}
+
+	.btn-gradient-primary:hover::before {
+		left: 100%;
+	}
+
+	.btn-gradient-primary:hover {
+		transform: translateY(-3px);
+		box-shadow: 0 12px 24px rgba(53, 173, 121, 0.6);
+	}
+
+	.btn-gradient-primary i,
+	.btn-gradient-primary span {
+		position: relative;
+		z-index: 2;
+	}
+
+/* ===== Botón alternativo verde ===== */
+.btn-secondary-green {
+	background-color: var(--accent-green);
+	color: white;
+	border: none;
+	padding: 0.6rem 1.8rem;
+	border-radius: 50px;
+	font-weight: 500;
+	transition: background-color 0.3s ease;
+}
+
+	.btn-secondary-green:hover {
+		background-color: #2b9063;
+	}
+
+/* ===== Tarjetas funcionales ===== */
+.card.funcionalidad-card {
+	overflow: hidden;
+	border-radius: 14px;
+	background: #fff;
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+	transition: transform 0.3s ease, box-shadow 0.3s ease;
+	border-top: 4px solid var(--accent-green);
+}
+
+	.card.funcionalidad-card:hover {
+		transform: translateY(-8px);
+		box-shadow: 0 16px 32px rgba(0, 0, 0, 0.15);
+	}
+
+/* ===== Imagen uniforme para tarjetas ===== */
+.img-wrapper {
+	height: 250px;
+	overflow: hidden;
+	position: relative;
+	border-radius: 14px 14px 0 0;
+}
+
+.img-cover {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+.img-wrapper:hover .img-cover {
+	transform: scale(1.05);
+	filter: brightness(1.1) contrast(1.02);
+}
+
+/* ===== Overlay elegante para tarjetas ===== */
+.overlay-content {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	background: #ffffff;
+	color: #111;
+	padding: 1rem;
+	z-index: 2;
+}
+
+	.overlay-content h5.fw-bold {
+		color: var(--accent-green);
+		border-bottom: 2px solid var(--accent-green);
+		padding-bottom: 0.3rem;
+		margin-bottom: 0.5rem;
+	}
+
+/* ===== Imagen misión destacada ===== */
+.img-main-mission {
+	max-height: 460px;
+	width: 100%;
+	object-fit: cover;
+	border-radius: 1rem;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* ===== Caja misión con borde verde ===== */
+.mission-text-box {
+	border-left: 5px solid var(--accent-green);
+	background-color: #f2fcf7;
+	padding: 1.5rem;
+	border-radius: 0.75rem;
+}
+
+/* ===== Decorador debajo de títulos ===== */
+.section h1.display-4::after,
+.section h3.fw-bold::after,
+.section h4.fw-bold::after {
+	content: '';
+	display: block;
+	width: 60px;
+	height: 4px;
+	background-color: var(--accent-green);
+	margin: 0.5rem auto 0;
+	border-radius: 2px;
+}
+
+/* ===== Animaciones ===== */
+@keyframes fadeInUp {
+	from {
+		opacity: 0;
+		transform: translateY(40px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes fadeInLeft {
+	from {
+		opacity: 0;
+		transform: translateX(-40px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+@keyframes fadeInRight {
+	from {
+		opacity: 0;
+		transform: translateX(40px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+.animate-fade-up,
+.animate-fade-left,
+.animate-fade-right {
+	opacity: 0;
+	animation-fill-mode: forwards;
+}
+
+.animate-fade-up {
+	animation: fadeInUp 1s ease forwards;
+}
+
+.animate-fade-left {
+	animation: fadeInLeft 1s ease forwards;
+}
+
+.animate-fade-right {
+	animation: fadeInRight 1s ease forwards;
+}
+
+.animate-fade-up.delay-1 {
+	animation-delay: 0.3s;
+}
+
+.animate-fade-up.delay-2 {
+	animation-delay: 0.6s;
+}
+
+.animate-fade-up.delay-3 {
+	animation-delay: 0.9s;
+}
+
+.animate-fade-left.delay-1,
+.animate-fade-right.delay-1 {
+	animation-delay: 0.4s;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+	.img-wrapper {
+		height: 180px;
+	}
+
+	.img-main-mission {
+		max-height: 320px;
+	}
+
+	.btn-gradient-primary {
+		font-size: 1rem;
+		padding: 0.6rem 1.8rem;
+	}
+
+	.overlay-content {
+		padding: 0.8rem;
+		font-size: 0.95rem;
+	}
+
+	.hero-banner {
+		height: 75vh;
+	}
+}

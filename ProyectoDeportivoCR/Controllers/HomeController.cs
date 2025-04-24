@@ -17,5 +17,10 @@ namespace ProyectoDeportivoCR.Controllers
         {
             return View();
         }
+
+        public IActionResult SobreNosotros()
+        {
+            return View();
+        }
     }
 }
