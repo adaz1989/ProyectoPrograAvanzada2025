@@ -5,34 +5,39 @@
     <input type="hidden" asp-for="TorneoId" />
 
     <div class="form-group">
-        <label asp-for="NombreEquipo">Nombre del equipo</label>
+        <img id="escudoPreview" src="" alt="Escudo del equipo" style="max-height: 200px; display: none; padding: 5px;" />
+    </div>
+
+    <div class="form-group">
+        <label for="UrlEscudo">Enlace del Escudo.</label>
+        <input type="text" class="form-control" name="UrlEscudo" asp-for="UrlEscudo" id="urlEscudoInput" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NombreEquipo">Nombre del Equipo</label>
         <input asp-for="NombreEquipo" class="form-control" required />
     </div>
 
     <div id="integrantes-container">
         <div class="integrante">
             <div class="form-group">
-                <label>Cédula del integrante</label>
-                <input name="Integrantes[0].Cedula" class="form-control" required />
+                <label>Cédula del Entrenador</label>
+                <input name="Integrantes[0].Cedula" class="form-control cedula-input" data-index="0" required />
             </div>
 
             <div class="form-group">
-                <label>Rol</label>
-                <input type="number" name="Integrantes[0].Rol" class="form-control" required />
+                <label>Nombre</label>
+                <input type="text" class="form-control nombre-input" name="Integrantes[0].Nombre" readonly />
             </div>
+
+            <div class="form-group">
+                <label>Apellidos</label>
+                <input type="text" class="form-control apellidos-input" name="Integrantes[0].Apellidos" readonly />
+            </div>
+
+            <input type="hidden" name="Integrantes[0].Rol" value="1" />
         </div>
     </div>
-
-    <!--
-    <div class="form-group">
-        <label asp-for="Cedula">Cédula</label>
-        <input asp-for="Cedula" class="form-control" required />
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Rol">Rol</label>
-        <input asp-for="Rol" class="form-control" required />
-    </div> -->
 
     <button type="button" id="agregar-integrante" class="btn btn-info">Agregar Integrante</button>
     <button type="submit" class="btn btn-success">Registrar</button>
@@ -40,6 +45,7 @@
 
 <script>
     let index = 1;
+
     document.getElementById('agregar-integrante').onclick = function () {
         const container = document.getElementById('integrantes-container');
         const newIntegrante = document.createElement('div');
@@ -47,17 +53,67 @@
 
         newIntegrante.innerHTML = `
             <div class="form-group">
-                <label>Nombre del integrante</label>
-                <input name="Integrantes[${index}].Cedula" class="form-control" required />
+                <label>Cédula del Integrante</label>
+                <input name="Integrantes[${index}].Cedula" class="form-control cedula-input" data-index="${index}" required />
             </div>
 
             <div class="form-group">
-                <label>Rol</label>
-                <input name="Integrantes[${index}].Rol" class="form-control" required />
+                <label>Nombre</label>
+                <input type="text" class="form-control nombre-input" name="Integrantes[${index}].Nombre" readonly />
             </div>
+
+            <div class="form-group">
+                <label>Apellidos</label>
+                <input type="text" class="form-control apellidos-input" name="Integrantes[${index}].Apellidos" readonly />
+            </div>
+
+            <input type="hidden" name="Integrantes[${index}].Rol" value="2" />
         `;
 
         container.appendChild(newIntegrante);
         index++;
     };
+
+    // Mostrar escudo al pegar URL
+    const escudoInput = document.getElementById('urlEscudoInput');
+    const escudoPreview = document.getElementById('escudoPreview');
+
+    escudoInput.addEventListener('input', function () {
+        const url = this.value.trim();
+        if (url.length > 5) {
+            escudoPreview.src = url;
+            escudoPreview.style.display = 'block';
+        } else {
+            escudoPreview.style.display = 'none';
+        }
+    });
+
+    // Delegar evento para todas las cédulas
+    document.addEventListener('input', async function (e) {
+        if (e.target.classList.contains('cedula-input')) {
+            const cedula = e.target.value.trim();
+            const index = e.target.getAttribute('data-index');
+
+            if (cedula.length === 9) {
+                try {
+                    const response = await fetch(`https://apis.gometa.org/cedulas/${cedula}`);
+                    const data = await response.json();
+
+                    const nombreInput = document.querySelector(`input[name="Integrantes[${index}].Nombre"]`);
+                    const apellidosInput = document.querySelector(`input[name="Integrantes[${index}].Apellidos"]`);
+
+                    if (data?.results && data.results.length > 0) {
+                        const persona = data.results[0];
+                        nombreInput.value = persona.firstname || '';
+                        apellidosInput.value = `${persona.lastname1 || ''} ${persona.lastname2 || ''}`;
+                    } else {
+                        nombreInput.value = '';
+                        apellidosInput.value = '';
+                    }
+                } catch (err) {
+                    console.error("Error al consultar la cédula:", err);
+                }
+            }
+        }
+    });
 </script>

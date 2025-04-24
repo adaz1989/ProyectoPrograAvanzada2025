@@ -38,7 +38,8 @@ namespace ProyectoApi.Controllers
                 var result = context.Execute("RegistrarEquipoTorneo",
                     new { model.NombreEquipo, 
                           model.TorneoId,
-                          Integrantes = table.AsTableValuedParameter("IntegranteEquipoType")
+                          Integrantes = table.AsTableValuedParameter("IntegranteEquipoType"),
+                          model.UrlEscudo
                     });
 
                 var respuesta = new RespuestaModel();

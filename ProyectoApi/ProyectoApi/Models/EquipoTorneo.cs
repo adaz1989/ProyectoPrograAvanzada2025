@@ -13,6 +13,7 @@ namespace ProyectoApi.Models
 
         [Required]
         public long TorneoId { get; set; }
+        public string? UrlEscudo { get; set; }
     }
 
     public class IntegranteModel
