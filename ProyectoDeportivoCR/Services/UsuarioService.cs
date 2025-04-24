@@ -72,5 +72,21 @@ namespace ProyectoDeportivoCR.Services
             };
 
         }
+
+        public async Task<Respuesta2Model<UsuarioModel>> ActualizarInformacionUsuario(UsuarioModel model)
+        {
+            // obtener token de sesión
+            var token = _httpContextAccessor.HttpContext!.Session.GetString("Token")!;
+
+            var response = await _usuarioRepositorie.ActualizarInformacionUsuario(token, model);
+            if (response.IsSuccessStatusCode)
+                return await response.LeerRespuesta2Model<UsuarioModel>();
+
+            return new Respuesta2Model<UsuarioModel>
+            {
+                Exito = false,
+                Mensaje = "Error de comunicación con la API."
+            };
+        }
     }
 }

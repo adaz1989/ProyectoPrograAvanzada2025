@@ -9,5 +9,7 @@
         public Task<Respuesta2Model<CanchaModel>> DeshabilitarCancha(int canchaId);
 
         public Task<Respuesta2Model<CanchaModel>> ObtenerCancha(int canchaId);
+        public Task<Respuesta2Model<List<HorarioCanchaModel>>> ObtenerHorariosCancha(long canchaId);
+        public Task<Respuesta2Model<HorarioCanchaModel>> RegistrarHorarioCancha(HorarioCanchaModel model);
     }
 }

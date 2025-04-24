@@ -31,6 +31,8 @@ namespace ProyectoApi.Models
         public string? NombreCanton { get; set; }
         public string? NombreDistrito { get; set; }
 
+        public HorarioCanchaModel? Horario { get; set; }
+
 
 
     }

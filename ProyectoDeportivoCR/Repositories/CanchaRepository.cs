@@ -22,7 +22,9 @@ namespace ProyectoDeportivoCR.Repositories
                 { "RegistrarCancha",            $"{baseUrl}Canchas/RegistrarCancha" },
                 { "ActualizarCancha",           $"{baseUrl}Canchas/ActualizarInformacionCanchas" },
                 { "DeshabilitarCancha",         $"{baseUrl}Canchas/DeshabilitarCanchas" },
-                { "ObtenerCancha",              $"{baseUrl}Canchas/ObtenerInformacionCanchas" }
+                { "ObtenerCancha",              $"{baseUrl}Canchas/ObtenerInformacionCanchas" },
+                { "ObtenerHorariosCancha",      $"{baseUrl}HorariosCancha/ObtenerHorariosCancha" },
+                { "RegistrarHorarioCancha",     $"{baseUrl}HorariosCancha/RegistrarHorarioCancha" }
             };
         }
 
@@ -44,7 +46,7 @@ namespace ProyectoDeportivoCR.Repositories
             // El controlador usa [HttpPut("ActualizarInformacionCanchas")]
             // Enviamos el modelo en el cuerpo de la solicitud como JSON
             return await http.PutAsJsonAsync(url, model);
-        } 
+        }
 
         public async Task<HttpResponseMessage> DeshabilitarCancha(int canchaId)
         {
@@ -67,5 +69,22 @@ namespace ProyectoDeportivoCR.Repositories
             // GET para obtener la información de la cancha
             return await http.GetAsync(url);
         }
+
+        public async Task<HttpResponseMessage> ObtenerHorariosCancha(long canchaId)
+        {
+            using var http = _httpClient.CreateClient();
+            // La ruta de la API es [HttpGet("ObtenerHorariosCanchas/{canchaId}")]
+            var url = $"{_apiEndpoints["ObtenerHorariosCancha"]}/{canchaId}";
+            // GET para obtener la información de la cancha
+            return await http.GetAsync(url);
+        }
+
+        public async Task<HttpResponseMessage> RegistrarHorarioCancha(HorarioCanchaModel model)
+        {
+            using var http = _httpClient.CreateClient();
+            var url = _apiEndpoints["RegistrarHorarioCancha"];
+            return await http.PostAsJsonAsync(url, model);
+        }
+
     }
 }

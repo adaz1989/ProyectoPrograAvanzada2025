@@ -7,10 +7,13 @@ namespace ProyectoDeportivoCR.Controllers
     public class CanchaController : Controller
     {
         private readonly ICanchaService _canchaService;
+        private readonly DiasService _diasService;
 
-        public CanchaController(ICanchaService canchaService)
+
+        public CanchaController(ICanchaService canchaService, DiasService diasService)
         {
             _canchaService = canchaService;
+            _diasService = diasService;
         }
 
         [HttpGet]
@@ -88,6 +91,39 @@ namespace ProyectoDeportivoCR.Controllers
             ViewBag.Mensaje = resultado.Mensaje;
 
             return RedirectToAction("ObtenerCancha");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> HorarioCancha(int canchaId)
+        {
+            // CAMBIAR ESTO PARA SI O SI RECIBIR EL ID DE LA CANCHA
+            canchaId = 2;
+            var resultadoCancha = await _canchaService.ObtenerCancha(canchaId);
+            var resultadoHorario = await _canchaService.ObtenerHorariosCancha(canchaId);
+            var resultadoDias = await _diasService.ObtenerDias();
+
+
+            ViewBag.Cancha = resultadoCancha.Datos;
+            ViewBag.Dias = resultadoDias.Datos;
+            return View(resultadoHorario.Datos);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RegistrarHorarioCancha(HorarioCanchaModel model)
+        {
+            var resultado = await _canchaService.RegistrarHorarioCancha(model);
+            ViewBag.Mensaje = resultado.Mensaje;
+
+
+            // PESIMA PRACTICA, PERO POR TIEMPO PREFIERO CASTEAR LONG A INT ANTES QUE ARREGLAR TODO LO DEMAS
+            var resultadoCancha = await _canchaService.ObtenerCancha((int)model.CanchaId);
+            var resultadoHorario = await _canchaService.ObtenerHorariosCancha(model.CanchaId);
+            var resultadoDias = await _diasService.ObtenerDias();
+
+            ViewBag.Cancha = resultadoCancha.Datos;
+            ViewBag.Dias = resultadoDias.Datos;
+
+            return View("HorarioCancha", resultadoHorario.Datos);
         }
     }
 }

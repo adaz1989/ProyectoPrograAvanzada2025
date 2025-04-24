@@ -1,0 +1,69 @@
+﻿@model ProyectoDeportivoCR.Models.UsuarioModel
+
+<section class="section section-variant-1 bg-gray-100">
+    <div class="container">
+        <div class="row row-50 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-4">
+                <div class="card-login-register" id="card-l-r">
+                    <div class="card-top-panel">
+                        <div class="card-top-panel-left">
+                            <h5 class="card-title card-title-login">Actualizar información del usuario</h5>
+                        </div>
+                    </div>
+
+                    <div class="card-form card-form-login">
+                        @if (ViewBag.Mensaje != null)
+                        {
+                            <div class="alert alert-info mt-3">@ViewBag.Mensaje</div>
+                        }
+                        <form class="rd-form" method="post" asp-controller="Usuario" asp-action="ActualizarInformacionUsuario">
+                            <input type="hidden" name="UsuarioId" value="@Model.UsuarioId" />
+
+                            <div class="form-wrap">
+                                <p>Nombre.</p>
+                                <input class="form-input form-control-has-validation form-control-last-child"
+                                       type="text"
+                                       name="NombreUsuario"
+                                       value="@Model.NombreUsuario"
+                                       required />
+                            </div>
+
+                            <div class="form-wrap">
+                                <p>Apellidos.</p>
+                                <input class="form-input form-control-has-validation form-control-last-child"
+                                       type="text"
+                                       name="ApellidosUsuario"
+                                       value="@Model.ApellidosUsuario"
+                                       required />
+                            </div>
+
+                            <div class="form-wrap">
+                                <p>Teléfono.</p>
+                                <input class="form-input form-control-has-validation form-control-last-child"
+                                       type="tel"
+                                       name="TelefonoUsuario"
+                                       value="@Model.TelefonoUsuario"
+                                       required />
+                            </div>
+
+                            <div class="form-wrap">
+                                <p>Correo electrónico.</p>
+                                <input class="form-input form-control-last-child"
+                                       type="email"
+                                       name="CorreoUsuario"
+                                       value="@Model.CorreoUsuario"
+                                       readonly />
+                            </div>
+
+                            <button type="submit" class="button button-lg button-primary button-block">
+                                Guardar cambios
+                            </button>
+                        </form>
+
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

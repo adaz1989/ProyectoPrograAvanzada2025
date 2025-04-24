@@ -23,6 +23,8 @@ builder.Services.AddScoped<IDeporteRepository, DeporteRepository>();
 
 builder.Services.AddScoped<ICanchaRepository, CanchaRepository>();
 builder.Services.AddScoped<ICanchaService, CanchaService>();
+
+builder.Services.AddScoped<DiasService>();
 //-----------------------------------------------------------------
 
 var app = builder.Build();

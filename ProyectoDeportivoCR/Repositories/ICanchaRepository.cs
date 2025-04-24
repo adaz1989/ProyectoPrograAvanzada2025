@@ -9,5 +9,7 @@
         public Task<HttpResponseMessage> DeshabilitarCancha(int canchaId);
 
         public Task<HttpResponseMessage> ObtenerCancha(int canchaId);
+        public Task<HttpResponseMessage> ObtenerHorariosCancha(long canchaId);
+        public Task<HttpResponseMessage> RegistrarHorarioCancha(HorarioCanchaModel model);
     }
 }

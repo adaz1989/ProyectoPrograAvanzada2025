@@ -17,10 +17,11 @@ namespace ProyectoApi.Controllers
         {
             var ex = HttpContext.Features.Get<IExceptionHandlerFeature>();
 
-            var respuesta = new RespuestaModel();
-
-            respuesta.Exito = false;
-            respuesta.Mensaje = "Se presentó un problema en el sistema.";
+            var respuesta = new RespuestaModel
+            {
+                Exito = false,
+                Mensaje = ex?.Error.Message ?? "Se presentó un problema en el sistema."
+            };
 
             return Ok(respuesta);
         }

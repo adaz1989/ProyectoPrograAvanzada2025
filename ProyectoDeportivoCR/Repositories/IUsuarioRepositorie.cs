@@ -6,5 +6,6 @@
         public Task<HttpResponseMessage> IniciarSesion(UsuarioModel model);
         public Task<HttpResponseMessage> RegistrarUsuario(UsuarioModel model);
         public Task<HttpResponseMessage> ObtenerInformacionUsuario(string token);
+        public Task<HttpResponseMessage> ActualizarInformacionUsuario(string token, UsuarioModel model);
     }
 }

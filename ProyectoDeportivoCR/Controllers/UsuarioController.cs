@@ -22,7 +22,7 @@ namespace ProyectoDeportivoCR.Controllers
                 return View(usuario);
             }
 
-            return RedirectToAction("Login", "IniciarSesion");
+            return RedirectToAction("IniciarSesion", "Login");
         }
 
         [HttpGet]
@@ -36,8 +36,23 @@ namespace ProyectoDeportivoCR.Controllers
                 return View(usuario);
             }
 
-            return RedirectToAction("Login", "IniciarSesion");
+            return RedirectToAction("IniciarSesion", "Login");
         }
+
+        [HttpPost]
+        public async Task<IActionResult> ActualizarInformacionUsuario(UsuarioModel model)
+        {
+            var resultado = await _usuarioService.ActualizarInformacionUsuario(model); 
+
+            if (!resultado.Exito)
+            {
+                ViewBag.Mensaje = resultado.Mensaje;
+                return View(model);
+            }            
+
+            return RedirectToAction("PerfilUsuario");
+        }
+
     }
 }
 

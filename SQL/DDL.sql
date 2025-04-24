@@ -266,3 +266,47 @@ DELETE FROM EquiposTorneos;
 
 ALTER TABLE IntegrantesEquipos
 ADD Rol INT NOT NULL;
+
+
+
+----------------------------------------------------------
+-- NECESARIO PARA VOLVER NULL LA FK TorneoId EN ReservacionesCanchas
+----------------------------------------------------------
+DECLARE @fkName NVARCHAR(200), @sql NVARCHAR(MAX);
+
+SELECT
+    @fkName = fk.name
+FROM sys.foreign_keys fk
+JOIN sys.foreign_key_columns fkc 
+    ON fk.object_id = fkc.constraint_object_id
+JOIN sys.columns c 
+    ON fkc.parent_object_id = c.object_id 
+   AND fkc.parent_column_id  = c.column_id
+WHERE OBJECT_NAME(fk.parent_object_id) = 'ReservacionesCanchas'
+  AND c.name = 'TorneoId';
+
+IF @fkName IS NOT NULL
+BEGIN
+    SET @sql = N'ALTER TABLE ReservacionesCanchas DROP CONSTRAINT [' + @fkName + N']';
+    EXEC sp_executesql @sql;
+END
+GO
+
+-- 2) Alterar la columna para permitir NULLs
+ALTER TABLE ReservacionesCanchas
+ALTER COLUMN TorneoId BIGINT NULL;
+GO
+
+-- 3) Volver a añadir la FK con nombre fijo (si no existe)
+IF NOT EXISTS (
+    SELECT 1 
+    FROM sys.foreign_keys 
+    WHERE name = 'FK_ReservacionesCanchas_Torneos'
+)
+BEGIN
+    ALTER TABLE ReservacionesCanchas
+    ADD CONSTRAINT FK_ReservacionesCanchas_Torneos
+        FOREIGN KEY (TorneoId)
+        REFERENCES Torneos(TorneoId);
+END
+GO
