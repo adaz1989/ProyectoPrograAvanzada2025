@@ -57,27 +57,6 @@ GO
 
 
 CREATE OR ALTER PROCEDURE dbo.ObtenerFacturaPorId
-    @FacturaId BIGINT
-AS
-BEGIN
-    SET NOCOUNT ON;
-
-    SELECT
-        FacturaId,
-        Monto,
-        FechaHoraFactura,
-        Comprobante,
-        ReservacionId,
-        UsuarioId,
-        MetodoPagoId,
-        Estado,
-        FotoComprobante
-    FROM dbo.Facturas
-    WHERE FacturaId = @FacturaId;
-END;
-GO
-
-CREATE OR ALTER PROCEDURE dbo.ObtenerFacturaPorId
     @FacturaId BIGINT,
     @CodigoError INT OUTPUT,
     @Mensaje VARCHAR(255) OUTPUT
@@ -110,32 +89,24 @@ BEGIN
     END
 END;
 
+GO
+CREATE OR ALTER PROCEDURE dbo.ObtenerTodasLasFacturas
+AS
+BEGIN
+    SET NOCOUNT ON;
 
-select * from dbo.Facturas	
-
-
-DECLARE @Monto DECIMAL(10,2) = 2500,
-        @FechaHoraFactura DATETIME = '2025-04-07T01:06:53.760Z',
-        @Comprobante VARCHAR(MAX) = 'Aprobado',
-        @ReservacionId BIGINT = 2,
-        @UsuarioId BIGINT = 1,
-        @MetodoPagoId BIGINT = 1,
-        @FotoComprobante VARBINARY(MAX) = NULL, 
-        @CodigoError INT,
-        @Mensaje VARCHAR(255);
-
-EXEC dbo.RegistrarFactura
-    @Monto = @Monto,
-    @FechaHoraFactura = @FechaHoraFactura,
-    @Comprobante = @Comprobante,
-    @ReservacionId = @ReservacionId,
-    @UsuarioId = @UsuarioId,
-    @MetodoPagoId = @MetodoPagoId,
-    @FotoComprobante = @FotoComprobante,
-    @CodigoError = @CodigoError OUTPUT,
-    @Mensaje = @Mensaje OUTPUT;
-
-SELECT @CodigoError AS CodigoError, @Mensaje AS Mensaje;
+    SELECT
+        FacturaId,
+        Monto,
+        FechaHoraFactura,
+        Comprobante,
+        ReservacionId,
+        UsuarioId,
+        MetodoPagoId,
+        Estado,
+        FotoComprobante
+    FROM dbo.Facturas
+END;
+GO
 
 
-EXEC dbo.ObtenerFacturaPorId @FacturaId = 2;

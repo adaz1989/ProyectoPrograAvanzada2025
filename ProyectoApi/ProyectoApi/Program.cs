@@ -44,6 +44,9 @@ builder.Services.AddScoped<IProvinciaService, ProvinciaService>();
 builder.Services.AddScoped<IDistritoService, DistritoService>();
 builder.Services.AddScoped<IDistritoRepository, DistritoRepository>();
 
+builder.Services.AddScoped<IResennaCanchaService, ResennaCanchaService>();
+builder.Services.AddScoped<IResennaCanchaRepository, ResennaRepository>();
+
 
 
 

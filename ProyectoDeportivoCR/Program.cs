@@ -6,24 +6,24 @@ using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 1. Añade MVC y HttpClientFactory
+// 1. Aï¿½ade MVC y HttpClientFactory
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient();
 
-// 2. Configura sesión en memoria
+// 2. Configura sesiï¿½n en memoria
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
-    // Tiempo de inactividad antes de expirar la sesión
+    // Tiempo de inactividad antes de expirar la sesiï¿½n
     options.IdleTimeout = TimeSpan.FromMinutes(30);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
 
-// 3. Para poder inyectar IHttpContextAccessor y leer/escribir sesión
+// 3. Para poder inyectar IHttpContextAccessor y leer/escribir sesiï¿½n
 builder.Services.AddHttpContextAccessor();
 
-// 4. Inyección de dependencias de tus servicios/repositorios
+// 4. Inyecciï¿½n de dependencias de tus servicios/repositorios
 builder.Services.AddScoped<ITorneoService, TorneoService>();
 builder.Services.AddScoped<IEncriptacionService, EncriptacionService>();
 builder.Services.AddScoped<IUsuarioRepositorie, UsuarioRepositorie>();
@@ -44,6 +44,13 @@ builder.Services.AddScoped<IDistritoRepository, DistritoRepository>();
 builder.Services.AddScoped<IProvinciaService, ProvinciaService>();
 builder.Services.AddScoped<ICantonService, CantonService>();
 builder.Services.AddScoped<IDistritoService, DistritoService>();
+builder.Services.AddScoped<ICanchaService, CanchaService>();
+
+builder.Services.AddScoped<IResennaService, ResennaService>();
+builder.Services.AddScoped<IResennaRepository, ResennaRepository>();
+
+
+
 //-----------------------------------------------------------------
 
 var app = builder.Build();

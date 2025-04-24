@@ -24,9 +24,9 @@
     }
 
     <div class="row mb-4">
-        <div class="col-md-6 text-center mb-2">
-            <a asp-controller="Cancha" asp-action="RegistrarCancha" class="btn btn-success btn-lg">
-                Registrar Cancha
+        <div class="col-12 text-center">
+            <a asp-controller="Cancha" asp-action="RegistrarCancha" class="btn btn-registrar-cancha">
+                <i class="bi bi-plus-circle me-2"></i> Registrar Cancha
             </a>
         </div>
     </div>
@@ -74,6 +74,12 @@
                                    asp-route-canchaId="@cancha.CanchaId"
                                    class="btn btn-outline-warning btn-sm">
                                     Actualizar
+                                </a>
+                                <a asp-controller="Resennas"
+                                   asp-action="RegistrarResenna"
+                                   asp-route-canchaId="@cancha.CanchaId"
+                                   class="btn btn-outline-success btn-sm">
+                                    Registrar Reseña
                                 </a>
                             </div>
                         </div>
