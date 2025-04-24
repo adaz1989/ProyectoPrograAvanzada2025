@@ -47,7 +47,6 @@ BEGIN
 END;
 GO
 
-
 CREATE OR ALTER PROCEDURE dbo.DeshabilitarCategoria
     @CategoriaId BIGINT,
     @CodigoError INT OUTPUT,
@@ -91,7 +90,6 @@ BEGIN
     END CATCH
 END;
 GO
-
 
 CREATE OR ALTER PROCEDURE dbo.EditarCategoria
     @CategoriaId BIGINT,
@@ -157,7 +155,6 @@ BEGIN
 END;
 GO
 
-
 CREATE OR ALTER PROCEDURE dbo.ObtenerCategoriasPorId
     @CategoriaId BIGINT = NULL,
     @CodigoError INT OUTPUT,
@@ -206,7 +203,6 @@ BEGIN
 END;
 GO
 
-
 CREATE OR ALTER PROCEDURE dbo.ObtenerTodasLasCategorias
 AS
 BEGIN
@@ -223,7 +219,5 @@ BEGIN
     ORDER BY CategoriaId;   
 END;
 GO
-
-
 
 select * from dbo.Categorias

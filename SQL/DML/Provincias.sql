@@ -147,11 +147,6 @@ BEGIN
 END;
 GO
 
-
-
-INSERT INTO Provincias (NombreProvincia) VALUES ('San Jose');
-
-
 CREATE OR ALTER PROCEDURE dbo.ObtenerTodasProvincias
 AS
 BEGIN

@@ -1,5 +1,4 @@
-USE ProyectoAspNetCore;
-GO  
+
 -- ===============================================================
 --                REGISTRAR USUARIO
 -- ===============================================================
@@ -77,5 +76,4 @@ SELECT UsuarioId, NombreUsuario, DescripcionTipoUsuario
     AND Estado = 1
 END
 
-
-
+SELECT * FROM USUARIOS;

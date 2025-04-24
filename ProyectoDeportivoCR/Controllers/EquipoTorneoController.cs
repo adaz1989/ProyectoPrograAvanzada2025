@@ -42,7 +42,7 @@ namespace ProyectoDeportivoCR.Controllers
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "EquipoTorneo/RegistrarEquipoTorneo";
 
-                // http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
+                http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
                 var response = http.PostAsJsonAsync(url, model).Result;
 
                 if (response.IsSuccessStatusCode)
