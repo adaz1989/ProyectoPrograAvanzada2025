@@ -46,6 +46,12 @@ namespace ProyectoApi.Services
                 return long.Parse(UsuarioId!);
             }
             return 0;
-        }        
+        } 
+        
+        public bool ValidarUsuarioAdmin(IEnumerable<Claim> valores)
+        {
+            var tipoUsuario = valores.FirstOrDefault(x => x.Type == "TipoUsuario")?.Value;
+            return tipoUsuario == "Administrador";
+        }
     }
 }

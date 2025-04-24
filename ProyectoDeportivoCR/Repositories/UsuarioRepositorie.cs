@@ -19,7 +19,8 @@ namespace ProyectoDeportivoCR.Repositories
             {
                 { "RegistrarUsuario", $"{baseUrl}Sesion/RegistrarUsuario" },
                 { "IniciarSesion",    $"{baseUrl}Sesion/IniciarSesion" },
-                { "ObtenerInformacionUsuario", $"{baseUrl}Usuario/ObtenerInformacionUsuario" }
+                { "ObtenerInformacionUsuario", $"{baseUrl}Usuario/ObtenerInformacionUsuario" },
+                { "ActualizarInformacionUsuario",$"{baseUrl}Usuario/ActualizarInformacionUsuario" }
             };
         }
 
@@ -52,6 +53,14 @@ namespace ProyectoDeportivoCR.Repositories
             http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
             return await http.GetAsync(url);
+        }
+
+        public async Task<HttpResponseMessage> ActualizarInformacionUsuario(string token, UsuarioModel model)
+        {
+            using var http = _httpClient.CreateClient();
+            http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var url = _apiEndpoints["ActualizarInformacionUsuario"];
+            return await http.PutAsJsonAsync(url, model);
         }
     }
 }

@@ -50,6 +50,12 @@ builder.Services.AddScoped<IResennaCanchaRepository, ResennaRepository>();
 
 
 
+builder.Services.AddScoped<IHorarioCanchaRepository, HorarioCanchaRepository>();
+builder.Services.AddScoped<IHorariosCanchasService, HorariosCanchaService>();
+
+builder.Services.AddScoped<IReservacionRepository, ReservacionRepository>();
+builder.Services.AddScoped<IReservacionService, ReservacionService>();
+
 
 
 builder.Services.AddSwaggerGen(options =>

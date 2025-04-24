@@ -1,14 +1,19 @@
-﻿@model ProyectoDeportivoCR.Models.CategoriaModel?
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+@model ProyectoDeportivoCR.Models.CategoriaModel?
 
 @{
     ViewBag.Title = "Buscar Categoría";
+    // Recupera el nombre del rol desde la sesión
+    var rolNombre = HttpContextAccessor.HttpContext!.Session.GetString("RolNombre");
 }
 
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <h2 class="mb-4 text-center">Buscar Categoría</h2>
-            
+
             <div class="card shadow-sm">
                 <div class="card-body">
                     <!-- Formulario para solicitar el ID de la categoría -->
@@ -24,7 +29,7 @@
                 </div>
             </div>
 
-            <!-- Se muestran los detalles de la categoría si el modelo no es null -->
+            <!-- Mostrar detalles si existe el modelo -->
             @if (Model != null)
             {
                 <div class="card shadow-sm mt-4">
@@ -32,30 +37,39 @@
                         <h5 class="card-title">@Model.NombreCategoria</h5>
                         <ul class="list-group list-group-flush mb-3">
                             <li class="list-group-item"><strong>ID:</strong> @Model.CategoriaId</li>
-                            <li class="list-group-item"><strong>Nombre Categoria:</strong> @Model.NombreCategoria</li>
+                            <li class="list-group-item"><strong>Nombre Categoría:</strong> @Model.NombreCategoria</li>
                             <li class="list-group-item"><strong>Edad Mínima:</strong> @Model.EdadMinima</li>
                             <li class="list-group-item"><strong>Edad Máxima:</strong> @Model.EdadMaxima</li>
                         </ul>
-                        <div class="d-flex justify-content-between flex-wrap gap-2">
-                            <!-- Botón para buscar otra categoría -->
-                            <a asp-controller="Categoria" asp-action="RegistrarCategoria" class="btn btn-primary">
-                                Registrar Categoría
-                            </a>
-                            <!-- Botón para actualizar la categoría -->
-                            <a asp-controller="Categoria" asp-action="ActualizarCategoria" asp-route-categoriaId="@Model.CategoriaId" class="btn btn-warning">
-                                Actualizar Categoría
-                            </a>
-                            <!-- Botón/formulario para deshabilitar la categoría -->
-                            <form asp-controller="Categoria" asp-action="DesabilitarCategoria" method="post"
-                                  onsubmit="return confirm('¿Está seguro que desea deshabilitar esta categoría?');"
-                                  style="display:inline;">
-                                @Html.AntiForgeryToken() <!-- Añadir esta línea -->
-                                <input type="hidden" name="categoriaId" value="@Model.CategoriaId" />
-                                <button type="submit" class="btn btn-danger">
-                                    Deshabilitar Categoría
-                                </button>
-                            </form>
-                        </div>
+
+                        <!-- Solo visible para administradores -->
+                        @if (rolNombre == "Administrador")
+                        {
+                            <div class="d-flex justify-content-between flex-wrap gap-2">
+                                <a asp-controller="Categoria"
+                                   asp-action="RegistrarCategoria"
+                                   class="btn btn-success">
+                                    <i class="bi bi-plus-circle"></i> Registrar Categoría
+                                </a>
+                                <a asp-controller="Categoria"
+                                   asp-action="ActualizarCategoria"
+                                   asp-route-categoriaId="@Model.CategoriaId"
+                                   class="btn btn-warning">
+                                    <i class="bi bi-pencil-square"></i> Actualizar Categoría
+                                </a>
+                                <form asp-controller="Categoria"
+                                      asp-action="DesabilitarCategoria"
+                                      method="post"
+                                      onsubmit="return confirm('¿Está seguro que desea deshabilitar esta categoría?');"
+                                      style="display:inline;">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="categoriaId" value="@Model.CategoriaId" />
+                                    <button type="submit" class="btn btn-danger">
+                                        <i class="bi bi-trash2-fill"></i> Deshabilitar Categoría
+                                    </button>
+                                </form>
+                            </div>
+                        }
                     </div>
                 </div>
             }

@@ -5,24 +5,19 @@ namespace ProyectoApi.Models
     public class ReservacionCanchaModel
     {
         public long ReservacionId { get; set; }
-        public DateOnly FechaReservacion { get; set; }
-        public TimeOnly HoraInicio { get; set; }
-        public TimeOnly HoraFin { get; set; }
-        // Llaves foraneas
+        public DateTime FechaReservavion { get; set; }
+        public TimeSpan HoraInicio { get; set; }
+        public TimeSpan HoraFin { get; set; }
+
+        // Llaves foráneas
         public long CanchaId { get; set; }
         public long UsuarioId { get; set; }
-        public long TorneoId { get; set; }
+        public long? TorneoId { get; set; } = null;
 
-        // Desnormalizacion
-        // Info de la cancha
+        // Desnormalización
         public string? NombreCancha { get; set; }
-        public string? CorreoCancha { get; set; }
-        public string? TelefonoCancha { get; set; }
-        public double PrecioHora { get; set; }
-        public string? DetalleDireccion { get; set; }
-        public string? DescripcionCancha { get; set; }
-
         public string? NombreUsuario { get; set; }
+        public string? CorreoElectronico { get; set; }
         public string? NombreTorneo { get; set; }
 
     }

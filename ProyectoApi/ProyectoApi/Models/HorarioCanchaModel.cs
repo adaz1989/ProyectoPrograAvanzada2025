@@ -4,7 +4,10 @@
     {
         public long CanchaId { get; set; }
         public long DiaId { get; set; }
-        public TimeOnly HoraApertura { get; set; }
-        public TimeOnly HoraCierre { get; set; }
+        public TimeSpan HoraApertura { get; set; }
+        public TimeSpan HoraCierre { get; set; }
+
+        //Desnormalizado
+        public string? NombreDia { get; set; }
     }
 }

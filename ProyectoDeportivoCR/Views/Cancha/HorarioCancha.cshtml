@@ -1,0 +1,130 @@
+﻿@model IEnumerable<ProyectoDeportivoCR.Models.HorarioCanchaModel>?
+
+@{
+
+    ViewData["Title"] = "Buscar Cancha";
+
+    var cancha = ViewBag.Cancha as ProyectoDeportivoCR.Models.CanchaModel;
+    var dias = ViewBag.Dias as IEnumerable<ProyectoDeportivoCR.Models.DiaModel>;
+}
+
+<section class="section section-variant-1 bg-gray-100">
+    <div class="container">
+        <div class="row row-50 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-4">
+                <div class="card-login-register" id="card-l-r">
+                    <div class="card-top-panel">
+                        <div class="card-top-panel-left">
+                            <h5 class="card-title card-title-login">Gestion de horario</h5>
+                        </div>
+                    </div>
+
+                    <div class="card-form card-form-login">
+                        @if (ViewBag.Mensaje != null)
+                        {
+                            <div class="alert alert-warning" role="alert">
+                                @ViewBag.Mensaje
+                            </div>
+                        }
+
+                        @if (cancha != null)
+                        {
+                            <div class="form-wrap">
+                                <p><strong>Nombre:</strong> @cancha.NombreCancha</p>
+                            </div> 
+
+                            <div class="form-wrap">
+                                <p><strong>Descripción:</strong> @cancha.DescripcionCancha</p>
+                            </div>
+
+                            <div class="form-wrap">
+                                <p><strong>Deporte:</strong> @cancha.NombreDeporte</p>
+                            </div>
+
+                            <hr />
+
+                            @if (Model != null && Model.Any())
+                            {
+                                <div class="form-wrap">
+                                    <h5>Horarios registrados</h5>
+
+                                    <table class="table table-bordered table-sm mt-3">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>Día</th>
+                                                <th>Hora de Apertura</th>
+                                                <th>Hora de Cierre</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var horario in Model)
+                                            {                                                
+                                                <tr>
+                                                    <td>@horario.NombreDia</td>
+                                                    <td>@horario.HoraApertura.ToString("HH\\:mm")</td>
+                                                    <td>@horario.HoraCierre.ToString("HH\\:mm")</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <hr />
+                            }
+                            else
+                            {
+                                <div class="form-wrap">
+                                    <div class="alert alert-info">No hay horarios registrados para esta cancha aún.</div>
+                                </div>
+                            }
+
+                            <form method="post" asp-controller="Cancha" asp-action="RegistrarHorarioCancha">
+                                <h5>Registro de horario</h5>
+
+                                <input type="hidden" name="CanchaId" value="@cancha.CanchaId" />
+
+                                <div class="form-wrap">
+                                    <select id="diaSelect" name="DiaId" class="form-input form-control-has-validation form-control-last-child" required>
+                                        <option value="">-- Seleccione un día... --</option>
+                                        @foreach (var d in dias ?? Enumerable.Empty<ProyectoDeportivoCR.Models.DiaModel>())
+                                        {
+                                            <option value="@d.DiaId">@d.NombreDia</option>
+                                        }
+                                    </select>
+                                </div>
+
+                                <div class="form-wrap">
+                                    <p>Hora de apertura</p>
+                                    <select class="form-input form-control-has-validation form-control-last-child" name="HoraApertura" required>
+                                        <option value="">-- Seleccione la hora de apertura --</option>
+                                        @for (int i = 0; i < 24; i++)
+                                        {
+                                            var valor = new TimeOnly(i, 0).ToString("HH\\:mm\\:ss"); 
+                                            var display = new TimeOnly(i, 0).ToString("HH\\:mm");    
+                                            <option value="@valor">@display</option>
+                                        }
+                                    </select>
+                                </div>
+
+                                <div class="form-wrap">
+                                    <p>Hora de cierre</p>
+                                    <select class="form-input form-control-has-validation form-control-last-child" name="HoraCierre" required>
+                                        <option value="">-- Seleccione la hora de cierre --</option>
+                                        @for (int i = 0; i < 24; i++)
+                                        {
+                                            var valor = new TimeOnly(i, 0).ToString("HH\\:mm\\:ss");
+                                            var display = new TimeOnly(i, 0).ToString("HH\\:mm");
+                                            <option value="@valor">@display</option>
+                                        }
+                                    </select>
+                                </div>
+
+                                <button type="submit" class="button button-lg button-primary button-block mt-3">Guardar horario</button>
+                            </form>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
