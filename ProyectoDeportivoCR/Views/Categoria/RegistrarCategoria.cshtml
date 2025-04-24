@@ -4,39 +4,71 @@
     ViewBag.Title = "Registrar Categoría";
 }
 
+<head>
+    <link rel="stylesheet" href="~/css/EstilosCRUD.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" />
+</head>
+
 <div class="container mt-5">
-    <h2 class="mb-4">Registrar Categoría</h2>
+    <div class="row justify-content-center">
+        <div class="col-lg-10 col-md-12">
+            <section class="form-section">
+                <h2 class="form-title">
+                    <i class="bi bi-tags"></i>
+                    Registrar Categoría
+                </h2>
 
-    @if (ViewBag.Mensaje != null)
-    {
-        <div class="alert alert-info">
-            @ViewBag.Mensaje
-        </div>
-    }
+                @if (ViewBag.Mensaje != null)
+                {
+                    <div class="custom-alert success">
+                        <i class="bi bi-check-circle-fill"></i>
+                        @ViewBag.Mensaje
+                    </div>
+                }
 
-    <div class="card shadow-sm">
-        <div class="card-body">
-            <form asp-action="RegistrarCategoria" method="post">
-                @* Mostrar los errores de validación generales *@
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <form asp-action="RegistrarCategoria" method="post" class="form-container">
+                    <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
 
-                <div class="mb-3">
-                    <label asp-for="NombreCategoria" class="form-label"></label>
-                    <input asp-for="NombreCategoria" class="form-control" />
-                    <span asp-validation-for="NombreCategoria" class="text-danger"></span>
-                </div>
-                <div class="mb-3">
-                    <label asp-for="EdadMinima" class="form-label"></label>
-                    <input asp-for="EdadMinima" class="form-control" type="number" />
-                    <span asp-validation-for="EdadMinima" class="text-danger"></span>
-                </div>
-                <div class="mb-3">
-                    <label asp-for="EdadMaxima" class="form-label"></label>
-                    <input asp-for="EdadMaxima" class="form-control" type="number" />
-                    <span asp-validation-for="EdadMaxima" class="text-danger"></span>
-                </div>
-                <button type="submit" class="btn btn-primary">Registrar Categoría</button>
-            </form>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label asp-for="NombreCategoria" class="form-label">
+                                <i class="bi bi-text-paragraph"></i> Nombre de la Categoría
+                            </label>
+                            <input asp-for="NombreCategoria"
+                                   class="form-control"
+                                   placeholder="Ej: Juvenil, Libre, Máster…" />
+                            <span asp-validation-for="NombreCategoria"
+                                  class="validation-message"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="EdadMinima" class="form-label">
+                                <i class="bi bi-chevron-bar-contract"></i> Edad Mínima
+                            </label>
+                            <input asp-for="EdadMinima"
+                                   class="form-control"
+                                   placeholder="Ej: 12" />
+                            <span asp-validation-for="EdadMinima"
+                                  class="validation-message"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="EdadMaxima" class="form-label">
+                                <i class="bi bi-chevron-bar-expand"></i> Edad Máxima
+                            </label>
+                            <input asp-for="EdadMaxima"
+                                   class="form-control"
+                                   placeholder="Ej: 17" />
+                            <span asp-validation-for="EdadMaxima"
+                                  class="validation-message"></span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-register">
+                        <i class="bi bi-check-circle-fill"></i> Registrar Categoría
+                    </button>
+                </form>
+            </section>
         </div>
     </div>
 </div>

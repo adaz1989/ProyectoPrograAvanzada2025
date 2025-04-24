@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProyectoApi.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ResennasController : ControllerBase

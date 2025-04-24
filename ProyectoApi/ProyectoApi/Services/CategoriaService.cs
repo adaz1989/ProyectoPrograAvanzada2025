@@ -1,5 +1,6 @@
 ﻿
 using Dapper;
+using Microsoft.Data.SqlClient;
 using System.Data;
 using System.Reflection;
 
@@ -82,6 +83,33 @@ namespace ProyectoApi.Services
                     Mensaje = "Error inesperado en la base de datos"
                 }
             };
+        }
+        public async Task<RespuestaModel> ObtenerTodasLasCategorias()
+        {
+            var respuesta = new RespuestaModel();
+
+            try
+            {
+                var resultado = await _categoriaRepository.ObtenerTodasLasCategorias();
+
+                if (resultado != null)
+                {
+                    respuesta.Exito = true;
+                    respuesta.Datos = resultado;
+                }
+                else
+                {
+                    respuesta.Exito = false;
+                    respuesta.Mensaje = "No se encontró una cancha válida con ese Id";
+                }
+            }
+            catch (SqlException ex)
+            {
+                respuesta.Exito = false;
+                respuesta.Mensaje = ex.Message;
+            }
+
+            return respuesta;
         }
     }
 }

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ProyectoApi.Controllers
 {
-    [AllowAnonymous]
+
     [Route("api/[controller]")]
     [ApiController]
     public class CategoriaController : ControllerBase
@@ -50,6 +50,14 @@ namespace ProyectoApi.Controllers
         {
             var respuesta = await _categoriaService.ObtenerInformacionCategoria(categoriaId);
             return Ok(respuesta);
+        }
+
+        [HttpGet]
+        [Route("ObtenerTodasLasCategorias")]
+        public async Task<IActionResult> ObtenerTodasLasCanchas()
+        {
+            var canchas = await _categoriaService.ObtenerTodasLasCategorias();
+            return Ok(canchas); // Devuelve la lista directamente, no un objeto envoltorio.
         }
 
 
