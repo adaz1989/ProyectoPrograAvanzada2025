@@ -310,3 +310,14 @@ BEGIN
         REFERENCES Torneos(TorneoId);
 END
 GO
+
+
+-- 1) Agregar FotoCancha a la tabla Canchas
+ALTER TABLE dbo.Canchas
+ADD FotoCancha VARBINARY(MAX) NULL;
+GO
+
+-- 2) Agregar FotoComprobante a la tabla Facturas
+ALTER TABLE dbo.Facturas
+ADD FotoComprobante VARBINARY(MAX) NULL;
+GO

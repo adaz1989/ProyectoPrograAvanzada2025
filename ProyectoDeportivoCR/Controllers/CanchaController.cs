@@ -7,14 +7,29 @@ namespace ProyectoDeportivoCR.Controllers
     public class CanchaController : Controller
     {
         private readonly ICanchaService _canchaService;
-        private readonly DiasService _diasService;
+        private readonly IProvinciaService _provinciaService;
+        private readonly ICantonService _cantonService;
+        private readonly IDistritoService _distritoService;
+        private readonly IDeporteService _deporteService;
+        private readonly DiasService _diasService; // Si tienes una interfaz, usar: IDiasService
 
-
-        public CanchaController(ICanchaService canchaService, DiasService diasService)
+        public CanchaController(
+            ICanchaService canchaService,
+            IProvinciaService provinciaService,
+            ICantonService cantonService,
+            IDistritoService distritoService,
+            IDeporteService deporteService,
+            DiasService diasService // Si existe interfaz: IDiasService diasService
+        )
         {
             _canchaService = canchaService;
+            _provinciaService = provinciaService;
+            _cantonService = cantonService;
+            _distritoService = distritoService;
+            _deporteService = deporteService;
             _diasService = diasService;
         }
+
 
         [HttpGet]
         public IActionResult Index()

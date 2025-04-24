@@ -13,16 +13,15 @@ namespace ProyectoDeportivoCR.Repositories
             _httpClient = httpClient;
             _configuration = configuration;
 
-            // Leer la URL base de tu archivo de configuración (appsettings.json)
             var baseUrl = _configuration.GetSection("Variables:urlWebApi").Value!;
 
-            // Definir los endpoints de Canchas según tu CanchasController
             _apiEndpoints = new Dictionary<string, string>
             {
                 { "RegistrarCancha",            $"{baseUrl}Canchas/RegistrarCancha" },
                 { "ActualizarCancha",           $"{baseUrl}Canchas/ActualizarInformacionCanchas" },
                 { "DeshabilitarCancha",         $"{baseUrl}Canchas/DeshabilitarCanchas" },
                 { "ObtenerCancha",              $"{baseUrl}Canchas/ObtenerInformacionCanchas" },
+                { "ObtenerTodasLasCanchas",     $"{baseUrl}Canchas/ObtenerTodasLasCanchas" },
                 { "ObtenerHorariosCancha",      $"{baseUrl}HorariosCancha/ObtenerHorariosCancha" },
                 { "RegistrarHorarioCancha",     $"{baseUrl}HorariosCancha/RegistrarHorarioCancha" }
             };

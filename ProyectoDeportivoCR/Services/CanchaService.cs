@@ -75,6 +75,25 @@ namespace ProyectoDeportivoCR.Services
             };
         }
 
+        public async Task<Respuesta2Model<List<CanchaModel>>> ObtenerTodasLasCanchas()
+        {
+            var token = _httpContextAccessor.HttpContext?.Session.GetString("Token");
+
+            var respuesta = await _canchaRepository.ObtenerTodasLasCanchas(token);
+            if (respuesta.IsSuccessStatusCode)
+            {
+
+                return await respuesta.LeerRespuesta2Model<List<CanchaModel>>();
+            }
+
+            return new Respuesta2Model<List<CanchaModel>>
+            {
+                Exito = false,
+                Mensaje = "Error al comunicarse con la API.",
+                Datos = null
+            };
+        }
+
         public async Task<Respuesta2Model<List<HorarioCanchaModel>>> ObtenerHorariosCancha(long CanchaId)
         {
             var respuesta = await _canchaRepository.ObtenerHorariosCancha(CanchaId);
