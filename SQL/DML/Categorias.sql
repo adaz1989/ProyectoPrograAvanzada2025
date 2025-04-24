@@ -159,7 +159,7 @@ GO
 
 
 CREATE OR ALTER PROCEDURE dbo.ObtenerCategoriasPorId
-    @CategoriaId BIGINT = NULL,  -- Parámetro opcional. Si se envía, se obtiene esa categoría en específico.
+    @CategoriaId BIGINT = NULL,
     @CodigoError INT OUTPUT,
     @Mensaje VARCHAR(255) OUTPUT
 AS
@@ -206,27 +206,24 @@ BEGIN
 END;
 GO
 
+
+CREATE OR ALTER PROCEDURE dbo.ObtenerTodasLasCategorias
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT
+        CategoriaId,
+        NombreCategoria,
+        EdadMinima,
+        EdadMaxima,
+        Estado
+    FROM dbo.Categorias
+    WHERE Estado = 1       
+    ORDER BY CategoriaId;   
+END;
+GO
+
+
+
 select * from dbo.Categorias
-
-DECLARE @CodigoError INT, @Mensaje VARCHAR(255);
-
-EXEC dbo.ObtenerCategoriasPorId 
-    @CategoriaId = 1, 
-    @CodigoError = @CodigoError OUTPUT,
-    @Mensaje = @Mensaje OUTPUT;
-
-SELECT @CodigoError AS CodigoError, @Mensaje AS Mensaje;
-
-go 
-
-DECLARE @CodigoError INT;
-DECLARE @Mensaje VARCHAR(255);
-
-EXEC dbo.RegistrarCategoria 
-    @NombreCategoria = 'Juvenil',
-    @EdadMinima = 12,
-    @EdadMaxima = 17,
-    @CodigoError = @CodigoError OUTPUT,
-    @Mensaje = @Mensaje OUTPUT;
-
-SELECT @CodigoError AS CodigoError, @Mensaje AS Mensaje;
