@@ -13,9 +13,14 @@ namespace ProyectoDeportivoCR.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var respuesta = await _deporteService.ObtenerTodosLosDeportes();
+            if (respuesta.Exito)
+                return View(respuesta.Datos);
+
+            ViewBag.ErrorMessage = respuesta.Mensaje;
+            return View(new List<DeporteModel>());
         }
 
         [HttpGet]

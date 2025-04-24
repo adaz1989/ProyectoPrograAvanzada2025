@@ -37,6 +37,14 @@ namespace ProyectoApi.Controllers
             var respuesta = await _provinciaService.ObtenerInformacionProvincia(provinciaId);
             return Ok(respuesta);
         }
+
+        [HttpGet]
+        [Route("ObtenerTodasProvincias")]
+        public async Task<IActionResult> ObtenerTodasProvincias()
+        {
+            var respuesta = await _provinciaService.ObtenerTodasProvincias();
+            return Ok(respuesta);
+        }
     }
 
 }

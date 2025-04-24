@@ -1,0 +1,272 @@
+﻿/* -------------------------------------------------------
+   Estilos base (existentes)
+   ------------------------------------------------------- */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8fafc;
+    color: #2d3748;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* 1) Sección del formulario */
+.form-section {
+    background: #ffffff;
+    padding: 2.5rem;
+    border-radius: 1.5rem;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+    border: 1px solid #e8eef4;
+    margin: 2rem auto;
+    max-width: 600px;
+}
+
+/* 2) Título */
+.form-title {
+    color: #2d3748;
+    font-size: 2rem;
+    margin-bottom: 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid #f0f4f9;
+    justify-content: center;
+    text-align: center;
+}
+
+    .form-title i {
+        font-size: 1.6rem;
+        color: #48bb78;
+    }
+
+/* 3) Grupos de campo */
+.form-group {
+    position: relative;
+    margin-bottom: 1.25rem;
+}
+
+.form-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    color: #4a5568;
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+}
+
+/* 4) Inputs y textarea */
+.form-control {
+    width: 100%;
+    padding: 0.875rem 1.25rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 0.75rem;
+    background: #fff;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+    .form-control:focus {
+        border-color: #48bb78;
+        box-shadow: 0 0 0 3px rgba(72, 187, 120, 0.15);
+    }
+
+.form-group textarea.form-control {
+    min-height: 150px;
+    resize: vertical;
+}
+
+/* 5) Validaciones y alertas */
+.validation-message {
+    color: #e53e3e;
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+    display: block;
+}
+
+.custom-alert {
+    padding: 1rem 1.5rem;
+    border-radius: 0.75rem;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+    .custom-alert.success {
+        background: #f0fff4;
+        border: 1px solid #c6f6d5;
+        color: #38a169;
+    }
+
+    .custom-alert.danger {
+        background: #fff5f5;
+        border: 1px solid #fed7d7;
+        color: #e53e3e;
+    }
+
+/* 6) Acciones generales */
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.btn-register {
+    display: inline-flex;
+    padding: 0.5rem 1.5rem; 
+    font-size: 0.9rem;
+    border-radius: 0.5rem; 
+    background: linear-gradient(135deg, #38a169 0%, #48bb78 100%);
+    color: #fff;
+    border: none;
+    transition: all 0.2s ease;
+}
+
+    .btn-register:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(72, 187, 120, 0.2);
+    }
+
+.btn-cancel {
+    background: transparent;
+    color: #4a5568;
+    padding: 0.75rem 1.5rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+    .btn-cancel:hover {
+        background-color: #f8f9fa;
+        border-color: #48bb78;
+        color: #38a169;
+    }
+
+/* 7) Rating stars avanzado */
+.rating-container {
+    display: flex;
+    justify-content: flex-end; 
+    font-size: 1.6rem;
+    gap: 0.5rem;
+}
+
+    .rating-container input[type="radio"] {
+        display: none; /* oculta el radio pero deja la lógica de “+ label” */
+    }
+
+    .rating-container label {
+        cursor: pointer;
+        color: #ddd;
+        transition: color 0.2s;
+    }
+
+        /* hover pinta esa estrella y todas las anteriores */
+        .rating-container label:hover,
+        .rating-container label:hover ~ label {
+            color: #ffc107;
+        }
+
+    /* checked + label pinta la estrella clicada y todas las anteriores */
+    .rating-container input:checked + label,
+    .rating-container input:checked + label ~ label {
+        color: #ffc107;
+    }
+/* -------------------------------------------------------
+   Estilos Tarjetas de Canchas
+   ------------------------------------------------------- */
+
+/* Tarjeta de cancha */
+.card.cancha-card {
+    transition: transform 0.3s, box-shadow 0.3s;
+    border-radius: 1rem;
+    overflow: hidden;
+    border: 1px solid #e0e0e0;
+    background: #fff;
+}
+
+    .card.cancha-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+    }
+
+    .card.cancha-card .card-img-top {
+        height: 220px;
+        object-fit: cover;
+        border-bottom: 1px solid #eee;
+    }
+
+    .card.cancha-card .card-body {
+        padding: 1rem;
+        font-size: 0.95rem;
+    }
+
+    .card.cancha-card .card-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+    /* Botones dentro de la tarjeta */
+    .card.cancha-card .action-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        justify-content: center;
+    }
+/* Botón principal Registrar Cancha */
+.btn-registrar-cancha {
+    background: linear-gradient(135deg, #28a745, #218838);
+    color: #fff;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    transition: background 0.3s ease;
+}
+
+    .btn-registrar-cancha:hover {
+        background: linear-gradient(135deg, #218838, #1e7e34);
+        color: #fff;
+    }
+
+/* -------------------------------------------------------
+   Responsive
+   ------------------------------------------------------- */
+@media (max-width: 768px) {
+    .form-section {
+        padding: 1.5rem;
+    }
+
+    .rating-container .star-label {
+        font-size: 1.6rem;
+    }
+
+    .card.cancha-card .card-img-top {
+        height: 180px;
+    }
+}
+
+@media (max-width: 576px) {
+    .btn-register, .btn-registrar-cancha {
+        padding: 0.6rem 1.5rem;
+        font-size: 0.9rem;
+    }
+
+    .btn-cancel {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+    }
+}

@@ -25,24 +25,27 @@ namespace ProyectoApi.Repositories
             parametros.Add("@TelefonoCancha", model.TelefonoCancha);
             parametros.Add("@PrecioHora", model.PrecioHora);
             parametros.Add("@DeporteId", model.DeporteId);
-            parametros.Add("@ProvinciaId", model.ProvinciaId);
-            parametros.Add("@CantonId", model.CantonId);
-            parametros.Add("@Distritold", model.DistritoId);
             parametros.Add("@DetalleDireccion", model.DetalleDireccion);
             parametros.Add("@DescripcionCancha", model.DescripcionCancha);
-            parametros.Add("@UsuarioId", model.UsuarioId);
+            parametros.Add("@Estado", model.Estado);
+            parametros.Add("@FotoCancha", model.FotoCancha, dbType: DbType.Binary);
 
             // Parámetros de salida
             parametros.Add("@CodigoError", dbType: DbType.Int32, direction: ParameterDirection.Output);
             parametros.Add("@Mensaje", dbType: DbType.String, size: 255, direction: ParameterDirection.Output);
 
-            await conexion.ExecuteAsync("dbo.ActualizarInformacionCancha", parametros, commandType: CommandType.StoredProcedure);
+            await conexion.ExecuteAsync(
+                "dbo.ActualizarInformacionCancha",
+                parametros,
+                commandType: CommandType.StoredProcedure
+            );
 
             int codigoError = parametros.Get<int>("@CodigoError");
             string mensaje = parametros.Get<string>("@Mensaje");
 
             return (codigoError, mensaje);
         }
+
 
         public async Task<(int CodigoError, string Mensaje)> DeshabilitarCancha(long canchaId)
         {
@@ -88,6 +91,7 @@ namespace ProyectoApi.Repositories
             using var conexion = _context.CrearConexion();
 
             var parametros = new DynamicParameters();
+
             parametros.Add("@NombreCancha", model.NombreCancha);
             parametros.Add("@CorreoCancha", model.CorreoCancha);
             parametros.Add("@TelefonoCancha", model.TelefonoCancha);
@@ -99,6 +103,7 @@ namespace ProyectoApi.Repositories
             parametros.Add("@DetalleDireccion", model.DetalleDireccion);
             parametros.Add("@DescripcionCancha", model.DescripcionCancha);
             parametros.Add("@UsuarioId", model.UsuarioId);
+            parametros.Add("@FotoCancha", model.FotoCancha);
 
             parametros.Add("@CodigoError", dbType: DbType.Int32, direction: ParameterDirection.Output);
             parametros.Add("@Mensaje", dbType: DbType.String, size: 255, direction: ParameterDirection.Output);
@@ -111,6 +116,18 @@ namespace ProyectoApi.Repositories
             string Mensaje = parametros.Get<string>("@Mensaje");
 
             return (CodigoError, Mensaje);
+        }
+
+        public async Task<IEnumerable<CanchaModel>> ObtenerTodasLasCanchas()
+        {
+            using var conexion = _context.CrearConexion();
+
+            var resultado = await conexion.QueryAsync<CanchaModel>(
+                "dbo.ObtenerTodasLasCanchas",
+                commandType: CommandType.StoredProcedure
+            );
+
+            return resultado;
         }
     }
 }

@@ -60,6 +60,18 @@ namespace ProyectoApi.Repositories
             return resultado!;
         }
 
+        public async Task<IEnumerable<ProvinciaModel>> ObtenerTodasProvincias()
+        {
+            using var conexion = _context.CrearConexion();
+
+            var resultado = await conexion.QueryAsync<ProvinciaModel>(
+                "dbo.ObtenerTodasProvincias",
+                commandType: CommandType.StoredProcedure
+            );
+
+            return resultado;
+        }
+
         public async Task<(int CodigoError, string Mensaje)> RegistrarProvincia(ProvinciaModel model)
         {
             using var conexion = _context.CrearConexion();

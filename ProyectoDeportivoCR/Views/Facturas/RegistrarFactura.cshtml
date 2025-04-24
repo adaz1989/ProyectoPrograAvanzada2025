@@ -1,0 +1,129 @@
+﻿@model ProyectoDeportivoCR.Models.FacturaModel
+
+@{
+    ViewBag.Title = "Registrar Factura";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/EstilosCRUD.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+</head>
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <section class="form-section">
+                <h2 class="form-title text-center mb-4">
+                    <i class="bi bi-receipt"></i>
+                    REGISTRAR FACTURA
+                </h2>
+                <p class="text-center text-muted mb-4">
+                    Complete los campos y adjunte el comprobante para registrar su factura
+                </p>
+
+                @if (ViewBag.Mensaje != null)
+                {
+                    <div class="custom-alert success text-center mb-4">
+                        <i class="bi bi-check-circle-fill"></i>
+                        @ViewBag.Mensaje
+                    </div>
+                }
+
+                <form asp-action="RegistrarFactura" method="post" enctype="multipart/form-data" class="form-container">
+                    <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
+
+                    <!-- Sección Monto y Fecha -->
+                    <div class="form-section-group">
+                        <h4 class="form-subtitle"><i class="bi bi-currency-dollar"></i> MONTO</h4>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">
+                                    <i class="bi bi-cash-coin"></i> Monto
+                                </label>
+                                <input asp-for="Monto" type="number" step="0.01"
+                                       class="form-control input-numeric"
+                                       placeholder="0000.00" />
+                                <span asp-validation-for="Monto" class="validation-message"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">
+                                    <i class="bi bi-calendar-check"></i> Fecha y Hora
+                                </label>
+                                <input asp-for="FechaHoraFactura" type="datetime-local"
+                                       class="form-control"
+                                       placeholder="dd/mm/aaaa --:--" />
+                                <span asp-validation-for="FechaHoraFactura" class="validation-message"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Comprobante" class="form-label">
+                                <i class="bi bi-chat-square-text"></i> Descripción del Comprobante
+                            </label>
+                            <input asp-for="Comprobante"
+                                   class="form-control"
+                                   type="text"
+                                   placeholder="Ejemplo: Pago de servicios, compra de productos, etc." />
+                            <span asp-validation-for="Comprobante" class="validation-message"></span>
+                        </div>
+
+                    </div>
+
+                    <div class="form-section-group">
+                        <h4 class="form-subtitle">
+                            <i class="bi bi-paperclip"></i> COMPROBANTE
+                        </h4>
+
+                        <label for="fotoComprobante" id="dropzone" class="dropzone">
+                            <i class="bi bi-cloud-upload-fill dropzone-icon"></i>
+                            <p class="dropzone-text">Haz clic para seleccionar archivo</p>
+                            <p class="dropzone-subtext">JPEG/PNG, máx. 2 MB</p>
+                            <input asp-for="FotoComprobanteWeb"
+                                   id="fotoComprobante"
+                                   type="file"
+                                   accept="image/jpeg, image/png"
+                                   class="d-none" />
+                        </label>
+                        <span asp-validation-for="FotoComprobanteWeb" class="validation-message"></span>
+                    </div>
+
+
+                    <!-- Sección Referencias -->
+                    <div class="form-section-group">
+                        <h4 class="form-subtitle"><i class="bi bi-bookmarks"></i> REFERENCIAS</h4>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label asp-for="ReservacionId" class="form-label">
+                                    <i class="bi bi-ticket-detailed"></i> ID Reservación
+                                </label>
+                                <input asp-for="ReservacionId"
+                                       class="form-control input-id"
+                                       placeholder="0000" />
+                                <span asp-validation-for="ReservacionId" class="validation-message"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="MetodoPagoId" class="form-label">
+                                <i class="bi bi-credit-card"></i> Método de Pago
+                            </label>
+                            <select asp-for="MetodoPagoId" class="form-select"
+                                    asp-items="@(new SelectList(ViewBag.MetodosPago,"MetodoPagoId","DescripcionMetodoPago"))">
+                                <option value="">Seleccione un método de pago</option>
+                            </select>
+                            <span asp-validation-for="MetodoPagoId" class="validation-message"></span>
+                        </div>
+
+                    </div>
+
+                    <div class="form-footer text-center mt-5">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="bi bi-save-fill"></i> Registrar Factura
+                        </button>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </div>
+</div>

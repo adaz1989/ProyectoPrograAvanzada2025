@@ -62,7 +62,7 @@ namespace ProyectoApi.Services
             else
             {
                 respuesta.Exito = false;
-                respuesta.Mensaje = "No se encontro un usuario valido con ese Id";
+                respuesta.Mensaje = "No se encontro un objeto valido con ese Id";
             }
             return (respuesta);
         }
@@ -70,6 +70,26 @@ namespace ProyectoApi.Services
         public Task<RespuestaModel> ObtenerInformacionDeporte(int DeporteId)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<RespuestaModel> ObtenerTodosLosDeportes()
+        {
+            var resultado = await _deporteRepository.ObtenerTodosLosDeportes();
+
+            var respuesta = new RespuestaModel();
+
+            if (resultado != null)
+            {
+                respuesta.Exito = true;
+                respuesta.Datos = resultado;
+            }
+            else
+            {
+                respuesta.Exito = false;
+                respuesta.Mensaje = "No se encontro un objeto valido con ese Id";
+            }
+
+            return (respuesta);
         }
 
         public async Task<RespuestaModel> RegistrarDeporte(DeporteModel model)

@@ -90,5 +90,32 @@ namespace ProyectoApi.Services
                 }
             };
         }
+        public async Task<RespuestaModel> ObtenerTodasLasCanchas()
+        {
+            var respuesta = new RespuestaModel();
+
+            try
+            {
+                var resultado = await _canchasRepository.ObtenerTodasLasCanchas();
+
+                if (resultado != null)
+                {
+                    respuesta.Exito = true;
+                    respuesta.Datos = resultado;
+                }
+                else
+                {
+                    respuesta.Exito = false;
+                    respuesta.Mensaje = "No se encontró una cancha válida con ese Id";
+                }
+            }
+            catch (SqlException ex)
+            {
+                respuesta.Exito = false;
+                respuesta.Mensaje = ex.Message;
+            }
+
+            return respuesta;
+        }
     }
 }

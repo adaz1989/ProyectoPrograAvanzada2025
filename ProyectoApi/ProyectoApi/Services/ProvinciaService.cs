@@ -1,4 +1,6 @@
 ﻿
+using Microsoft.Data.SqlClient;
+
 namespace ProyectoApi.Services
 {
     public class ProvinciaService : IProvinciaService
@@ -47,6 +49,34 @@ namespace ProyectoApi.Services
                 respuesta.Mensaje = "No se encontro un usuario valido con ese Id";
             }
             return (respuesta);
+        }
+
+        public async Task<RespuestaModel> ObtenerTodasProvincias()
+        {
+            var respuesta = new RespuestaModel();
+
+            try
+            {
+                var resultado = await _repository.ObtenerTodasProvincias();
+
+                if (resultado != null && resultado.Any())
+                {
+                    respuesta.Exito = true;
+                    respuesta.Datos = resultado;
+                }
+                else
+                {
+                    respuesta.Exito = false;
+                    respuesta.Mensaje = "No hay cantones registrados.";
+                }
+            }
+            catch (SqlException ex)
+            {
+                respuesta.Exito = false;
+                respuesta.Mensaje = $"Error SQL: {ex.Message}";
+            }
+
+            return respuesta;
         }
 
         public async Task<RespuestaModel> RegistrarProvincia(ProvinciaModel model)

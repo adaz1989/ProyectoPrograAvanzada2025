@@ -1,78 +1,90 @@
 ﻿@model ProyectoDeportivoCR.Models.CanchaModel?
 
 @{
-    ViewData["Title"] = "Buscar Cancha";
+    ViewData["Title"] = "Detalles de Cancha";
 }
 
-<div class="container mt-5">
+<div class="container my-5">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <h2 class="mb-4 text-center">Buscar Cancha por ID</h2>
+        <div class="col-lg-8">
+            <h2 class="text-center mb-4"><i class="bi bi-info-circle"></i> Detalles de la Cancha</h2>
 
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <!-- Formulario para buscar cancha -->
-                    <form asp-action="ObtenerCancha" method="get">
-                        <div class="mb-3">
-                            <label for="canchaId" class="form-label">ID de la Cancha</label>
-                            <input type="number" class="form-control" id="canchaId" name="canchaId" required />
-                        </div>
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-primary">Buscar</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <!-- Botón para registrar una nueva cancha (siempre visible) -->
-            <div class="text-center mt-4">
-                <a asp-controller="Cancha" asp-action="RegistrarCancha" class="btn btn-success">
-                    Registrar Cancha
-                </a>
-            </div>
-
-            <!-- Mostrar detalles si hay información de una cancha -->
             @if (Model != null)
             {
-                <div class="card shadow-sm mt-4">
-                    <div class="card-body">
-                        <h5 class="card-title">@Model.NombreCancha</h5>
-                        <ul class="list-group list-group-flush mb-3">
-                            <li class="list-group-item"><strong>ID:</strong> @Model.CanchaId</li>
-                            <li class="list-group-item"><strong>Correo:</strong> @Model.CorreoCancha</li>
-                            <li class="list-group-item"><strong>Teléfono:</strong> @Model.TelefonoCancha</li>
-                            <li class="list-group-item"><strong>Precio por Hora:</strong> @Model.PrecioHora.ToString("C")</li>
-                            <li class="list-group-item"><strong>Dirección:</strong> @Model.DetalleDireccion</li>
-                            <li class="list-group-item"><strong>Descripción:</strong> @Model.DescripcionCancha</li>
-                            <li class="list-group-item"><strong>Usuario:</strong> @Model.NombreUsuario</li>
-                            <li class="list-group-item"><strong>Deporte:</strong> @Model.NombreDeporte</li>
-                            <li class="list-group-item"><strong>Ubicación:</strong> @Model.NombreProvincia, @Model.NombreCanton, @Model.NombreDistrito</li>
-                        </ul>
-                        <div class="d-flex justify-content-between flex-wrap gap-2">
-                            <!-- Botón para actualizar la cancha -->
-                            <a asp-controller="Cancha" asp-action="ActualizarCancha" asp-route-canchaId="@Model.CanchaId" class="btn btn-warning">
-                                Actualizar Cancha
-                            </a>
-                            <!-- Botón/formulario para deshabilitar la cancha -->
-                            <form asp-controller="Cancha" asp-action="DeshabilitarCancha" method="post"
-                                  onsubmit="return confirm('¿Está seguro que desea deshabilitar esta cancha?');"
-                                  style="display:inline;">
-                                @Html.AntiForgeryToken()
-                                <input type="hidden" name="canchaId" value="@Model.CanchaId" />
-                                <button type="submit" class="btn btn-danger">
-                                    Deshabilitar Cancha
-                                </button>
-                            </form>
+                <div class="card shadow">
+                    <div class="row g-0">
+                        <div class="col-md-5">
+                            @if (Model.FotoCancha != null && Model.FotoCancha.Length > 0)
+                            {
+                                <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.FotoCancha)"
+                                     alt="Foto de @Model.NombreCancha"
+                                     class="img-fluid rounded-start"
+                                     style="object-fit: cover; height:100%; width:100%;" />
+                            }
+                            else
+                            {
+                                <img src="~/images/cancha-default.png"
+                                     alt="Imagen predeterminada"
+                                     class="img-fluid rounded-start"
+                                     style="object-fit: cover; height:100%; width:100%;" />
+                            }
+                        </div>
+                        <div class="col-md-7">
+                            <div class="card-body">
+                                <h3 class="card-title">@Model.NombreCancha</h3>
+                                <p class="card-text"><strong>ID:</strong> @Model.CanchaId</p>
+                                <p class="card-text"><strong>Correo:</strong> @Model.CorreoCancha</p>
+                                <p class="card-text"><strong>Teléfono:</strong> @Model.TelefonoCancha</p>
+                                <p class="card-text"><strong>Precio/Hora:</strong> @Model.PrecioHora.ToString("C")</p>
+                                <p class="card-text"><strong>Ubicación:</strong> @Model.NombreProvincia &gt; @Model.NombreCanton &gt; @Model.NombreDistrito</p>
+                                <p class="card-text"><strong>Dirección:</strong> @Model.DetalleDireccion</p>
+                                <p class="card-text"><strong>Deporte:</strong> @Model.NombreDeporte</p>
+                                <p class="card-text"><strong>Descripción:</strong> @Model.DescripcionCancha</p>
+
+                                <div class="mt-4 d-flex flex-wrap gap-2">
+                                    <a asp-controller="Cancha"
+                                       asp-action="ActualizarCancha"
+                                       asp-route-canchaId="@Model.CanchaId"
+                                       class="btn btn-warning">
+                                        <i class="bi bi-pencil-square"></i> Actualizar
+                                    </a>
+
+                                    <form asp-controller="Cancha"
+                                          asp-action="DeshabilitarCancha"
+                                          method="post"
+                                          onsubmit="return confirm('¿Está seguro que desea deshabilitar esta cancha?');"
+                                          style="display:inline;">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="canchaId" value="@Model.CanchaId" />
+                                        <button type="submit" class="btn btn-danger">
+                                            <i class="bi bi-trash2-fill"></i> Deshabilitar
+                                        </button>
+                                    </form>
+
+                                    <a asp-controller="Cancha"
+                                       asp-action="Index"
+                                       class="btn btn-secondary">
+                                        <i class="bi bi-arrow-left-circle"></i> Volver
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             }
             else if (ViewBag.Mensaje != null)
             {
-                <div class="alert alert-warning mt-4" role="alert">
-                    @ViewBag.Mensaje
+                <div class="alert alert-warning text-center" role="alert">
+                    <i class="bi bi-exclamation-triangle-fill"></i> @ViewBag.Mensaje
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-info text-center" role="alert">
+                    <i class="bi bi-info-circle"></i> No se han proporcionado datos de la cancha.
                 </div>
             }
         </div>
     </div>
 </div>
+

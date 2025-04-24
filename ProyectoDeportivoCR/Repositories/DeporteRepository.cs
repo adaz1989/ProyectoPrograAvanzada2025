@@ -21,8 +21,9 @@ namespace ProyectoDeportivoCR.Repositories
             // Diccionario con las rutas de la API para Deporte
             _apiEndpoints = new Dictionary<string, string>
             {
-                { "RegistrarDeporte",         $"{baseUrl}Deporte/RegistrarDeporte" },
-                { "ObtenerInformacionDeporte", $"{baseUrl}Deporte/ObtenerInformacionDeporte" }
+                { "RegistrarDeporte",           $"{baseUrl}Deporte/RegistrarDeporte" },
+                { "ObtenerInformacionDeporte" , $"{baseUrl}Deporte/ObtenerInformacionDeporte" },
+                { "ObtenerTodosLosDeportes"   , $"{baseUrl}Deporte/ObtenerTodosLosDeportes" }
             };
         }
 
@@ -37,6 +38,15 @@ namespace ProyectoDeportivoCR.Repositories
         {
             using var http = _httpClient.CreateClient();
             var url = $"{_apiEndpoints["ObtenerInformacionDeporte"]}/{deporteId}";
+            return await http.GetAsync(url);
+        }
+
+        public async Task<HttpResponseMessage> ObtenerTodosLosDeportes()
+        {
+            using var http = _httpClient.CreateClient();
+            var url = _apiEndpoints["ObtenerTodosLosDeportes"];  // Ruta configurada en _apiEndpoints
+
+            // Realizamos una petición GET para obtener la lista de todas las canchas activas
             return await http.GetAsync(url);
         }
     }

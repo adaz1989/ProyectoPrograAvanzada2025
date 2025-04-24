@@ -30,7 +30,25 @@ builder.Services.AddScoped<ICanchasRepository, CanchasRepository>();
 
 
 builder.Services.AddScoped<IEquipoService, EquipoService>();
-builder.Services.AddScoped<IEquipoRepository, EquipoRepository>();  
+builder.Services.AddScoped<IEquipoRepository, EquipoRepository>();
+
+builder.Services.AddScoped<IFacturaService, FacturasService>();
+builder.Services.AddScoped<IFacturaRepository, FacturaRepository>();
+
+builder.Services.AddScoped<ICantonRepository, CantonRepository>(); 
+builder.Services.AddScoped<ICantonService, CantonService>();
+
+builder.Services.AddScoped<IProvinciaRepository,ProvinciaRepository>();
+builder.Services.AddScoped<IProvinciaService, ProvinciaService>();
+
+builder.Services.AddScoped<IDistritoService, DistritoService>();
+builder.Services.AddScoped<IDistritoRepository, DistritoRepository>();
+
+builder.Services.AddScoped<IResennaCanchaService, ResennaCanchaService>();
+builder.Services.AddScoped<IResennaCanchaRepository, ResennaRepository>();
+
+
+
 
 
 
@@ -64,7 +82,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
                 return expires > DateTime.UtcNow;
             }
             return false;
-        }
+        },
+        NameClaimType = "UsuarioId"
     };
 });
 

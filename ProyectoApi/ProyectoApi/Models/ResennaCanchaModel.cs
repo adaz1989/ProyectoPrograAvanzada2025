@@ -2,7 +2,7 @@
 
 namespace ProyectoApi.Models
 {
-    public class RenennaCanchaModel
+    public class ResennaCanchaModel
     {
         public long CanchaId { get; set; }
         public long UsuarioId { get; set; }

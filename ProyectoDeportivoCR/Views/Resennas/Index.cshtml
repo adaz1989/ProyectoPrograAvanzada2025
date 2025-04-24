@@ -1,0 +1,69 @@
+﻿@model List<ProyectoDeportivoCR.Models.ResennaCanchaModel>
+
+@{
+    ViewData["Title"] = "Listado de Reseñas";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/EstilosCRUD.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+</head>
+
+<div class="crud-container my-5">
+    <h2 class="mb-4 text-center"><i class="bi bi-chat-square-text"></i> Listado de Reseñas</h2>
+
+    @if (ViewBag.Error != null)
+    {
+        <div class="alert alert-danger">
+            @ViewBag.Error
+        </div>
+    }
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Cancha ID</th>
+                        <th>Usuario ID</th>
+                        <th>Calificación</th>
+                        <th>Comentario</th>
+                        <th class="text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var resenna in Model)
+                    {
+                        <tr>
+                            <td>@resenna.CanchaId</td>
+                            <td>@resenna.UsuarioId</td>
+                            <td>
+                                @for (int i = 0; i < resenna.Calificacion; i++)
+                                {
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                }
+                                @for (int i = resenna.Calificacion; i < 5; i++)
+                                {
+                                    <i class="bi bi-star text-secondary"></i>
+                                }
+                            </td>
+                            <td>@resenna.Comentario</td>
+                            <td class="text-center">
+                                <a asp-action="Details"
+                                   asp-route-canchaId="@resenna.CanchaId"
+                                   class="btn btn-outline-primary btn-sm">
+                                    <i class="bi bi-eye"></i> Detalles
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <p class="text-center">No hay reseñas registradas.</p>
+    }
+</div>

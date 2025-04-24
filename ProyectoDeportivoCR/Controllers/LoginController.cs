@@ -20,6 +20,7 @@ namespace ProyectoDeportivoCR.Controllers
             return View();
         }
 
+
         [HttpPost]
         public async Task<IActionResult> RegistrarUsuario(UsuarioModel model)
         {
@@ -27,9 +28,11 @@ namespace ProyectoDeportivoCR.Controllers
 
             ViewBag.Mensaje = resultado.Mensaje;
 
-            if (resultado.Exito) return RedirectToAction("IniciarSesion");
+            if (resultado.Exito)
+                return RedirectToAction("IniciarSesion");
 
-            return View();
+
+            return View(model);
         }
 
         public IActionResult IniciarSesion()

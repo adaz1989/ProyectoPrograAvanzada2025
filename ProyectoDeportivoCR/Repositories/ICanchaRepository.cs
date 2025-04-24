@@ -2,12 +2,10 @@
 {
     public interface ICanchaRepository
     {
-        public Task<HttpResponseMessage> RegistrarCancha(CanchaModel model);
-
-        public Task<HttpResponseMessage> ActualizarInformacionCancha(CanchaModel model);
-
-        public Task<HttpResponseMessage> DeshabilitarCancha(int canchaId);
-
-        public Task<HttpResponseMessage> ObtenerCancha(int canchaId);
+        Task<HttpResponseMessage> RegistrarCancha(CanchaModel model, string? token);
+        Task<HttpResponseMessage> ActualizarInformacionCancha(CanchaModel model, string? token);
+        Task<HttpResponseMessage> DeshabilitarCancha(long canchaId, string? token);
+        Task<HttpResponseMessage> ObtenerCancha(long canchaId, string? token);
+        Task<HttpResponseMessage> ObtenerTodasLasCanchas(string? token);
     }
 }

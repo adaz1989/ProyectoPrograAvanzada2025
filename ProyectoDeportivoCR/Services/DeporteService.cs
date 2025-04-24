@@ -43,5 +43,22 @@ namespace ProyectoDeportivoCR.Services
                 Mensaje = "Error al comunicarse con la API."
             };
         }
+
+        public async Task<Respuesta2Model<List<DeporteModel>>> ObtenerTodosLosDeportes()
+        {
+            var respuesta = await _deporteRepository.ObtenerTodosLosDeportes();
+            if (respuesta.IsSuccessStatusCode)
+            {
+
+                return await respuesta.LeerRespuesta2Model<List<DeporteModel>>();
+            }
+
+            return new Respuesta2Model<List<DeporteModel>>
+            {
+                Exito = false,
+                Mensaje = "Error al comunicarse con la API.",
+                Datos = null
+            };
+        }
     }
 }
