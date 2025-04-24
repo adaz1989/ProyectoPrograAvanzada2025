@@ -158,3 +158,23 @@ BEGIN
     END CATCH
 END;
 GO
+
+------------------------------------------------------------------------
+CREATE or ALTER PROCEDURE ObtenerReservacionesActivasPorUsuario
+    @UsuarioId INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        r.ReservacionId,
+        r.CanchaId,
+        r.FechaReservavion,
+        r.HoraInicio,
+        r.HoraFin,
+        r.Estado,
+        c.NombreCancha
+    FROM ReservacionesCanchas r
+    INNER JOIN Canchas c ON r.CanchaId = c.CanchaId
+    WHERE r.UsuarioId = @UsuarioId AND r.Estado = 1;
+END

@@ -7,5 +7,6 @@
         public Task<RespuestaModel> ObtenerInformacionCanton(int CantonId);
 
         public Task<RespuestaModel> ObtenerTodosCantones();
+        public Task<IEnumerable<CantonModel>> ObtenerCantonesPorProvincia(int provinciaId);
     }
 }

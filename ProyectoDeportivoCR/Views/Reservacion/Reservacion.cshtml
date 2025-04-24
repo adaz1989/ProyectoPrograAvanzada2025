@@ -1,0 +1,120 @@
+﻿@model ProyectoDeportivoCR.Models.ViewModels.ReservacionViewModel
+
+@{
+    ViewData["Title"] = "Reservación de Cancha";
+}
+
+<section class="section section-variant-1 bg-gray-100">
+    <div class="container">
+        <div class="row row-50 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-6">
+                <div class="card-login-register" id="card-l-r">
+                    <div class="card-top-panel">
+                        <div class="card-top-panel-left">
+                            <h5 class="card-title card-title-login">Reservaciones</h5>
+                        </div>
+                    </div>
+                    <div class="card-form card-form-login">
+                        @if (TempData["Mensaje"] != null)
+                        {
+                            <div class="alert alert-warning mt-2">@TempData["Mensaje"]</div>
+                        }
+
+                        @if (Model != null)
+                        {
+                            <div class="form-wrap">
+                                
+                                <p><strong>Cancha:</strong> @Model.Cancha.NombreCancha</p>
+                                <p><strong>Deporte:</strong> @Model.Cancha.NombreDeporte</p>
+                                <p><strong>Fecha:</strong> @Model.Fecha.ToString("yyyy-MM-dd")</p>
+                            </div>
+
+                            <hr />
+
+                            <form method="get" asp-action="Reservacion" class="form-inline mb-3">
+                                <input type="hidden" name="canchaId" value="@Model.Cancha.CanchaId" />
+                                <div class="form-wrap me-2">
+                                    <input type="date"
+                                           name="fecha"
+                                           class="form-input form-control"
+                                           value="@Model.Fecha.ToString("yyyy-MM-dd")"
+                                           required />
+                                </div>
+                                <button type="submit" class="button button-sm button-primary">Cambiar fecha</button>
+                            </form>
+
+                            <div class="form-wrap">
+                                <h5>Bloques de 1 hora</h5>
+                                <table class="table table-bordered table-sm mt-2">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Inicio</th>
+                                            <th>Fin</th>
+                                            <th>Estado</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var slot in Model.Slots)
+                                        {
+                                            var rowClass = slot.Estado switch
+                                            {
+                                                "Disponible" => "table-success",
+                                                "Ocupada" => "table-danger",
+                                                "ReservadaPorUsuario" => "table-primary",
+                                                _ => ""
+                                            };
+                                            <tr class="@rowClass">
+                                                <td>@slot.HoraInicio.ToString("HH:mm")</td>
+                                                <td>@slot.HoraFin.ToString("HH:mm")</td>
+                                                <td>@slot.Estado</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            @* Formulario de reservación solo si hay horarios disponibles *@
+                            @if (Model.HoraInicioOptions?.Any() == true && Model.HoraFinOptions?.Any() == true)
+                            {
+                                <hr />
+                                <form method="post" asp-action="RegistrarReservacion">
+                                    <input type="hidden" name="CanchaId" value="@Model.Cancha.CanchaId" />
+                                    <input type="hidden" name="FechaReservavion" value="@Model.Fecha.ToString("yyyy-MM-dd")" />
+
+                                    <div class="form-group">
+                                        <label for="HoraInicio">Hora de Inicio</label>
+                                        <select name="HoraInicio" class="form-control" required>
+                                            <option value="">-- Selecciona hora --</option>
+                                            @foreach (var hora in Model.HoraInicioOptions)
+                                            {
+                                                <option value="@hora.Value">@hora.Text</option>
+                                            }
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group mt-2">
+                                        <label for="HoraFin">Hora de Fin</label>
+                                        <select name="HoraFin" class="form-control" required>
+                                            <option value="">-- Selecciona hora --</option>
+                                            @foreach (var hora in Model.HoraFinOptions)
+                                            {
+                                                <option value="@hora.Value">@hora.Text</option>
+                                            }
+                                        </select>
+                                    </div>
+
+                                    <button type="submit" class="button button-primary mt-3">Reservar</button>
+                                </form>
+
+                            }
+                        }
+                        else
+                        {
+                            <div class="alert alert-info">No hay datos para mostrar.</div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

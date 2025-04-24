@@ -1,17 +1,25 @@
-﻿namespace ProyectoApi.Services
+﻿using Microsoft.AspNetCore.Connections;
+using Microsoft.AspNetCore.Http;
+
+namespace ProyectoApi.Services
 {
     public class ReservacionService : IReservacionService
     {
         private readonly IReservacionRepository _reservacionRepository;
+        private readonly IJwtService _jwtService;
 
-        public ReservacionService(IReservacionRepository reservacionRepository)
+        public ReservacionService(IReservacionRepository reservacionRepository, IJwtService jwtService)
         {
             _reservacionRepository = reservacionRepository;
+            _jwtService = jwtService;
         }
 
-        public async Task<RespuestaModel> RegistrarReservacion(ReservacionCanchaModel model)
+        public async Task<RespuestaModel> RegistrarReservacion(ReservacionCanchaModel model, HttpContext httpContext)
         {
-            // Validación 1: hora de inicio debe ser anterior a hora de fin
+            var usuarioId = _jwtService.ObtenerUsuarioJwt(httpContext.User.Claims);
+            model.UsuarioId = usuarioId;
+
+            // hora de inicio debe ser anterior a hora de fin
             if (model.HoraInicio >= model.HoraFin)
             {
                 return new RespuestaModel

@@ -93,34 +93,32 @@
                     <div class="form-grid four">
                         <div class="form-group">
                             <label asp-for="ProvinciaId" class="form-label">Provincia</label>
-                            <select asp-for="ProvinciaId"
-                                    class="form-select"
-                                    asp-items="@(new SelectList(ViewBag.Provincias, "ProvinciaId", "NombreProvincia"))">
+                            <select asp-for="ProvinciaId" class="form-select" id="provinciaSelect">
                                 <option value="">Seleccione una Provincia</option>
+                                @foreach (var provincia in ViewBag.Provincias)
+                                {
+                                    <option value="@provincia.ProvinciaId">@provincia.NombreProvincia</option>
+                                }
                             </select>
-                            <span asp-validation-for="ProvinciaId"
-                                  class="validation-message"></span>
+                            <span asp-validation-for="ProvinciaId" class="validation-message"></span>
                         </div>
+
                         <div class="form-group">
                             <label asp-for="CantonId" class="form-label">Cantón</label>
-                            <select asp-for="CantonId"
-                                    class="form-select"
-                                    asp-items="@(new SelectList(ViewBag.Cantones, "CantonId", "NombreCanton"))">
+                            <select asp-for="CantonId" class="form-select" id="cantonSelect">
                                 <option value="">Seleccione un Cantón</option>
                             </select>
-                            <span asp-validation-for="CantonId"
-                                  class="validation-message"></span>
+                            <span asp-validation-for="CantonId" class="validation-message"></span>
                         </div>
+
                         <div class="form-group">
                             <label asp-for="DistritoId" class="form-label">Distrito</label>
-                            <select asp-for="DistritoId"
-                                    class="form-select"
-                                    asp-items="@(new SelectList(ViewBag.Distritos, "DistritoId", "NombreDistrito"))">
+                            <select asp-for="DistritoId" class="form-select" id="distritoSelect">
                                 <option value="">Seleccione un Distrito</option>
                             </select>
-                            <span asp-validation-for="DistritoId"
-                                  class="validation-message"></span>
+                            <span asp-validation-for="DistritoId" class="validation-message"></span>
                         </div>
+
                         <div class="form-group">
                             <label asp-for="DeporteId" class="form-label">Deporte</label>
                             <select asp-for="DeporteId"
@@ -184,3 +182,55 @@
         </div>
     </div>
 </div>
+
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        const apiBaseUrl = 'https://localhost:7054/api/Provincia';
+
+        $('#provinciaSelect').change(function () {
+            const provinciaId = $(this).val();
+            $('#cantonSelect').empty().append('<option value="">Cargando...</option>');
+            $('#distritoSelect').empty().append('<option value="">Seleccione un Distrito</option>');
+
+            if (provinciaId) {
+                $.ajax({
+                    url: `${apiBaseUrl}/Cantones/${provinciaId}`,
+                    method: 'GET',
+                    success: function (cantones) {
+                        $('#cantonSelect').empty().append('<option value="">Seleccione un Cantón</option>');
+                        cantones.forEach(canton => {
+                            $('#cantonSelect').append(`<option value="${canton.CantonId}">${canton.NombreCanton}</option>`);
+                        });
+                    },
+                    error: function () {
+                        alert('Error al cargar cantones.');
+                    }
+                });
+            }
+        });
+
+        $('#cantonSelect').change(function () {
+            const cantonId = $(this).val();
+            $('#distritoSelect').empty().append('<option value="">Cargando...</option>');
+
+            if (cantonId) {
+                $.ajax({
+                    url: `${apiBaseUrl}/Distritos/${cantonId}`,
+                    method: 'GET',
+                    success: function (distritos) {
+                        $('#distritoSelect').empty().append('<option value="">Seleccione un Distrito</option>');
+                        distritos.forEach(distrito => {
+                            $('#distritoSelect').append(`<option value="${distrito.DistritoId}">${distrito.NombreDistrito}</option>`);
+                        });
+                    },
+                    error: function () {
+                        alert('Error al cargar distritos.');
+                    }
+                });
+            }
+        });
+    });
+</script>

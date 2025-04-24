@@ -51,6 +51,8 @@ builder.Services.AddScoped<ICanchaService, CanchaService>();
 builder.Services.AddScoped<IResennaService, ResennaService>();
 builder.Services.AddScoped<IResennaRepository, ResennaRepository>();
 
+builder.Services.AddScoped<IReservacionService, ReservacionService>();
+builder.Services.AddScoped<IReservacionRepositorie, ReservacionRepositorie>();
 
 
 //-----------------------------------------------------------------

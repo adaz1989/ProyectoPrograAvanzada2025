@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ProyectoApi.Controllers
@@ -15,11 +16,12 @@ namespace ProyectoApi.Controllers
             _jwtService = jwtService;
         }
 
+        [Authorize]
         [HttpPost]
         [Route("RegistrarReservacion")]
         public async Task<IActionResult> RegistrarReservacion(ReservacionCanchaModel model)
         {
-            var respuesta = await _reservacionService.RegistrarReservacion(model);
+            var respuesta = await _reservacionService.RegistrarReservacion(model, HttpContext);
             return Ok(respuesta);
         }
 
@@ -32,6 +34,7 @@ namespace ProyectoApi.Controllers
             return Ok(respuesta);
         }
 
+        [Authorize]
         [HttpPut]
         [Route("DeshabilitarReservacion/{reservacionId}")]
         public async Task<IActionResult> DeshabilitarReservacion(long reservacionId)
