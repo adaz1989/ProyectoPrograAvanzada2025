@@ -27,7 +27,7 @@ namespace ProyectoDeportivoCR.Services
 
                 Console.WriteLine("URL generada: " + url);
 
-                http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _contextAccessor.HttpContext?.Session.GetString("Token"));
+                // http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _contextAccessor.HttpContext?.Session.GetString("Token"));
                 var response = http.GetAsync(url).Result;
 
                 Console.WriteLine("Código de estado: " + response.StatusCode);
@@ -36,11 +36,13 @@ namespace ProyectoDeportivoCR.Services
                 {
 
                     var result = response.Content.ReadFromJsonAsync<RespuestaModel>().Result;
-                    
-                    if (result != null && result.Indicador)
-                    {
-                        return JsonSerializer.Deserialize<List<TorneoModel>>((JsonElement)result.Datos!)!;
-                    }
+
+                    return JsonSerializer.Deserialize<List<TorneoModel>>((JsonElement)result.Datos!)!;
+
+                    //if (result != null && result.Indicador)
+                    //{
+                    //    return JsonSerializer.Deserialize<List<TorneoModel>>((JsonElement)result.Datos!)!;
+                    //}
 
                 }
 
